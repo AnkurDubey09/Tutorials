@@ -1,0 +1,13 @@
+Hello,
+
+Welcome to my git repository, here I am going to show some advance configurations for protractor/angularJS testing framework.
+
+I am going to classify the different configurations in different files so that it remains in small, specific and understandable
+format.
+
+You can find the small videos on youtube, and the link is here:
+https://www.youtube.com/playlist?list=PLlRGex8BKmeeLhlfMq-HfG5gTHevw_bb2
+
+
+Thanks,
+Ankur Dubey
