@@ -1,6 +1,0 @@
-Hi,
-
-This is sample test file. Please ignore it.
-
-Thanks,
-AD
