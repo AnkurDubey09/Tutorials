@@ -2,5 +2,5 @@ Hi,
 
 This is sample test file. Please ignore it. This file is for testing.
 
-Thanks,
+Regards,
 AD
