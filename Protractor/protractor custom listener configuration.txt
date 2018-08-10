@@ -1,0 +1,101 @@
+Custom listener configuration using Protractor testing framework:
+
+We need to create a custom listener file here which can have following code:
+
+// Take the instance of the configured logger.
+var logger = require('./log');
+
+// Variables to have e2es' status information.
+let numberOfPassed = 0;
+let numberOfFailed = 0;
+let numberOfPending = 0;
+
+var listenerReporter = {
+    jasmineStarted: function (suiteInfo) {
+        console.log('Running suite with ' + suiteInfo.totalSpecsDefined);
+        logger.log('info', '==============================================================');
+        logger.log('info', '##############################################################');
+        logger.log('info', 'Running suites with ' + suiteInfo.totalSpecsDefined);
+    },
+
+    suiteStarted: function (result) {
+        console.log('Suite started: ' + result.description);
+        logger.log('info', 'Suite started: ' + result.description);
+    },
+
+    specStarted: function (result) {
+        console.log('Spec started: ' + result.description);
+        logger.log('info', 'Spec started: ' + result.description);
+    }, 
+
+    specDone: function (result) {
+        if (result.status === 'passed') {
+            numberOfPassed++;
+            logger.log('info', 'Spec: -> ' + result.description + ' Status: -> ' + result.status + '_PASSED');
+            logger.log('info', 'Passed expectations in --> ' + result.description + ' are:-> ' + result.passedExpectations.length);
+        } else if (result.status === 'failed') {
+            numberOfFailed++;
+            for (var i = 0; i < result.failedExpectations.length; i++) {
+                console.log('Failure: ' + result.failedExpectations[i].message);
+                logger.log('error', 'Failure: ' + result.failedExpectations[i].message);
+                console.log(result.failedExpectations[i].stack);
+                logger.log('error', result.failedExpectations[i].stack);
+            }
+            logger.log('error', 'Spec: -> ' + result.description + ' Status: -> ' + result.status + '_FAILED');
+        }
+        else if (result.status === 'pending') {
+            numberOfPending++;
+            logger.log('warn', 'Spec: -> ' + result.description + ' Status: -> ' + result.status + '_PENDING');
+        }
+        console.log('Spec: -> ' + result.description + ' Status: -> ' + result.status);
+        logger.log('info', 'Spec: -> ' + result.description + ' Status: -> ' + result.status);
+        for (var i = 0; i < result.failedExpectations.length; i++) {
+            console.log('Failure: ' + result.failedExpectations[i].message);
+            logger.log('info', 'Failure: ' + result.failedExpectations[i].message);
+            console.log(result.failedExpectations[i].stack);
+            logger.log('info', result.failedExpectations[i].stack);
+        }
+        console.log('Passed expectations in --> ' + result.description + ' are:-> ' + result.passedExpectations.length);
+        logger.log('info', 'Passed expectations in --> ' + result.description + ' are:-> ' + result.passedExpectations.length);
+        
+        
+    },
+
+    suiteDone: function (result) {
+        console.log('Suite: -> ' + result.description + ' Status: -> ' + result.status);
+        logger.log('info', 'Suite: -> ' + result.description + ' Status: -> ' + result.status);
+        for (var i = 0; i < result.failedExpectations.length; i++) {
+            console.log('AfterAll ' + result.failedExpectations[i].message);
+            logger.log('info', 'AfterAll ' + result.failedExpectations[i].message);
+            console.log(result.failedExpectations[i].stack);
+            logger.log('info', result.failedExpectations[i].stack);
+        }
+    }, 
+
+    jasmineDone: function () {
+        console.log('Finished suite');
+        console.log('##### passed: ' + numberOfPassed + '##### failed: ' + numberOfFailed + '##### pending: ' + numberOfPending);
+        logger.log('info', '========================================================================');
+        logger.log('info', '========================================================================');
+        logger.log('info', 'passed: ' + numberOfPassed + ' || failed: ' + numberOfFailed + ' || pending: ' + numberOfPending);
+        logger.log('info', '========================================================================');
+        logger.log('info', '========================================================================');
+    }
+  
+};
+
+module.exports = listenerReporter;
+
+Now configure this listener in protractor.conf.js under onPrepare() section:
+
+// on top 
+var myReporter = require('./listenerReporter');
+
+// onPrepare()
+onPrepare() {
+      
+    jasmine.getEnv().addReporter(myReporter);
+    
+}
+
+Now when you execute e2es then the above information for your e2es is logged in log file configured in logger.

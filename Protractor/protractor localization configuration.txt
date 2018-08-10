@@ -1,0 +1,66 @@
+Localization configurations using Protractor testing framework:
+
+We have different JSON files for different locales which consist data in the key/value form. These JSONs are being imported 
+in our spec files and we are verifying or expecting application's text/labels/messages, from the respective JSON files using
+key from the JSON files.
+
+We can write the following code or similar code to get the localization JSON file:
+
+In spec file:
+
+let mySetLocale = browser.params.locale;
+
+switch(mySetLocale){
+
+        case 'en':{
+            lan = require('../../i18n/en.json');
+            break;
+        }
+        case 'de':{
+            lan = require('../../i18n/de.json');
+            break;
+        }
+        case 'da':{
+            lan = require('../../i18n/da.json');
+            break;
+        }
+        case 'fr':{
+            lan = require('../../i18n/fr.json');
+            break;
+        }
+        default:{
+            lan = require('../../i18n/en-us.json');
+        }
+
+}
+
+And then, in spec file, we can get the strings from respective locale files in following way and can compare them with the 
+actual string, extracted on the application:
+
+expect(element(by.id('printBtn')).getText()).toBe(lan.PRINT_PREVIEW);
+expect(element(by.id('helpLink')).getText()).toBe(lan.HELP);
+expect(element(by.id('signinLink')).getText()).toBe(lan.SIGN_IN);
+
+here PRINT_PREVIEW, HELP and SIGN_IN strings are keys in locale's JSON file and their value is being fetched from the file to
+compare it with the actual value coming on application.
+
+In protractor.conf.js:
+
+configure the parameter, based on it locale JSON file be loaded or referenced in spec file. We can see that in spec file, 
+'mySetLocale' is getting the this parameter's value.
+
+params: {
+	"locale":"de"
+}
+
+And we need to configure the locale's setting on Protractor.conf.js file too. Browser will be launched in the configured locale here.
+
+chromeOptions: {
+
+      // How to set browser language (menus & so on)
+      args: [ 'lang=de-DE,de' ],
+      // How to set Accept-Language header
+      prefs: {
+        intl: { accept_languages: "de-DE,de" },
+      },
+}
