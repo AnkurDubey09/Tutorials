@@ -1,0 +1,242 @@
+{
+	"defaultCSS": {
+		"createPanelContainer": {
+			"fill": "rgb(78, 78, 78)",
+			"color": "rgba(78, 78, 78, 1)",
+			"stroke": "none",
+			"annotation_tools": {
+				"fill": "rgb(78, 78, 78)",
+				"color": "rgba(78, 78, 78, 1)",
+				"stroke": "none"
+			},
+			"measurement_tools": {
+				"fill": "rgb(78, 78, 78)",
+				"color": "rgba(78, 78, 78, 1)",
+				"stroke": "none"
+			},
+			"multiSelect": {
+				"fill": "rgb(78, 78, 78)",
+				"color": "rgba(78, 78, 78, 1)",
+				"stroke": "none"
+			},
+			"on_hover": {
+				"color": "rgba(62, 83, 164, 1)",
+				"fill": "rgb(62, 83, 164)"
+			}
+		},
+		"legendContainer": {
+			"annotations": {
+				"view_annotation": {
+					"fill": "rgba(62, 83, 164, 0.5)"
+				}
+			},
+			"legend_overflow_icon": {
+				"fill": "rgb(46, 46, 46)",
+				"color": "rgba(46, 46, 46, 1)"
+			},
+			"legend_checkbox_icon": {
+				"fill": "rgb(46, 46, 46)",
+				"color": "rgba(46, 46, 46, 1)"
+			},
+			"legend_folder_icon": {
+				"fill": "rgb(208, 208, 208)",
+				"color": "rgba(208, 208, 208, 1)"
+			},
+			"legend_vector_icon": {
+				"color": "#ff0000"
+			},
+			"legend_query_icon": {
+				"color": "rgb(255, 64, 64)"
+			}
+		},
+		"i_icons": {
+			"fill": "rgb(46, 46, 46)",
+			"color": "rgba(46, 46, 46, 1)"
+		},
+		"label": {
+			"color": "rgba(113, 113, 113, 1)"
+		},
+		"text_primary": {
+			"color": "rgba(78, 78, 78, 1)"
+		},
+		"headers": {
+			"h1": {
+				"color": "rgba(46, 46, 46, 1)"
+			},
+			"h2": {
+				"color": "rgba(46, 46, 46, 1)"
+			},
+			"h3": {
+				"color": "rgba(46, 46, 46, 1)"
+			},
+			"h4": {
+				"color": "rgba(46, 46, 46, 1)"
+			},
+			"h5": {
+				"color": "rgba(46, 46, 46, 1)"
+			},
+			"h6": {
+				"color": "rgba(46, 46, 46, 1)"
+			}
+		},
+		"form": {
+			"form_control": {
+				"color": "rgba(62, 83, 164, 1)"
+			},
+			"input_form_control": {
+				"color": "rgba(62, 83, 164, 1)",
+				"bgcolor": "rgb(255, 255, 255)"
+			}
+		},
+		"buttons": {
+			"default_button": {
+				"color": "rgba(62, 83, 164, 1)",
+				"bgcolor": "rgb(255, 255, 255)",
+				"border_color": "rgb(62, 83, 164)"
+			},
+			"primary_button": {
+				"color": "rgba(255, 255, 255, 1)",
+				"bgcolor": "rgb(62, 83, 164)",
+				"border_color": "rgb(62, 83, 164)"
+			},
+			"button_link": {
+				"color": "rgba(113, 113, 113, 1)",
+				"background": "transparent",
+				"border_color": "transparent",
+				"border_radius": "0"
+			}
+		},
+		"annotations": {
+			"on_map": {
+				"fill": "rgba(62, 83, 164, 0.5)"
+			}
+		},
+		"body": {
+			"color": "rgba(113, 113, 113, 1)"
+		},
+		"legend_group":
+		{
+			"color":"rgba(78, 78, 78, 1)"
+		}
+	},
+	"customCSS": {
+		"createPanelContainer": {
+			"fill": "rgb(255, 195, 160)",
+			"color": "rgba(255, 195, 160, 1)",
+			"stroke": "none",
+			"annotation_tools": {
+				"fill": "rgb(255, 195, 160)",
+				"color": "rgba(255, 195, 160, 1)",
+				"stroke": "none"
+			},
+			"measurement_tools": {
+				"fill": "rgb(255, 195, 160)",
+				"color": "rgba(255, 195, 160, 1)",
+				"stroke": "none"
+			},
+			"multiSelect": {
+				"fill": "rgb(255, 195, 160)",
+				"color": "rgba(255, 195, 160, 1)",
+				"stroke": "none"
+			},
+			"on_hover": {
+				"color": "rgba(223, 36, 124, 1)",
+				"fill": "rgb(223, 36, 124)"
+			}
+		},
+		"legendContainer": {
+			"annotations": {
+				"view_annotation": {
+					"fill": "rgba(62, 83, 164, 0.5)"
+				}
+			},
+			"legend_overflow_icon": {
+				"fill": "rgb(250, 128, 114)",
+				"color": "rgba(250, 128, 114, 1)"
+			},
+			"legend_checkbox_icon": {
+				"fill": "rgb(250, 128, 114)",
+				"color": "rgba(250, 128, 114, 1)"
+			},
+			"legend_folder_icon": {
+				"fill": "rgb(208, 208, 208)",
+				"color": "rgba(208, 208, 208, 1)"
+			},
+			"legend_vector_icon": {
+				"color": "#ff0000"
+			},
+			"legend_query_icon": {
+				"color": "rgb(255, 64, 64)"
+			}
+		},
+		"i_icons": {
+			"fill": "rgb(250, 128, 114)",
+			"color": "rgba(250, 128, 114, 1)"
+		},
+		"label": {
+			"color": "rgba(240, 0, 8, 1)"
+		},
+		"text_primary": {
+			"color": "rgba(240, 0, 8, 1)"
+		},
+		"headers": {
+			"h1": {
+				"color": "rgba(54, 101, 1, 1)"
+			},
+			"h2": {
+				"color": "rgba(54, 101, 1, 1)"
+			},
+			"h3": {
+				"color": "rgba(54, 101, 1, 1)"
+			},
+			"h4": {
+				"color": "rgba(54, 101, 1, 1)"
+			},
+			"h5": {
+				"color": "rgba(54, 101, 1, 1)"
+			},
+			"h6": {
+				"color": "rgba(54, 101, 1, 1)"
+			}
+		},
+		"form": {
+			"form_control": {
+				"color": "rgba(70, 130, 180, 1)"
+			},
+			"input_form_control": {
+				"color": "rgba(255, 246, 143, 1)",
+				"bgcolor": "rgb(195, 151, 151)"
+			}
+		},
+		"buttons": {
+			"default_button": {
+				"color": "rgba(255, 255, 255, 1)",
+				"bgcolor": "rgb(32, 178, 170)",
+				"border_color": "rgb(32, 178, 170)"
+			},
+			"primary_button": {
+				"color": "rgba(86, 20, 114, 1)",
+				"bgcolor": "rgb(255, 0, 151)",
+				"border_color": "rgb(255, 0, 151)"
+			},
+			"button_link": {
+				"color": "rgba(138, 73, 107, 1)",
+				"background": "transparent",
+				"border_color": "transparent",
+				"border_radius": "0"
+			}
+		},
+		"annotations": {
+			"on_map": {
+				"fill": "rgba(252, 227, 0, 0.5)"
+			}
+		},
+		"body": {
+			"color": "rgba(207, 9, 137, 1)"
+		},
+		"legend_group":
+		{
+			"color":"rgba(102, 2, 60, 1)"
+		}
+	}
+}

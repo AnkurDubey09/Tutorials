@@ -1,0 +1,352 @@
+{
+    "automate": 1,
+    "data_array": [
+        {
+            "table":{
+                "table_name": "Building",
+                "table_layer_name": "Building Map"
+            },
+            "template_name": {
+                "create_template": "AutoTemplateBuildingA",
+                "edit_template": ""
+            },
+            "add_column": {
+                "enabled": true,
+                "columns": [
+                    {
+                        "col": {
+                            "type": "string",
+                            "name": "Central_Asset_Id(String)",
+                            "index": 0
+                        },
+                        "hide_column": false,
+                        "show_label": {
+                            "enable": true,
+                            "value": "CAID"
+                        },
+                        "label_above_value": true,
+                        "show_icon": {
+                            "enable": true,
+                            "icon_num": 4
+                        },
+                        "inline_label": false,
+                        "label_as_above": true,
+                        "prefix": "PFX1",
+                        "suffix": "SFX1"
+                    },
+                    {
+                        "col": {
+                            "type": "string",
+                            "name": "Site_Name(String)",
+                            "index": 1
+                        },
+                        "hide_column": true,
+                        "show_label": {
+                            "enable": false,
+                            "value": "SName"
+                        },
+                        "label_above_value": false,
+                        "show_icon": {
+                            "enable": true,
+                            "icon_num": 4
+                        },
+                        "inline_label": false,
+                        "label_as_above": false,
+                        "prefix": "PFX2",
+                        "suffix": "SFX2"
+                    },
+                    {
+                        "col": {
+                            "type": "int",
+                            "name": "Asset_Number(Decimal)",
+                            "index": 2
+                        },
+                        "hide_column": false,
+                        "show_label": {
+                            "enable": true,
+                            "value": "ANumber"
+                        },
+                        "label_above_value": true,
+                        "show_icon": {
+                            "enable": true,
+                            "icon_num": 4
+                        },
+                        "inline_label": false,
+                        "label_as_above": true,
+                        "prefix": "PFX3",
+                        "suffix": "SFX3"
+                    }
+                ]
+            },
+            "bar_chart": {
+                "enabled": false,
+                "bcharts": [
+                    {
+                        "title": "bchart1",
+                        "chart_represents": "vertical-representation",
+                        "layout": "vertical",
+                        "columns": [
+                            "ID",
+                            "Branch_number",
+                            "Branch_office_type"
+                        ]
+                    },
+                    {
+                        "title": "bchart2",
+                        "chart_represents": "horizontal-representation",
+                        "layout": "horizontal",
+                        "columns": [
+                            "ID",
+                            "Branch_number",
+                            "Branch_office_type"
+                        ]
+                    },
+                    {
+                        "title": "bchart3",
+                        "chart_represents": "horizontal-representation",
+                        "layout": "horizontal",
+                        "columns": [
+                            "ID",
+                            "Branch_number",
+                            "Branch_office_type"
+                        ]
+                    },
+                    {
+                        "title": "bchart4",
+                        "chart_represents": "horizontal-representation",
+                        "layout": "horizontal",
+                        "columns": [
+                            "ID",
+                            "Branch_number",
+                            "Branch_office_type"
+                        ]
+                    }
+                ]
+            },
+            "pie_chart": {
+                "enabled": false,
+                "pcharts": [
+                    {
+                        "title": "pchart1",
+                        "columns": [
+                            "ID",
+                            "Branch_number",
+                            "Branch_office_type"
+                        ]
+                    },
+                    {
+                        "title": "pchart2",
+                        "columns": [
+                            "ID",
+                            "Branch_number",
+                            "Branch_office_type"
+                        ]
+                    },
+                    {
+                        "title": "pchart3",
+                        "columns": [
+                            "ID",
+                            "Branch_number",
+                            "Branch_office_type"
+                        ]
+                    },
+                    {
+                        "title": "pchart4",
+                        "columns": [
+                            "ID",
+                            "Branch_number",
+                            "Branch_office_type"
+                        ]
+                    }
+                ]
+            },
+            "street_imagery": {
+                "enabled": false,
+                "add_google_street_view": true,
+                "show_google_view_for": {
+                    "specific": {
+                        "projection": "",
+                        "xlon": "",
+                        "ylat": ""
+                    }
+                },
+                "bearing_value": "None"
+            },
+            "add_text": {
+                "enabled": true,
+                "text": [
+                    {
+                        "value": "Hi, This is sample text.",
+                        "text_heading_type": "h1",
+                        "text_align_type": "left",
+                        "text_bold": true,
+                        "text_italic": false,
+                        "text_underline": true
+                    },
+                    {
+                        "value": "Hi, This is sample text.",
+                        "text_heading_type": "h2",
+                        "text_align_type": "center",
+                        "text_bold": true,
+                        "text_italic": false,
+                        "text_underline": true
+                    }
+                ]
+            }
+        },
+        {
+            "table":{
+                "table_name": "ABank",
+                "table_layer_name": "Bank Map"
+            },
+
+            "template_name":{
+                "create_template": "AutoTemplateABankA",
+                "edit_template": ""
+            },
+        
+            "add_column": {
+                "enabled": true,
+                "columns": [
+                    {
+                        "col": {
+                            "type": "int",
+                            "name": "Regulatory_ID(Integer)",
+                            "index": 1
+                        },
+                        "hide_column": true,
+                        "show_label": {
+                            "enable": true,
+                            "value": "RegID"
+                        },
+                        "label_above_value": true,
+                        "show_icon": {
+                            "enable": true,
+                            "icon_num": 4
+                        },
+                        "inline_label": false,
+                        "label_as_above": true,
+                        "prefix": "PFX1",
+                        "suffix": "SFX1"
+                    },
+                    {
+                        "col": {
+                            "type": "int",
+                            "name": "Branch_number(Integer)",
+                            "index": 2
+                        },
+                        "hide_column": true,
+                        "show_label": {
+                            "enable": true,
+                            "value": "Bran"
+                        },
+                        "label_above_value": false,
+                        "show_icon": {
+                            "enable": true,
+                            "icon_num": 4
+                        },
+                        "inline_label": true,
+                        "label_as_above": true,
+                        "prefix": "PFX2",
+                        "suffix": "SFX2"
+                    },
+                    {
+                        "col": {
+                            "type": "string",
+                            "name": "Address(String)",
+                            "index": 4
+                        },
+                        "hide_column": true,
+                        "show_label": {
+                            "enable": true,
+                            "value": "Addr"
+                        },
+                        "label_above_value": true,
+                        "show_icon": {
+                            "enable": true,
+                            "icon_num": 4
+                        },
+                        "inline_label": false,
+                        "label_as_above": true,
+                        "prefix": "PFX3",
+                        "suffix": "SFX3"
+                    }
+                ]
+            },
+            "bar_chart": {
+                "enabled": true,
+                "bcharts": [
+                    {
+                        "title": "bchart1",
+                        "chart_represents": "vertical-representation",
+                        "layout": "vertical",
+                        "choose_columns":{
+                            "all": false,
+                            "columns": ["ID","Branch_number","Branch_office_type"]
+                        }
+        
+                    },
+                    {
+                        "title": "bchart2",
+                        "chart_represents": "horizontal-representation",
+                        "layout": "horizontal",
+                        "choose_columns":{
+                            "all": false,
+                            "columns": ["Total_deposits_PriorYr","Branch_number","Branch_office_type"]
+                        }
+                    }
+                ]
+            },
+            "pie_chart": {
+                "enabled": false,
+                "pcharts": [
+                    {
+                        "title": "pchart1",
+                        "choose_columns":{
+                            "all": true,
+                            "columns": ["ID","Branch_number","Branch_office_type"]
+                        }
+        
+                    },
+                    {
+                        "title": "pchart2",
+                        "choose_columns":{
+                            "all": true,
+                            "columns": ["Total_deposits_PriorYr","Branch_number","Branch_office_type"]
+                        }
+        
+                    }
+                ]
+            },
+            "street_imagery": {
+                "enabled": false,
+                "add_google_street_view": true,
+                "show_google_view_for": {
+                    "specific": {
+                        "enable": true,
+                        "projection": "EPSG:27700",
+                        "xlon": "Longitude",
+                        "ylat": "Latitude"
+                    }
+                },
+                "bearing_value":{
+                    "enable": true,
+                    "value": "Latitude"
+                }
+            },
+            "add_text": {
+                "enabled": true,
+                "text": [
+                    {
+                        "value": "Custom Template using Template Designer",
+                        "text_heading_type": "h1",
+                        "text_align_type": "left",
+                        "text_bold": true,
+                        "text_italic": false,
+                        "text_underline": true
+                    }
+                ]
+            }
+        }
+    ]
+}
