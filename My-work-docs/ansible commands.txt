@@ -1,0 +1,56 @@
+sudo yum update -y
+
+rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6.8.noarch.rpm
+OR
+sudo yum install epel-release
+
+yum isntall ansible
+OR
+sudo yum install ansible
+
+ansible --version
+
+ssh-keygen
+
+ssh-copy-id -i root@<IP of node machine>
+
+vi /etc/ansible/hosts
+OR
+sudo vi /etc/ansible/hosts
+[group_name]
+alias ansible_ssh_host=your_server_ip
+
+ansible -m ping <name of the group of server in hosts file above>
+
+vi <name of playbook>.yml
+
+ansible-playbook <name of playbook>.yml --syntax-check // will check syntax
+ansible-playbook <name of playbook>.yml --step //Step wise, it will ask to continue for each step.
+ansible-playbook -v <name of playbook>.yml --step // enable verbose, will log information
+ansible-playbook <name of playbook>.yml // will execute
+==================================================
+
+Through Inventory.txt
+
+cat > /etc/ansible/inventory.txt
+target1 ansible_host=<IP Address>
+target2 ansible_host=<IP Address>
+
+ansible target1 -m ping -i inventory.txt
+ansible target2 -m ping -i inventory.txt
+ansible all -m ping -i inventory.txt
+====================================================
+
+
+
+
+http://docs.ansible.com/
+
+https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-centos-7
+
+https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-ubuntu-14-04
+
+https://www.unixmen.com/setup-ansible-ubuntu-15-04/
+
+
+

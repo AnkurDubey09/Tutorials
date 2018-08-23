@@ -1,0 +1,925 @@
+echo "You are using $(getconf LONG_BIT) bit Linux distro." --> To know about OS bit size
+
+Install google chrome on centos/RHEL
+https://www.cyberciti.biz/faq/howto-install-google-chrome-on-redhat-rhel-fedora-centos-linux/
+https://www.tecmint.com/install-google-chrome-on-redhat-centos-fedora-linux/
+
+Here is how to install and use the Google Chrome 62 in five easy steps:
+
+    Open the Terminal application. Grab 64bit Google Chrome.
+    Type the following command to download 64 bit version of Google Chrome:
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+    Install Google Chrome and its dependencies on a CentOS/RHEL, type:
+    sudo yum install ./google-chrome-stable_current_*.rpm
+    Start Google Chrome from the CLI:
+    google-chrome &
+	
+----------------------------------------------------------------------------------------------------
+
+
+https://www.2daygeek.com/list-of-command-line-package-manager-for-linux/#
+list of Command line Package Manager & Usage
+
+1) YUM Command
+
+Yum stand for Yellowdog Updater Modified is an open-source command-line package-management utility. Yum command is used to install, update, search & remove packages on RPM based system such as RHEL, CentOS, upto Fedora 21 & other clones. It automatically resolve dependencies and make it smooth package installation without any trouble.
+
+2) DNF (Fork of YUM) Command
+
+DNF stands for Dandified yum. We can tell DNF, the next generation of yum package manager (Fork of Yum) using hawkey/libsolv library for backend. Aleš Kozumplík started working on DNF since Fedora 18 and its implemented/launched in Fedora 22 finally. Dnf command is used to install, update, search & remove packages on Fedora 22 and later system. It automatically re5) APT-GET & APT-CACHE Command
+
+Apt-Get stands for Advanced Packaging Tool (APT). apg-get is a powerful command-line tool which is used to automatically download and install new software packages, upgrade existing software packages, update the package list index, and to upgrade the entire Debian based systems.solve dependencies and make it smooth package installation without any trouble.
+
+Yum replaced by DNF due to several long-term problems in Yum which was not solved. Asked why ? he did not patches the Yum issues. Aleš Kozumplík explains that patching was technically hard and YUM team wont accept the changes immediately and other major critical, YUM is 56K lines but DNF is 29K lies. So, there is no option for further development, except to fork.
+
+3) RPM Command
+
+RPM stands for Red Hat Package Manager is a powerful, command line Package Management utility for Red Hat based system such as (RHEL, CentOS, Fedora, openSUSE & Mageia) distributions. The utility allow you to install, upgrade, remove, query & verify the software on your Linux system/server. RPM files comes with .rpm extension. RPM package built with required libraries and dependency which will not conflicts other packages were installed on your system.
+
+4) ZYPPER Command
+
+Zypper is a command line package manager for suse & openSUSE distributions. It’s used to install, update, search & remove packages & manage repositories, perform various queries, and more. Zypper command-line interface to ZYpp system management library (libzypp).
+
+5) APT-GET & APT-CACHE Command
+
+Apt-Get stands for Advanced Packaging Tool (APT). apg-get is a powerful command-line tool which is used to automatically download and install new software packages, upgrade existing software packages, update the package list index, and to upgrade the entire Debian based systems.
+
+6) DPKG Command
+
+dpkg stands for Debian package manager (dpkg). dpkg is a command-line tool to install, build, remove and manage Debian packages. dpkg uses Aptitude (primary and more user-friendly) as a front-end to perform all the actions. Other utility such as dpkg-deb and dpkg-query uses dpkg as a front-end to perform some action. Now a days most of the administrator using Apt, Apt-Get & Aptitude to manage packages easily without headache and its robust management too. Even though still we need to use dpkg to perform some software installation where it’s necessary.
+
+7) PACMAN Command
+
+pacman stands for package manager utility (pacman). pacman is a command-line utility to install, build, remove and manage Arch Linux packages. pacman uses libalpm (Arch Linux Package Management (ALPM) library) as a back-end to perform all the actions.
+
+8) APT Command
+
+APT stands for Advanced Packaging Tool (APT) which is replacement for apt-get, like how DNF came to picture instead of YUM. It’s feature rich command-line tools with included all the futures in one command (APT) such as apt-cache, apt-search, dpkg, apt-cdrom, apt-config, apt-key, etc..,. and several other unique features. For example we can easily install .dpkg packages through APT but we can’t do through Apt-Get similar more features are included into APT command. APT-GET replaced by APT Due to lock of futures missing in apt-get which was not solved.
+
+
+9) SNAP Command
+
+Snap packages are secure, isolated from each other and the host system using technologies such as AppArmor, It’s cross-platform, self-contained, allowing a developer to package the exact software their application needs. This sandboxed isolation also improves security and allows applications, and whole snap-based systems, to be rolled back should an issue occur. It has many advantages over the more traditional package formats such as .deb, .rpm, and others. Snaps use a special YAML formatted file named snapcraft.yaml. Snaps really are the future of Linux application packaging.
+
+10) URPMI Command
+
+URPMI is Mageia’s command line tool for managing packages and repositories (media). It’s powerful command-line tool which is used to automatically download and install new software packages, upgrade existing software packages, update the package list index, and to upgrade the entire Mageia system. urpmi handles dependencies automatically (checks and resolves dependencies).
+-------------------------
+
+The major differences between YUM and RPM are that yum knows how to resolve dependencies and can source these additional packages when doing its work. ... Both tools can perform an install, and RPM will even allow you to install multiple versions simultaneously, but YUM will tell you that that package is already installed.
+
+---------------------
+
+
+YUM commands:
+https://www.tecmint.com/20-linux-yum-yellowdog-updater-modified-commands-for-package-mangement/
+
+YUM (Yellowdog Updater Modified) is an open source command-line as well as graphical based package management tool for RPM (RedHat Package Manager) based Linux systems. It allows users and system administrator to easily install, update, remove or search software packages on a systems.
+
+1. Install a Package with YUM
+
+To install a package called Firefox 14, just run the below command it will automatically find and install all required dependencies for Firefox.
+
+# yum install firefox
+Loaded plugins: fastestmirror
+Dependencies Resolved
+================================================================================================
+Package                    Arch        Version                    Repository            Size        
+================================================================================================
+Updating:
+firefox                        i686        10.0.6-1.el6.centos     updates             20 M
+Updating for dependencies:
+xulrunner                     i686        10.0.6-1.el6.centos     updates             12 M
+Transaction Summary
+================================================================================================
+Install       0 Package(s)
+Upgrade       2 Package(s)
+Total download size: 32 M
+Is this ok [y/N]: y
+Downloading Packages:
+(1/2): firefox-10.0.6-1.el6.centos.i686.rpm                                |  20 MB   01:10
+(2/2): xulrunner-10.0.6-1.el6.centos.i686.rpm                              |  12 MB   00:52
+------------------------------------------------------------------------------------------------
+Total                                                           63 kB/s |  32 MB   02:04
+Updated:
+firefox.i686 0:10.0.6-1.el6.centos
+Dependency Updated:
+xulrunner.i686 0:10.0.6-1.el6.centos
+Complete!
+
+The above command will ask confirmation before installing any package on your system. If you want to install packages automatically without asking any confirmation, use option -y as shown in below example.
+
+# yum -y install firefox
+
+2. Removing a Package with YUM
+
+To remove a package completely with their all dependencies, just run the following command as shown below.
+
+# yum remove firefox
+Loaded plugins: fastestmirror
+Setting up Remove Process
+Resolving Dependencies
+--> Running transaction check
+---> Package firefox.i686 0:10.0.6-1.el6.centos set to be erased
+--> Finished Dependency Resolution
+Dependencies Resolved
+====================================================================================================
+Package                    Arch        Version                        Repository            Size        
+====================================================================================================
+Removing:
+firefox                    i686        10.0.6-1.el6.centos            @updates              23 M
+Transaction Summary
+====================================================================================================
+Remove        1 Package(s)
+Reinstall     0 Package(s)
+Downgrade     0 Package(s)
+Is this ok [y/N]: y
+Downloading Packages:
+Running rpm_check_debug
+Running Transaction Test
+Transaction Test Succeeded
+Running Transaction
+Erasing        : firefox-10.0.6-1.el6.centos.i686                                                                                                                          1/1
+Removed:
+firefox.i686 0:10.0.6-1.el6.centos
+Complete!
+
+Same way the above command will ask confirmation before removing a package. To disable confirmation prompt just add option -y as shown in below.
+
+# yum -y remove firefox
+
+3. Updating a Package using YUM
+
+Let’s say you have outdated version of MySQL package and you want to update it to the latest stable version. Just run the following command it will automatically resolves all dependencies issues and install them.
+
+# yum update mysql
+Loaded plugins: fastestmirror
+Dependencies Resolved
+============================================================================================================
+Package            Arch                Version                    Repository                    Size
+============================================================================================================
+Updating:
+vsftpd             i386                2.0.5-24.el5_8.1           updates                       144 k
+Transaction Summary
+============================================================================================================
+Install       0 Package(s)
+Upgrade       1 Package(s)
+Total size: 144 k
+Is this ok [y/N]: y
+Downloading Packages:
+Running rpm_check_debug
+Running Transaction Test
+Finished Transaction Test
+Transaction Test Succeeded
+Running Transaction
+Updating       : vsftpd                                                                     1/2
+Cleanup        : vsftpd                                                                     2/2
+Updated:
+vsftpd.i386 0:2.0.5-24.el5_8.1
+Complete!
+
+4. List a Package using YUM
+
+Use the list function to search for the specific package with name. For example to search for a package called openssh, use the command.
+
+# yum list openssh
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+* base: mirror.neu.edu.cn
+* epel: mirror.neu.edu.cn
+* extras: mirror.neu.edu.cn
+* rpmforge: mirror.nl.leaseweb.net
+* updates: mirror.nus.edu.sg
+Installed Packages
+openssh.i386                                       4.3p2-72.el5_6.3                                                                      installed
+Available Packages                                 4.3p2-82.el5                                                                          base
+
+To make your search more accurate, define package name with their version, in case you know. For example to search for a specific version openssh-4.3p2 of the package, use the command.
+
+# yum list openssh-4.3p2
+
+5. Search for a Package using YUM
+
+If you don’t remember the exact name of the package, then use search function to search all the available packages to match the name of the package you specified. For example, to search all the packages that matches the word .
+
+# yum search vsftpd
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+* base: mirror.neu.edu.cn
+* epel: mirror.neu.edu.cn
+* extras: mirror.neu.edu.cn
+* rpmforge: mirror.nl.leaseweb.net
+* updates: ftp.iitm.ac.in
+============================== Matched: vsftpd ========================
+ccze.i386 : A robust log colorizer
+pure-ftpd-selinux.i386 : SELinux support for Pure-FTPD
+vsftpd.i386 : vsftpd - Very Secure Ftp Daemon
+
+6. Get Information of a Package using YUM
+
+Say you would like to know information of a package before installing it. To get information of a package just issue the below command.
+
+# yum info firefox
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+* base: mirror.neu.edu.cn
+* epel: mirror.neu.edu.cn
+* extras: mirror.neu.edu.cn
+* rpmforge: mirror.nl.leaseweb.net
+* updates: ftp.iitm.ac.in
+Available Packages
+Name       : firefox
+Arch       : i386
+Version    : 10.0.6
+Release    : 1.el5.centos
+Size       : 20 M
+Repo       : updates
+Summary    : Mozilla Firefox Web browser
+URL        : http://www.mozilla.org/projects/firefox/
+License    : MPLv1.1 or GPLv2+ or LGPLv2+
+Description: Mozilla Firefox is an open-source web browser, designed for standards
+: compliance, performance and portability.
+
+7. List all Available Packages using YUM
+
+To list all the available packages in the Yum database, use the below command.
+
+# yum list | less
+
+8. List all Installed Packages using YUM
+
+To list all the installed packages on a system, just issue below command, it will display all the installed packages.
+
+# yum list installed | less
+
+9. Yum Provides Function
+
+Yum provides function is used to find which package a specific file belongs to. For example, if you would like to know the name of the package that has the /etc/httpd/conf/httpd.conf.
+
+# yum provides /etc/httpd/conf/httpd.conf
+Loaded plugins: fastestmirror
+httpd-2.2.3-63.el5.centos.i386 : Apache HTTP Server
+Repo        : base
+Matched from:
+Filename    : /etc/httpd/conf/httpd.conf
+httpd-2.2.3-63.el5.centos.1.i386 : Apache HTTP Server
+Repo        : updates
+Matched from:
+Filename    : /etc/httpd/conf/httpd.conf
+httpd-2.2.3-65.el5.centos.i386 : Apache HTTP Server
+Repo        : updates
+Matched from:
+Filename    : /etc/httpd/conf/httpd.conf
+httpd-2.2.3-53.el5.centos.1.i386 : Apache HTTP Server
+Repo        : installed
+Matched from:
+Other       : Provides-match: /etc/httpd/conf/httpd.conf
+
+10. Check for Available Updates using Yum
+
+To find how many of installed packages on your system have updates available, to check use the following command.
+
+# yum check-update
+
+11. Update System using Yum
+
+To keep your system up-to-date with all security and binary package updates, run the following command. It will install all latest patches and security updates to your system.
+
+# yum update
+
+12. List all available Group Packages
+
+In Linux, number of packages are bundled to particular group. Instead of installing individual packages with yum, you can install particular group that will install all the related packages that belongs to the group. For example to list all the available groups, just issue following command.
+
+# yum grouplist
+Installed Groups:
+Administration Tools
+DNS Name Server
+Dialup Networking Support
+Editors
+Engineering and Scientific
+FTP Server
+Graphics
+Java Development
+Legacy Network Server
+Available Groups:
+Authoring and Publishing
+Base
+Beagle
+Cluster Storage
+Clustering
+Development Libraries
+Development Tools
+Eclipse
+Educational Software
+KDE (K Desktop Environment)
+KDE Software Development
+
+13. Install a Group Packages
+
+To install a particular package group, we use option as groupinstall. Fore example, to install “MySQL Database“, just execute the below command.
+
+# yum groupinstall 'MySQL Database'
+Dependencies Resolved
+=================================================================================================
+Package								Arch      Version			 Repository        Size
+=================================================================================================
+Updating:
+unixODBC                           i386      2.2.11-10.el5      base              290 k
+Installing for dependencies:
+unixODBC-libs                      i386      2.2.11-10.el5      base              551 k
+Transaction Summary
+=================================================================================================
+Install       1 Package(s)
+Upgrade       1 Package(s)
+Total size: 841 k
+Is this ok [y/N]: y
+Downloading Packages:
+Running rpm_check_debug
+Running Transaction Test
+Finished Transaction Test
+Transaction Test Succeeded
+Running Transaction
+Installing     : unixODBC-libs	1/3
+Updating       : unixODBC         2/3
+Cleanup        : unixODBC         3/3
+Dependency Installed:
+unixODBC-libs.i386 0:2.2.11-10.el5
+Updated:
+unixODBC.i386 0:2.2.11-10.el5
+Complete!
+
+14. Update a Group Packages
+
+To update any existing installed group packages, just run the following command as shown below.
+
+# yum groupupdate 'DNS Name Server'
+Dependencies Resolved
+================================================================================================================
+Package			Arch	        Version				Repository           Size
+================================================================================================================
+Updating:
+bind                           i386            30:9.3.6-20.P1.el5_8.2          updates              981 k
+bind-chroot                    i386            30:9.3.6-20.P1.el5_8.2          updates              47 k
+Updating for dependencies:
+bind-libs                      i386            30:9.3.6-20.P1.el5_8.2          updates              864 k
+bind-utils                     i386            30:9.3.6-20.P1.el5_8.2          updates              174 k
+Transaction Summary
+================================================================================================================
+Install       0 Package(s)
+Upgrade       4 Package(s)
+Total size: 2.0 M
+Is this ok [y/N]: y
+Downloading Packages:
+Running rpm_check_debug
+Running Transaction Test
+Finished Transaction Test
+Transaction Test Succeeded
+Running Transaction
+Updating       : bind-libs            1/8
+Updating       : bind                 2/8
+Updating       : bind-chroot          3/8
+Updating       : bind-utils           4/8
+Cleanup        : bind                 5/8
+Cleanup        : bind-chroot          6/8
+Cleanup        : bind-utils           7/8
+Cleanup        : bind-libs            8/8
+Updated:
+bind.i386 30:9.3.6-20.P1.el5_8.2                  bind-chroot.i386 30:9.3.6-20.P1.el5_8.2
+Dependency Updated:
+bind-libs.i386 30:9.3.6-20.P1.el5_8.2             bind-utils.i386 30:9.3.6-20.P1.el5_8.2
+Complete!
+
+15. Remove a Group Packages
+
+To delete or remove any existing installed group from the system, just use below command.
+
+# yum groupremove 'DNS Name Server'
+Dependencies Resolved
+===========================================================================================================
+Package                Arch              Version                         Repository          Size
+===========================================================================================================
+Removing:
+bind                   i386              30:9.3.6-20.P1.el5_8.2          installed           2.1 M
+bind-chroot            i386              30:9.3.6-20.P1.el5_8.2          installed           0.0
+Transaction Summary
+===========================================================================================================
+Remove        2 Package(s)
+Reinstall     0 Package(s)
+Downgrade     0 Package(s)
+Is this ok [y/N]: y
+Downloading Packages:
+Running rpm_check_debug
+Running Transaction Test
+Finished Transaction Test
+Transaction Test Succeeded
+Running Transaction
+Erasing        : bind                                                   1/2
+warning: /etc/sysconfig/named saved as /etc/sysconfig/named.rpmsave
+Erasing        : bind-chroot                                            2/2
+Removed:
+bind.i386 30:9.3.6-20.P1.el5_8.2                                        bind-chroot.i386 30:9.3.6-20.P1.el5_8.2
+Complete!
+
+16. List Enabled Yum Repositories
+
+To list all enabled Yum repositories in your system, use following option.
+
+# yum repolist
+repo id                     repo name                                            status
+base                        CentOS-5 - Base                                      enabled:  2,725
+epel                        Extra Packages for Enterprise Linux 5 - i386         enabled:  5,783
+extras                      CentOS-5 - Extras                                    enabled:    282
+mod-pagespeed               mod-pagespeed                                        enabled:      1
+rpmforge                    RHEL 5 - RPMforge.net - dag                          enabled: 11,290
+updates                     CentOS-5 - Updates                                   enabled:    743
+repolist: 20,824
+
+16. List all Enabled and Disabled Yum Repositories
+
+The following command will display all enabled and disabled yum repositories on the system.
+
+# yum repolist all
+repo id                     repo name                                            status
+C5.0-base                   CentOS-5.0 - Base                                    disabled
+C5.0-centosplus             CentOS-5.0 - Plus                                    disabled
+C5.0-extras                 CentOS-5.0 - Extras                                  disabled
+base                        CentOS-5 - Base                                      enabled:  2,725
+epel                        Extra Packages for Enterprise Linux 5 - i386         enabled:  5,783
+extras                      CentOS-5 - Extras                                    enabled:    282
+repolist: 20,824
+
+17. Install a Package from Specific Repository
+
+To install a particular package from a specific enabled or disabled repository, you must use –enablerepo option in your yum command. For example to Install PhpMyAdmin 3.5.2 package, just execute the command.
+
+# yum --enablerepo=epel install phpmyadmin
+Dependencies Resolved
+=============================================================================================
+Package                Arch           Version            Repository           Size
+=============================================================================================
+Installing:
+phpMyAdmin             noarch         3.5.1-1.el6        epel                 4.2 M
+Transaction Summary
+=============================================================================================
+Install       1 Package(s)
+Total download size: 4.2 M
+Installed size: 17 M
+Is this ok [y/N]: y
+Downloading Packages:
+phpMyAdmin-3.5.1-1.el6.noarch.rpm                       | 4.2 MB     00:25
+Running rpm_check_debug
+Running Transaction Test
+Transaction Test Succeeded
+Running Transaction
+Installing : phpMyAdmin-3.5.1-1.el6.noarch             1/1
+Verifying  : phpMyAdmin-3.5.1-1.el6.noarch             1/1
+Installed:
+phpMyAdmin.noarch 0:3.5.1-1.el6
+Complete!
+
+18. Interactive Yum Shell
+
+Yum utility provides a custom shell where you can execute multiple commands.
+
+# yum shell
+Loaded plugins: fastestmirror
+Setting up Yum Shell
+> update httpd
+Loading mirror speeds from cached hostfile
+* base: mirrors.sin3.sg.voxel.net
+* epel: ftp.riken.jp
+* extras: mirrors.sin3.sg.voxel.net
+* updates: mirrors.sin3.sg.voxel.net
+Setting up Update Process
+>
+
+19. Clean Yum Cache
+
+By default yum keeps all the repository enabled package data in /var/cache/yum/ with each sub-directory, to clean all cached files from enabled repository, you need to run the following command regularly to clean up all the cache and make sure that there is nothing unnecessary space is using. We don’t want to give the output of the below command, because we like to keep cached data as it is.
+
+# yum clean all
+
+20. View History of Yum
+
+To view all the past transactions of yum command, just use the following command.
+
+# yum history
+Loaded plugins: fastestmirror
+ID     | Login user               | Date and time    | Action(s)      | Altered
+-------------------------------------------------------------------------------
+10 | root               | 2012-08-11 15:19 | Install        |    3
+9 | root               | 2012-08-11 15:11 | Install        |    1
+8 | root               | 2012-08-11 15:10 | Erase          |    1 EE
+7 | root               | 2012-08-10 17:44 | Install        |    1
+6 | root               | 2012-08-10 12:19 | Install        |    2
+5 | root               | 2012-08-10 12:14 | Install        |    3
+4 | root               | 2012-08-10 12:12 | I, U           |   13 E<
+3 | root               | 2012-08-09 13:01 | Install        |    1 >
+2 | root               | 2012-08-08 20:13 | I, U           |  292 EE
+1 | System            | 2012-08-08 17:15 | Install        |  560
+history list
+
+1. Install a Package with YUM
+To install a package called Firefox 14, just run the below command it will automatically find and install all required dependencies for Firefox.
+yum install firefox
+
+The above command will ask confirmation before installing any package on your system. If you want to install packages automatically without asking any confirmation, use option -y as shown in below example.
+yum -y install firefox
+
+2. Removing a Package with YUM
+To remove a package completely with their all dependencies, just run the following command as shown below.
+yum remove firefox
+
+Same way the above command will ask confirmation before removing a package. To disable confirmation prompt just add option -y as shown in below.
+yum -y remove firefox
+
+3. Updating a Package using YUM
+Let’s say you have outdated version of MySQL package and you want to update it to the latest stable version. Just run the following command it will automatically resolves all dependencies issues and install them.
+yum update mysql
+
+4. List a Package using YUM
+Use the list function to search for the specific package with name. For example to search for a package called openssh, use the command.
+yum list openssh
+
+To make your search more accurate, define package name with their version, in case you know. For example to search for a specific version openssh-4.3p2 of the package, use the command.
+yum list openssh-4.3p2
+
+5. Search for a Package using YUM
+If you don’t remember the exact name of the package, then use search function to search all the available packages to match the name of the package you specified. For example, to search all the packages that matches the word .
+yum search vsftpd
+
+6. Get Information of a Package using YUM
+Say you would like to know information of a package before installing it. To get information of a package just issue the below command.
+yum info firefox
+
+7. List all Available Packages using YUM
+To list all the available packages in the Yum database, use the below command.
+yum list | less
+
+8. List all Installed Packages using YUM
+To list all the installed packages on a system, just issue below command, it will display all the installed packages.
+yum list installed | less
+
+9. Yum Provides Function
+Yum provides function is used to find which package a specific file belongs to. For example, if you would like to know the name of the package that has the /etc/httpd/conf/httpd.conf.
+yum provides /etc/httpd/conf/httpd.conf
+
+10. Check for Available Updates using Yum
+To find how many of installed packages on your system have updates available, to check use the following command.
+yum check-update
+
+11. Update System using Yum
+To keep your system up-to-date with all security and binary package updates, run the following command. It will install all latest patches and security updates to your system.
+yum update
+
+12. List all available Group Packages
+In Linux, number of packages are bundled to particular group. Instead of installing individual packages with yum, you can install particular group that will install all the related packages that belongs to the group. For example to list all the available groups, just issue following command.
+yum grouplist
+
+13. Install a Group Packages
+To install a particular package group, we use option as groupinstall. Fore example, to install “MySQL Database“, just execute the below command.
+yum groupinstall 'MySQL Database'
+
+14. Update a Group Packages
+To update any existing installed group packages, just run the following command as shown below.
+yum groupupdate 'DNS Name Server'
+
+15. Remove a Group Packages
+To delete or remove any existing installed group from the system, just use below command.
+yum groupremove 'DNS Name Server'
+
+16. List Enabled Yum Repositories
+To list all enabled Yum repositories in your system, use following option.
+yum repolist
+
+16. List all Enabled and Disabled Yum Repositories
+The following command will display all enabled and disabled yum repositories on the system.
+yum repolist all
+
+17. Install a Package from Specific Repository
+To install a particular package from a specific enabled or disabled repository, you must use –enablerepo option in your yum command. For example to Install PhpMyAdmin 3.5.2 package, just execute the command.
+yum --enablerepo=epel install phpmyadmin
+
+18. Interactive Yum Shell
+Yum utility provides a custom shell where you can execute multiple commands.
+yum shell
+
+19. Clean Yum Cache
+By default yum keeps all the repository enabled package data in /var/cache/yum/ with each sub-directory, to clean all cached files from enabled repository, you need to run the following command regularly to clean up all the cache and make sure that there is nothing unnecessary space is using. We don’t want to give the output of the below command, because we like to keep cached data as it is.
+yum clean all
+
+20. View History of Yum
+To view all the past transactions of yum command, just use the following command.
+yum history
+--------------------------
+https://www.tecmint.com/20-practical-examples-of-rpm-commands-in-linux/
+RPM Commands:
+
+RPM (Red Hat Package Manager) is an default open source and most popular package management utility for Red Hat based systems like (RHEL, CentOS and Fedora). The tool allows system administrators and users to install, update, uninstall, query, verify and manage system software packages in Unix/Linux operating systems. The RPM formerly known as .rpm file, that includes compiled software programs and libraries needed by the packages. This utility only works with packages that built on .rpm format.
+
+Some Facts about RPM (RedHat Package Manager)
+
+    RPM is free and released under GPL (General Public License).
+    RPM keeps the information of all the installed packages under /var/lib/rpm database.
+    RPM is the only way to install packages under Linux systems, if you’ve installed packages using source code, then rpm won’t manage it.
+    RPM deals with .rpm files, which contains the actual information about the packages such as: what it is, from where it comes, dependencies info, version info etc.
+
+There are five basic modes for RPM command
+
+    Install : It is used to install any RPM package.
+    Remove : It is used to erase, remove or un-install any RPM package.
+    Upgrade : It is used to update the existing RPM package.
+    Verify : It is used to verify an RPM packages.
+    Query : It is used query any RPM package.
+
+1. How to Check an RPM Signature Package
+
+Always check the PGP signature of packages before installing them on your Linux systems and make sure its integrity and origin is OK. Use the following command with –checksig (check signature) option to check the signature of a package called pidgin.
+[root@tecmint]# rpm --checksig pidgin-2.7.9-5.el6.2.i686.rpm
+pidgin-2.7.9-5.el6.2.i686.rpm: rsa sha1 (md5) pgp md5 OK
+
+2. How to Install an RPM Package
+
+For installing an rpm software package, use the following command with -i option. For example, to install an rpm package called pidgin-2.7.9-5.el6.2.i686.rpm.
+
+[root@tecmint]# rpm -ivh pidgin-2.7.9-5.el6.2.i686.rpm
+Preparing...                ########################################### [100%]
+1:pidgin                 ########################################### [100%]
+
+RPM command and options
+
+    -i : install a package
+    -v : verbose for a nicer display
+    -h: print hash marks as the package archive is unpacked.
+
+3. How to check dependencies of RPM Package before Installing
+
+Let’s say you would like to do a dependency check before installing or upgrading a package. For example, use the following command to check the dependencies of BitTorrent-5.2.2-1-Python2.4.noarch.rpm package. It will display the list of dependencies of package.
+
+[root@tecmint]# rpm -qpR BitTorrent-5.2.2-1-Python2.4.noarch.rpm
+/usr/bin/python2.4
+python >= 2.3
+python(abi) = 2.4
+python-crypto >= 2.0
+python-psyco
+python-twisted >= 2.0
+python-zopeinterface
+rpmlib(CompressedFileNames) = 2.6
+
+RPM command and options
+
+    -q : Query a package
+    -p : List capabilities this package provides.
+    -R: List capabilities on which this package depends..
+
+4. How to Install a RPM Package Without Dependencies
+
+If you know that all needed packages are already installed and RPM is just being stupid, you can ignore those dependencies by using the option –nodeps (no dependencies check) before installing the package.
+
+[root@tecmint]# rpm -ivh --nodeps BitTorrent-5.2.2-1-Python2.4.noarch.rpm
+Preparing...                ########################################### [100%]
+1:BitTorrent             ########################################### [100%]
+
+The above command forcefully install rpm package by ignoring dependencies errors, but if those dependency files are missing, then the program will not work at all, until you install them.
+
+5. How to check an Installed RPM Package
+
+Using -q option with package name, will show whether an rpm installed or not.
+
+[root@tecmint]# rpm -q BitTorrent
+BitTorrent-5.2.2-1.noarch
+
+6. How to List all files of an installed RPM package
+
+To view all the files of an installed rpm packages, use the -ql (query list) with rpm command.
+
+[root@tecmint]# rpm -ql BitTorrent
+/usr/bin/bittorrent
+/usr/bin/bittorrent-console
+/usr/bin/bittorrent-curses
+/usr/bin/bittorrent-tracker
+/usr/bin/changetracker-console
+/usr/bin/launchmany-console
+/usr/bin/launchmany-curses
+/usr/bin/maketorrent
+/usr/bin/maketorrent-console
+/usr/bin/torrentinfo-console
+
+7. How to List Recently Installed RPM Packages
+
+Use the following rpm command with -qa (query all) option, will list all the recently installed rpm packages.
+
+[root@tecmint]# rpm -qa --last
+BitTorrent-5.2.2-1.noarch                     Tue 04 Dec 2012 05:14:06 PM BDT
+pidgin-2.7.9-5.el6.2.i686                     Tue 04 Dec 2012 05:13:51 PM BDT
+cyrus-sasl-devel-2.1.23-13.el6_3.1.i686       Tue 04 Dec 2012 04:43:06 PM BDT
+cyrus-sasl-2.1.23-13.el6_3.1.i686             Tue 04 Dec 2012 04:43:05 PM BDT
+cyrus-sasl-md5-2.1.23-13.el6_3.1.i686         Tue 04 Dec 2012 04:43:04 PM BDT
+cyrus-sasl-plain-2.1.23-13.el6_3.1.i686       Tue 04 Dec 2012 04:43:03 PM BDT
+
+8. How to List All Installed RPM Packages
+
+Type the following command to print the all the names of installed packages on your Linux system.
+
+[root@tecmint]# rpm -qa
+initscripts-9.03.31-2.el6.centos.i686
+polkit-desktop-policy-0.96-2.el6_0.1.noarch
+thunderbird-17.0-1.el6.remi.i686
+
+9. How to Upgrade a RPM Package
+
+If we want to upgrade any RPM package “–U” (upgrade) option will be used. One of the major advantages of using this option is that it will not only upgrade the latest version of any package, but it will also maintain the backup of the older package so that in case if the newer upgraded package does not run the previously installed package can be used again.
+
+[root@tecmint]# rpm -Uvh nx-3.5.0-2.el6.centos.i686.rpm
+Preparing...                ########################################### [100%]
+1:nx                     ########################################### [100%]
+
+10. How to Remove a RPM Package
+
+To un-install an RPM package, for example we use the package name nx, not the original package name nx-3.5.0-2.el6.centos.i686.rpm. The -e (erase) option is used to remove package.
+
+[root@tecmint]# rpm -evv nx
+
+11. How to Remove an RPM Package Without Dependencies
+
+The –nodeps (Do not check dependencies) option forcefully remove the rpm package from the system. But keep in mind removing particular package may break other working applications.
+
+[root@tecmint]# rpm -ev --nodeps vsftpd
+
+12. How to Query a file that belongs which RPM Package
+
+Let’s say, you have list of files and you would like to find out which package belongs to these files. For example, the following command with -qf (query file) option will show you a file /usr/bin/htpasswd is own by package httpd-tools-2.2.15-15.el6.centos.1.i686.
+
+[root@tecmint]# rpm -qf /usr/bin/htpasswd
+httpd-tools-2.2.15-15.el6.centos.1.i686
+
+13. How to Query a Information of Installed RPM Package
+
+Let’s say you have installed an rpm package and want to know the information about the package. The following -qi (query info) option will print the available information of the installed package.
+
+[root@tecmint]# rpm -qi vsftpd
+Name        : vsftpd				   Relocations: (not relocatable)
+Version     : 2.2.2				   Vendor: CentOS
+Release     : 11.el6				   Build Date: Fri 22 Jun 2012 01:54:24 PM BDT
+Install Date: Mon 17 Sep 2012 07:55:28 PM BDT      Build Host: c6b8.bsys.dev.centos.org
+Group       : System Environment/Daemons           Source RPM: vsftpd-2.2.2-11.el6.src.rpm
+Size        : 351932                               License: GPLv2 with exceptions
+Signature   : RSA/SHA1, Mon 25 Jun 2012 04:07:34 AM BDT, Key ID 0946fca2c105b9de
+Packager    : CentOS BuildSystem <http://bugs.centos.org>
+URL         : http://vsftpd.beasts.org/
+Summary     : Very Secure Ftp Daemon
+Description :
+vsftpd is a Very Secure FTP daemon. It was written completely from
+scratch.
+
+14. Get the Information of RPM Package Before Installing
+
+You have download a package from the internet and want to know the information of a package before installing. For example, the following option -qip (query info package) will print the information of a package sqlbuddy.
+
+[root@tecmint]# rpm -qip sqlbuddy-1.3.3-1.noarch.rpm
+Name        : sqlbuddy                     Relocations: (not relocatable)
+Version     : 1.3.3                        Vendor: (none)
+Release     : 1                            Build Date: Wed 02 Nov 2011 11:01:21 PM BDT
+Install Date: (not installed)              Build Host: rpm.bar.baz
+Group       : Applications/Internet        Source RPM: sqlbuddy-1.3.3-1.src.rpm
+Size        : 1155804                      License: MIT
+Signature   : (none)
+Packager    : Erik M Jacobs
+URL         : http://www.sqlbuddy.com/
+Summary     : SQL Buddy â Web based MySQL administration
+Description :
+SQLBuddy is a PHP script that allows for web-based MySQL administration.
+
+15. How to Query documentation of Installed RPM Package
+
+To get the list of available documentation of an installed package, use the following command with option -qdf (query document file) will display the manual pages related to vmstat package.
+
+[root@tecmint]# rpm -qdf /usr/bin/vmstat
+/usr/share/doc/procps-3.2.8/BUGS
+/usr/share/doc/procps-3.2.8/COPYING
+/usr/share/doc/procps-3.2.8/COPYING.LIB
+/usr/share/doc/procps-3.2.8/FAQ
+/usr/share/doc/procps-3.2.8/NEWS
+/usr/share/doc/procps-3.2.8/TODO
+
+16. How to Verify a RPM Package
+
+Verifying a package compares information of installed files of the package against the rpm database. The -Vp (verify package) is used to verify a package.
+
+[root@tecmint downloads]# rpm -Vp sqlbuddy-1.3.3-1.noarch.rpm
+S.5....T.  c /etc/httpd/conf.d/sqlbuddy.conf
+
+17. How to Verify all RPM Packages
+
+Type the following command to verify all the installed rpm packages.
+
+[root@tecmint]# rpm -Va
+S.5....T.  c /etc/rc.d/rc.local
+.......T.  c /etc/dnsmasq.conf
+.......T.    /etc/ld.so.conf.d/kernel-2.6.32-279.5.2.el6.i686.conf
+S.5....T.  c /etc/yum.conf
+S.5....T.  c /etc/yum.repos.d/epel.repo
+
+18. How to Import an RPM GPG key
+
+To verify RHEL/CentOS/Fedora packages, you must import the GPG key. To do so, execute the following command. It will import CentOS 6 GPG key.
+
+[root@tecmint]# rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+
+19. How to List all Imported RPM GPG keys
+
+To print all the imported GPG keys in your system, use the following command.
+
+[root@tecmint]# rpm -qa gpg-pubkey*
+gpg-pubkey-0608b895-4bd22942
+gpg-pubkey-7fac5991-4615767f
+gpg-pubkey-0f2672c8-4cd950ee
+gpg-pubkey-c105b9de-4e0fd3a3
+gpg-pubkey-00f97f56-467e318a
+gpg-pubkey-6b8d79e6-3f49313d
+gpg-pubkey-849c449f-4cb9df30
+
+20. How To rebuild Corrupted RPM Database
+
+Sometimes rpm database gets corrupted and stops all the functionality of rpm and other applications on the system. So, at the time we need to rebuild the rpm database and restore it with the help of following command.
+
+[root@tecmint]# cd /var/lib
+[root@tecmint]# rm __db*
+[root@tecmint]# rpm --rebuilddb
+[root@tecmint]# rpmdb_verify Packages
+
+-------------------------------------------------------
+https://www.digitalocean.com/community/tutorials/how-to-set-up-and-use-yum-repositories-on-a-centos-6-vps
+How To Set Up and Use Yum Repositories on a CentOS 6 VPS
+Introduction
+
+YUM Repositories are warehouses of Linux software (RPM package files). RPM package file is a Red Hat Package Manager file and enables quick and easy software installation on Red Hat/CentOS Linux. YUM Repositories hold a number of RPM package files and enable download and installation of new software on our VPS. YUM Repositories can hold RPM package files locally (local disk) or remotely (FTP, HTTP or HTTPS). YUM Configuration files hold the information required to successfully find and install software (RPM packages files) on our VPS.
+
+Most common and largest CentOS YUM Repositories:
+
+    CentOS Official Repository Mirrors
+    EPEL Repository Mirrors
+    RPMforge Repository
+    ElRepo Repository
+Advantages of installing software from YUM Repositories are:
+
+    Easy Software Management - installing, updating, and deleting packages is simple
+    Software Dependency Resolution - software dependencies are automatically resolved and installed
+    Official Red Hat/CentOS Package Manager - YUM is official Red Hat/CentOS package manager
+
+Sometimes the software we want to install on our CentOS VPS is not available from default Official CentOS Repositories. In situations like this, we can use one of the additional (Non-Official) CentOS YUM Repositories listed above. Additional repositories sometimes hold newer versions of software packages than Official CentOS Repositories.
+
+YUM Repository Configuration File
+
+We can install new software on Red Hat/CentOS Linux with "yum install packagename" command from console. Running this command first checks for existing YUM Repository configuration files in /etc/yum.repos.d/ directory. It reads each YUM Repository configuration file to get the information required to download and install new software, resolves software dependencies and installs the required RPM package files.
+
+YUM Repository configuration files must:
+
+    be located in /etc/yum.repos.d/ directory
+    have .repo extension, to be recognized by YUM
+
+Available YUM Repository configuration file options are:
+
+    Repository ID - One word unique repository ID (example: [examplerepo])
+    Name - Human readable name of the repository (example: name=Example Repository)
+    Baseurl - URL to the repodata directory. You can use file://path if repository is located locally or ftp://link, http://link, https://link if repository is located remotely - HTTP Authentication available http://user:password@www.repo1.com/repo1 (example: baseurl=http://mirror.cisp.com/CentOS/6/os/i386/)
+    Enabled - Enable repository when performing updates and installs (example: enabled=1)
+    Gpgcheck - Enable/disable GPG signature checking (example: gpgcheck=1)
+    Gpgkey - URL to the GPG key (example: gpgkey=http://mirror.cisp.com/CentOS/6/os/i386/RPM-GPG-KEY-CentOS-6)
+    Exclude - List of the packages to exclude (example: exclude=httpd,mod_ssl)
+    Includepkgs - List of the packages to include (example: include=kernel)
+
+Required YUM Repository configuration file options are:
+
+    Repository ID
+    Name
+    Baseurl
+    Enabled
+
+	
+Step 1: Create YUM Repository configuration file
+
+Use your favorite console text editor and create a new YUM Repository configuration file with .repo extension in /etc/yum.repos.d/ directory. To create a new file with "vi editor" run the following command from console:
+
+vi /etc/yum.repos.d/example.repo
+
+Step 2: Insert YUM Repository options
+
+Insert the desired YUM Repository options to the newly created YUM Repository configuration file and save changes.
+Example YUM Repository Configuration file:
+
+/etc/yum.repos.d/example.repo
+
+[examplerepo]
+name=Example Repository
+baseurl=http://mirror.cisp.com/CentOS/6/os/i386/
+enabled=1
+gpgcheck=1
+gpgkey=http://mirror.cisp.com/CentOS/6/os/i386/RPM-GPG-KEY-CentOS-6
+
+=================================================================================================================================================================
+
+https://www.computerhope.com/unix/apt-get.htm
+What is the apt GET command?
+apt-get is the command-line tool for working with APT software packages. APT (the Advanced Packaging Tool) is an evolution of the Debian .deb software packaging system. It is a rapid, practical, and efficient way to install packages on your system
