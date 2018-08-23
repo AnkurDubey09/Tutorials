@@ -1,0 +1,1116 @@
+--------------------------------------------
+###############GIT COMMANDS#################
+--------------------------------------------
+https://gist.github.com/nanusdad/7e516743e5e709073f7e
+
+Working_directory > Staging > Repository
+
+Install git on your PC/Laptop.
+Create a local repository and go into it.
+Open git bash.
+run 'git init' command.
+
+git status 
+
+git add . or git add 'file_name'
+got commit -m "text message"
+
+# See the differences
+git diff
+git diff --staged
+
+# Remove file
+git rm 'file_name'
+git commit -m "message"
+
+# Rename
+git mv 'f_nm' 'new_f_nm'
+git commit -m "message"
+
+# Direct commit to master by skipping staging, refrain from this option
+git commit -am "message"
+
+# Checkout file from repository
+git checkout -- 'file_name'
+
+# Un-staging
+git reset HEAD 'file_name'
+
+# Getting old version from the repository
+git log (To know all the last commits, so that we can pick up the commit_number of the working file)
+git checkout commit_number -- 'file_name'
+git add 'file_name'
+git commit -m 'message'
+
+=======================================
+AnkurDubey09/BeHappy@12345
+
+https://github.com/AnkurDubey09
+https://github.com/AnkurDubey09/Tutorials.git
+
+git remote add ankdu09 https://github.com/AnkurDubey09/Tutorials.git
+
+---------------------Copied from my git page-----------------
+echo "# Tutorials" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/AnkurDubey09/Tutorials.git
+git push -u origin master
+
+git remote add origin https://github.com/AnkurDubey09/Tutorials.git
+git push -u origin master
+----------------------------------------------------
+
+
+====================================================
+
+Four stages--> untracked, tracked, commit, remote
+
+git config --global user.name <name>
+git config --global user.email <email>
+
+git clone <git_repository_url>       To clone or copy the repository.
+
+git remote -v                        To see the remote repositories.
+
+git remote add <origin_1> <new_git_repository_url>   To add new repository.
+
+git branch <branch_name>             To create a branch.
+git branch                           To see the branches.
+git branch -m <br_name> <br_new_name>    To rename the branch.
+git branch -d <br_name>              To delete the branch. It can't be deleted if there is merge request pending on master for that branch. Use -D flag, to delete forcefully.
+git branch -D <br_name>              To delete the branch forcefully.
+git push origin :<br_name>           To delete the branch from remote. OR delete a branch and push it to remote repo.
+git diff master <br_name>            To see the difference between branches.
+git branch -a                        To show all branches.
+git branch -r                        To show all remote branches.
+git checkout -b <br_name>            To create a branch and switch it to immediately.
+git ls-remote origin                 To list down all branches and tags from remote repository.
+git checkout <br_name>               To go the branch.
+git checkout master                  To go on master.
+git push origin <br_name>            To push changes on branch on remote.
+
+git tag <tag_name>                   To create tag; have to be on that particular change_id (we call it something, I am forgetting)
+git tag --list                       To show the tags.
+git show <tag_name>                  To show the details of tag.
+git tag <tag_name> -m "<message with the tag>" To create a tag with a description.
+git push origin <tag_name>           To push the tag on the remote repo.
+git tag -d <tag_name>				 To delete tag.
+git push origin :<tag_name>          To delete the tag on remote repo.
+
+git blame <file_name>                To see, who all have made changes in file.
+git log                              To see the logs.
+
+git add .                            To make files to be tracked.
+git add <file_name>                  To make file to be tracked.
+
+git commit -m "<commit_message>"     To commit to the local repository.
+
+//Stash always before commit.
+git stash <stash_name>
+git stash                            To create a stash. Now run git status, you won't see any changes.
+git stash list                       To list the stashes.
+git stash drop <stash_name or id>    To delete the stash.
+git stash pop                        To apply the latest stash.
+git stash apply <stash_name stash@{0}>         To apply stash.
+
+git clean -f                         To remove the untracked.
+
+===========================
+Viewing an old revision
+===========================
+
+This example assumes that you’ve started developing a crazy experiment, but you’re not sure if you want to keep it or not. 
+To help you decide, you want to take a look at the state of the project before you started your experiment. 
+First, you’ll need to find the ID of the revision you want to see.
+
+git log --oneline
+
+You can use git checkout to view the “Make some import changes to hello.txt” commit as follows:
+
+git checkout a1e8fb5
+
+This makes your working directory match the exact state of the a1e8fb5 commit. You can look at files, 
+compile the project, run tests, and even edit files without worrying about losing the current state of the project. 
+Nothing you do in here will be saved in your repository. To continue developing, you need to get back to the “current” state 
+of your project:
+
+git checkout master
+
+=======================================
+How to undo a commit with git checkout
+=======================================
+
+Using the git checkout command we can checkout the previous commit, a1e8fb5, putting the repository in a state before the 
+crazy commit happened. Checking out a specific commit will put the repo in a "detached HEAD" state. 
+This means you are no longer working on any branch. In a detached state, any new commits you make will be orphaned when you 
+change branches back to an established branch. Orphaned commits are up for deletion by Git's garbage collector. 
+The garbage collector runs on a configured interval and permanently destroys orphaned commits. To prevent orphaned commits 
+from being garbage collected, we need to ensure we are on a branch.
+
+From the detached HEAD state, we can execute git checkout -b new_branch_without_crazy_commit. This will create a new 
+branch named new_branch_without_crazy_commit and switch to that state. The repo is now on a new history timeline in which 
+the 872fa7e commit no longer exists. At this point, we can continue work on this new branch in which the 872fa7e commit no 
+longer exists and consider it 'undone'. Unfortunately, if you need the previous branch, maybe it was your master branch, 
+this undo strategy is not appropriate. Let's look at some other 'undo' strategies.
+
+===========================================
+How to undo a public commit with git revert
+============================================
+
+Let's assume we are back to our original commit history example. The history that includes the 872fa7e commit. 
+This time let's try a revert 'undo'. If we execute git revert HEAD, Git will create a new commit with the inverse of 
+the last commit. This adds a new commit to the current branch history and now makes it look like:
+
+git log --oneline
+e2f9a78 Revert "Try something crazy"
+872fa7e Try something crazy
+a1e8fb5 Make some important changes to hello.txt
+435b61d Create hello.txt
+9773e52 Initial import
+
+At this point, we have again technically 'undone' the 872fa7e commit. Although 872fa7e still exists in the history, 
+the new e2f9a78 commit is an inverse of the changes in 872fa7e. Unlike our previous checkout strategy, we can continue using 
+the same branch. This solution is a satisfactory undo. This is the ideal 'undo' method for working with public shared 
+repositories. If you have requirements of keeping a curated and minimal Git history this strategy may not be satisfactory.
+
+====================================
+How to undo a commit with git reset
+====================================
+For this undo strategy we will continue with our working example. git reset is an extensive command with multiple uses and 
+functions. If we invoke git reset --hard a1e8fb5 the commit history is reset to that specified commit. Examining the commit 
+history with git log will now look like:
+
+git log --oneline
+a1e8fb5 Make some important changes to hello.txt
+435b61d Create hello.txt
+9773e52 Initial import
+
+The log output shows the e2f9a78 and 872fa7e commits no longer exist in the commit history. At this point, we can continue 
+working and creating new commits as if the 'crazy' commits never happened. This method of undoing changes has the cleanest 
+effect on history. Doing a reset is great for local changes however it adds complications when working with a shared remote 
+repository. If we have a shared remote repository that has the 872fa7e commit pushed to it, and we try to git push a branch 
+where we have reset the history, Git will catch this and throw an error. Git will assume that the branch being pushed is not up 
+to date because of it's missing commits. In these scenarios, git revert should be the preferred undo method.
+
+==========================
+Undoing the last commit
+==========================
+
+In the previous section, we discussed different strategies for undoing commits. These strategies are all applicable to the 
+most recent commit as well. In some cases though, you might not need to remove or reset the last commit. Maybe it was just 
+made prematurely. In this case you can amend the most recent commit. Once you have made more changes in the working directory 
+and staged them for commit by using git add, you can execute git commit --amend. This will have Git open the configured system 
+editor and let you modify the last commit message. The new changes will be added to the amended commit.
+
+======================
+The working directory
+======================
+
+The working directory is generally in sync with the local file system. To undo changes in the working directory you can edit 
+files like you normally would using your favorite editor. Git has a couple utilities that help manage the working directory. 
+There is the git clean command which is a convince utility for undoing changes to the working directory. Additionally, git reset 
+can be invoked with the --mixed or --hard options and will apply a reset to the working directory.
+
+====================
+The staging index
+====================
+
+The git add command is used to add changes to the staging index. Git reset is primarily used to undo the staging index changes. 
+A --mixed reset will move any pending changes from the staging index back into the working directory.
+
+=========================
+Undoing public changes
+==========================
+
+When working on a team with remote repositories, extra consideration needs to be made when undoing changes. Git reset 
+should generally be considered a 'local' undo method. A reset should be used when undoing changes to a private branch. 
+This safely isolates the removal of commits from other branches that may be in use by other developers. Problems arise when a 
+reset is executed on a shared branch and that branch is then pushed remotely with git push. Git will block the push in this 
+scenario complaining that the branch being pushed is out of date from the remote branch as it is missing commits.
+
+The preferred method of undoing shared history is git revert. A revert is safer than a reset because it will not remove any 
+commits from a shared history. A revert will retain the commits you want to undo and create a new commit that inverts the 
+undesired commit. This method is safer for shared remote collaboration because a remote developer can then pull the branch and 
+receive the new revert commit which undoes the undesired commit.
+
+==============================
+Important points - Summary
+==============================
+ - Once changes have been committed they are generally permanent
+ 
+ - Use git checkout to move around and review the commit history
+ 
+ - git revert is the best tool for undoing shared public changes
+ 
+ - git reset is best used for undoing local private changes
+ 
+===============================
+Useful links
+===============================
+https://www.atlassian.com/git/tutorials/learn-git-with-bitbucket-cloud
+https://www.atlassian.com/git/tutorials/what-is-version-control#benefits-of-version-control
+https://www.atlassian.com/git/tutorials/what-is-git
+https://www.atlassian.com/git/tutorials/why-git
+https://www.atlassian.com/git/tutorials/resetting-checking-out-and-reverting
+https://www.atlassian.com/git/tutorials/undoing-changes
+https://www.atlassian.com/git/tutorials/undoing-changes/git-rm
+https://www.atlassian.com/git/tutorials/undoing-changes/git-clean
+https://www.atlassian.com/git/tutorials/undoing-changes/git-revert
+https://www.atlassian.com/git/tutorials/undoing-changes/git-reset
+https://www.atlassian.com/git/tutorials/inspecting-a-repository
+https://www.atlassian.com/git/tutorials/saving-changes
+https://www.atlassian.com/git/tutorials/saving-changes/git-commit
+https://www.atlassian.com/git/tutorials/saving-changes/git-diff
+https://www.atlassian.com/git/tutorials/saving-changes/git-stash
+https://www.atlassian.com/git/tutorials/saving-changes/gitignore
+https://www.atlassian.com/git/tutorials/setting-up-a-repository
+https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-init
+https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-clone
+https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-config
+https://www.atlassian.com/git/tutorials/syncing
+https://www.atlassian.com/git/tutorials/syncing/git-fetch
+https://www.atlassian.com/git/tutorials/syncing/git-push
+https://www.atlassian.com/git/tutorials/syncing/git-pull
+https://www.atlassian.com/git/tutorials/making-a-pull-request
+https://www.atlassian.com/git/tutorials/using-branches
+https://www.atlassian.com/git/tutorials/using-branches/git-checkout
+https://www.atlassian.com/git/tutorials/using-branches/git-merge
+https://www.atlassian.com/git/tutorials/comparing-workflows
+https://www.atlassian.com/git/tutorials/merging-vs-rebasing
+https://www.atlassian.com/git/tutorials/resetting-checking-out-and-reverting
+https://www.atlassian.com/git/tutorials/git-log
+https://www.atlassian.com/git/tutorials/git-hooks
+https://www.atlassian.com/git/tutorials/refs-and-the-reflog
+https://www.atlassian.com/git/tutorials/git-lfs
+
+=====================================================================================================================
+=====================================================================================================================
+My practice:|1| Creating new branch, pushing it on remote, creating file, pushing it on remote, deleting file and pushing on remote.
+=============
+
+1- Create a branch
+
+git branch mylocalbranch
+
+2- Add branch to remote
+
+git push ankdu09 mylocalbranch //here ankdu09 is my origin branch on github
+
+3- Create a file into mylocalbranch (a file is created physically on my git_repo_location)
+
+ a - git checkout mylocalbranch // come on mylocalbranch
+ b - git add <file_name>
+ c - git commit -m "message"
+ d - git push ankdu09 mylocalbranch
+ 
+ Here changes will be done on your branch i.e. mylocalbranch on remote.
+ But if you want to merge it to master on remote, then on github, you have to merge the request manually.
+ 
+ if you want to merge this change on any other branch on remote then pull a request for that branch on github and merge it.
+ 
+4- Deleted file on physically on git_repo_location.
+
+5- Now want to merge this delete change on remote branches.
+
+ a - git checkout mylocalbranch // come on mylocalbranch
+ b - git rm <file_name>
+ c - git commit -m "message"
+ d - git push ankdu09 mylocalbranch
+ 
+ This file will be removed on mylocalbranch on remote.
+ If you want to remove this file on master then create a pull request on github and merge it on master.
+ 
+6- Delete branch locally
+
+git branch -d mylocalbranch or git branch -D mylocalbranch (for forcefully)
+
+[See locally if removed or not by >> git branch]
+
+7- Delete branch remotely.
+
+[See remotely if branch is there or not by >> git branch -r]
+
+git push ankdu09 :mylocalbranch
+
+[See remotely if branch removed or not by >> git branch -r]
+
+[To see all branches i.e. local and remote >> git branch -a]
+
+=============================================================================================
+|2| Reverting changes after commit.
+https://www.atlassian.com/git/tutorials/undoing-changes
+
+1- Create/Updaing a file and add it on stage.
+
+ a - git checkout mylocalbranch // come on mylocalbranch
+ b - git add <file_name>
+ c - git commit -m "message"
+ d - git push ankdu09 mylocalbranch
+ 
+2- See the status by git status.
+
+3- See all the last commits by:
+
+git log --oneline // This will show all the last commits, with latest commit as HEAD.
+
+4- Run following command to revert.
+
+git revert HEAD  // This will revert the last commit and will open shell scripting to give comment. Give comment in insert mode
+and press ESC and type :q! to come out of it.
+
+5- Now see the file, your changes are undoned.
+
+=============================================================================================
+|3| Un-staging the changes.
+
+1- Create/Updaing a file and add it on stage.
+
+ a - git checkout mylocalbranch // come on mylocalbranch
+ b - git add <file_name>
+ 
+2- Un-stage the changes.
+
+git reset HEAD '<file_name>'
+
+=================================================================================================
+
+|4| Reset on local changes.
+
+1- Create/Updaing a file and add it on stage.
+
+ a - git checkout mylocalbranch // come on mylocalbranch
+ 
+2- Run following command to reset the file.
+
+git reset --hard // This will brought the file to last state.
+
+Or
+
+git checkout <file_name>
+
+==============================================================================================
+
+|5| Reset on last commit id.
+
+1- Create/Updaing a file and add it on stage.
+
+ a - git checkout mylocalbranch // come on mylocalbranch
+ b - git add <file_name>
+ c - git commit -m "message"
+ d - git push ankdu09 mylocalbranch
+ 
+2- See the status by git status.
+
+3- See all the last commits by:
+
+git log --oneline // This will show all the last commits, with latest commit as HEAD.
+
+4- Run following command to revert.
+
+git reset --hard a1e8fb5  // This will reset the commit to on given commit id.
+
+5- Now see the file, your changes on that point are shown.
+
+===============================================================================================
+
+|6| Comparing files: git diff file
+
+The git diff command can be passed an explicit file path option. When a file path is passed to git diff the diff operation will
+be scoped to the specified file. The below examples demonstrate this usage.
+
+git diff HEAD ./path/to/file
+
+This example is scoped to ./path/to/file when invoked, it will compare the specific changes in the working directory, against 
+the index, showing the changes that are not staged yet. By default git diff will execute the comparison against HEAD. 
+Omitting HEAD in the example above git diff ./path/to/file has the same effect.
+
+git diff --cached ./path/to/file
+
+When git diff is invoked with the --cached option the diff will compare the staged changes with the local repository. 
+The --cached option is synonymous with --staged.
+
+
+=============================================================================================
+
+|7| Comparing all changes
+
+Invoking git diff without a file path will compare changes across the entire repository. The above, file specific examples, 
+can be invoked without the ./path/to/file argument and have the same output results across all files in the local repo.
+
+===============================================================================================
+
+|8| Changes since last commit
+
+By default git diff will show you any uncommitted changes since the last commit.
+
+git diff
+
+
+=============================================================================================
+
+|9| Comparing files between two different commits
+
+git diff can be passed Git refs to commits to diff. Some example refs are, HEAD, tags, and branch names. Every commit in Git has a commit ID which you can get when you execute GIT LOG. You can also pass this commit ID to git diff.
+
+$:> git log --prety=oneline
+957fbc92b123030c389bf8b4b874522bdf2db72c add feature
+ce489262a1ee34340440e55a0b99ea6918e19e7a rename some classes
+6b539f280d8b0ec4874671bae9c6bed80b788006 refactor some code for feature
+646e7863348a427e1ed9163a9a96fa759112f102 add some copy to body
+
+$:> git diff 957fbc92b123030c389bf8b4b874522bdf2db72c ce489262a1e
+
+=============================================================================================
+
+|10| Comparing branches
+
+Branches are compared like all other ref inputs to git diff
+
+git diff branch1..other-feature-branch
+
+This example introduces the dot operator. The two dots in this example indicate the diff input is the tips of both branches. 
+The same effect happens if the dots are omitted and a space is used between the branches. Additionally, there is a three dot 
+operator:
+
+git diff branch1...other-feature-branch
+
+The three dot operator initiates the diff by changing the first input parameter branch1. It changes branch1 into a ref of 
+the shared common ancestor commit between the two diff inputs, the shared ancestor of branch1 and other-feature-branch. 
+The last parameter input parameter remains unchanged as the tip of other-feature-branch.
+
+
+===============================================================================================
+
+|11| Comparing files from two branches
+
+To compare a specific file across branches, pass in the path of the file as the third argument to git diff
+
+git diff master new_branch ./diff_test.txt
+
+
+
+=============================================================================================
+**********************
+:::::Git stash:::::
+**********************
+
+git stash temporarily shelves (or stashes) changes you've made to your working copy so you can work on something else, and 
+then come back and re-apply them later on. Stashing is handy if you need to quickly switch context and work on something else, 
+but you're mid-way through a code change and aren't quite ready to commit.
+
+===========================
+Stashing your work
+===========================
+
+The git stash command takes your uncommitted changes (both staged and unstaged), saves them away for later use, and then reverts 
+them from your working copy. For example:
+
+$ git status
+On branch master
+Changes to be committed:
+
+ new file: style.css
+
+Changes not staged for commit:
+
+ modified: index.html
+
+$ git stash
+Saved working directory and index state WIP on master: 5002d47 our new homepage
+HEAD is now at 5002d47 our new homepage
+
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+At this point you're free to make changes, create new commits, switch branches, and perform any other Git operations; then 
+come back and re-apply your stash when you're ready.
+
+Note that the stash is local to your Git repository; stashes are not transferred to the server when you push.
+
+=====================================
+Re-applying your stashed changes
+======================================
+You can reapply previously stashed changes with git stash pop:
+
+$ git status
+On branch master
+nothing to commit, working tree clean
+$ git stash pop
+On branch master
+Changes to be committed:
+
+ new file: style.css
+
+Changes not staged for commit:
+
+ modified: index.html
+
+Dropped refs/stash@{0} (32b3aa1d185dfe6d57b3c3cc3b32cbf3e380cc6a)
+
+Popping your stash removes the changes from your stash and reapplies them to your working copy.
+
+Alternatively, you can reapply the changes to your working copy and keep them in your stash with git stash apply:
+
+$ git stash apply
+On branch master
+Changes to be committed:
+
+ new file: style.css
+
+Changes not staged for commit:
+
+ modified: index.html
+ 
+This is useful if you want to apply the same stashed changes to multiple branches.
+
+Now that you know the basics of stashing, there is one caveat with git stash you need to be aware of: by default Git won't 
+stash changes made to untracked or ignored files.
+
+=================================================
+Stashing untracked or ignored files
+=================================================
+By default, running git stash will stash:
+
+    changes that have been added to your index (staged changes)
+    changes made to files that are currently tracked by Git (unstaged changes)
+
+But it will not stash:
+
+    new files in your working copy that have not yet been staged
+    files that have been ignored
+
+So if we add a third file to our example above, but don't stage it (i.e. we don't run git add), git stash won't stash it.
+
+$ script.js
+
+$ git status
+On branch master
+Changes to be committed:
+
+ new file: style.css
+
+Changes not staged for commit:
+
+ modified: index.html
+
+Untracked files:
+
+ script.js
+
+$ git stash
+Saved working directory and index state WIP on master: 5002d47 our new homepage
+HEAD is now at 5002d47 our new homepage
+
+$ git status
+On branch master
+Untracked files:
+
+ script.js
+
+Adding the -u option (or --include-untracked) tells git stash to also stash your untracked files:
+
+$ git status
+On branch master
+Changes to be committed:
+
+ new file: style.css
+
+Changes not staged for commit:
+
+ modified: index.html
+
+Untracked files:
+
+ script.js
+
+$ git stash -u
+Saved working directory and index state WIP on master: 5002d47 our new homepage
+HEAD is now at 5002d47 our new homepage
+
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+You can include changes to ignored files as well by passing the -a option (or --all) when running git stash.
+
+=========================================
+Managing multiple stashes
+=========================================
+
+You aren't limited to a single stash. You can run git stash several times to create multiple stashes, and then use git stash 
+list to view them. By default, stashes are identified simply as a "WIP" – work in progress – on top of the branch and commit 
+that you created the stash from. After a while it can be difficult to remember what each stash contains:
+
+$ git stash list
+stash@{0}: WIP on master: 5002d47 our new homepage
+stash@{1}: WIP on master: 5002d47 our new homepage
+stash@{2}: WIP on master: 5002d47 our new homepage
+
+To provide a bit more context, it's good practice to annotate your stashes with a description, using git stash save "message":
+
+$ git stash save "add style to our site"
+Saved working directory and index state On master: add style to our site
+HEAD is now at 5002d47 our new homepage
+
+$ git stash list
+stash@{0}: On master: add style to our site
+stash@{1}: WIP on master: 5002d47 our new homepage
+stash@{2}: WIP on master: 5002d47 our new homepage
+
+By default, git stash pop will re-apply the most recently created stash: stash@{0}
+
+You can choose which stash to re-apply by passing its identifier as the last argument, for example:
+
+$ git stash pop stash@{2}
+
+=========================================
+Viewing stash diffs
+=========================================
+You can view a summary of a stash with git stash show:
+
+$ git stash show
+ index.html | 1 +
+ style.css | 3 +++
+ 2 files changed, 4 insertions(+)
+
+Or pass the -p option (or --patch) to view the full diff of a stash:
+
+$ git stash show -p
+diff --git a/style.css b/style.css
+new file mode 100644
+index 0000000..d92368b
+--- /dev/null
++++ b/style.css
+@@ -0,0 +1,3 @@
++* {
++ text-decoration: blink;
++}
+diff --git a/index.html b/index.html
+index 9daeafb..ebdcbd2 100644
+--- a/index.html
++++ b/index.html
+@@ -1 +1,2 @@
++<link rel="stylesheet" href="style.css"/>
+
+===============================
+Partial stashes
+================================
+
+You can also choose to stash just a single file, a collection of files, or individual changes from within files. If you pass the -p option (or --patch) to git stash, it will iterate through each changed "hunk" in your working copy and ask whether you wish to stash it:
+
+$ git stash -p
+diff --git a/style.css b/style.css
+new file mode 100644
+index 0000000..d92368b
+--- /dev/null
++++ b/style.css
+@@ -0,0 +1,3 @@
++* {
++ text-decoration: blink;
++}
+Stash this hunk [y,n,q,a,d,/,e,?]? y
+diff --git a/index.html b/index.html
+index 9daeafb..ebdcbd2 100644
+--- a/index.html
++++ b/index.html
+@@ -1 +1,2 @@
++<link rel="stylesheet" href="style.css"/>
+Stash this hunk [y,n,q,a,d,/,e,?]? n
+
+You can hit ? for a full list of hunk commands. Commonly useful ones are:
+Command 	Description
+/ 	search for a hunk by regex
+? 	help
+n 	don't stash this hunk
+q 	quit (any hunks that have already been selected will be stashed)
+s 	split this hunk into smaller hunks
+y 	stash this hunk
+
+There is no explicit "abort" command, but hitting CTRL-C(SIGINT) will abort the stash process.
+
+===================================
+Creating a branch from your stash
+===================================
+If the changes on your branch diverge from the changes in your stash, you may run into conflicts when popping or applying your 
+stash. Instead, you can use git stash branch to create a new branch to apply your stashed changes to:
+
+$ git stash branch add-stylesheet stash@{1}
+Switched to a new branch 'add-stylesheet'
+On branch add-stylesheet
+Changes to be committed:
+
+ new file: style.css
+
+Changes not staged for commit:
+
+ modified: index.html
+
+Dropped refs/stash@{1} (32b3aa1d185dfe6d57b3c3cc3b32cbf3e380cc6a)
+
+This checks out a new branch based on the commit that you created your stash from, and then pops your stashed changes onto it.
+
+==============================
+Cleaning up your stash
+==============================
+If you decide you no longer need a particular stash, you can delete it with git stash drop:
+
+$ git stash drop stash@{1}
+Dropped stash@{1} (17e2697fd8251df6163117cb3d58c1f62a5e7cdb)
+
+Or you can delete all of your stashes with:
+
+$ git stash clear
+
+=====================================
+How git stash works
+=====================================
+If you just wanted to know how use git stash, you can stop reading here. But if you're curious about how Git (and git stash) 
+works under the hood, read on!
+
+Stashes are actually encoded in your repository as commit objects. The special ref at .git/refs/stash points to your most 
+recently created stash, and previously created stashes are referenced by the stash ref's reflog. This is why you refer to stashes
+by stash@{n}: you're actually referring to the nth reflog entry for the stash ref. Since a stash is just a commit, you can 
+inspect it with git log:
+
+$ git log --oneline --graph stash@{0}
+*-. 953ddde WIP on master: 5002d47 our new homepage
+|\ \ 
+| | * 24b35a1 untracked files on master: 5002d47 our new homepage
+| * 7023dd4 index on master: 5002d47 our new homepage
+|/ 
+* 5002d47 our new homepage
+
+Depending on what you stashed, a single git stash operation creates either two or three new commits. The commits in the diagram 
+above are:
+
+    stash@{0}, a new commit to store the tracked files that were in your working copy when you ran git stash
+    stash@{0}'s first parent, the pre-existing commit that was at HEAD when you ran git stash
+    stash@{0}'s second parent, a new commit representing the index when you ran git stash
+    stash@{0}'s third parent, a new commit representing untracked files that were in your working copy when you ran git stash. 
+	This third parent only created if:
+        your working copy actually contained untracked files; and
+        you specified the --include-untracked or --all option when invoked git stash.
+
+		
+*******************************************
+########Git Status: Inspecting a repository
+*******************************************
+
+The git status command displays the state of the working directory and the staging area. It lets you see which changes 
+have been staged, which haven’t, and which files aren’t being tracked by Git. Status output does not show you any information 
+regarding the committed project history. For this, you need to use git log.
+
+Related git commands
+
+    git tag  
+        Tags are ref's that point to specific points in Git history. git tag is generally used to capture a point in history 
+		that is used for a marked version release (i.e. v1.0.1). 
+    git blame
+        The high-level function of git blame is the display of author metadata attached to specific committed lines in a file. 
+		This is used to explore the history of specific code and answer questions about what, how, and why the code was added to 
+		a repository.
+    git log  
+        The git log command displays committed snapshots. It lets you list the project history, filter it, and search for 
+		specific changes. 
+		
+git log
+
+Display the entire commit history using the default formatting. If the output takes up more than one screen, 
+you can use Space to scroll and q to exit.
+
+git log -n <limit>
+
+Limit the number of commits by <limit>. For example, git log -n 3 will display only 3 commits.
+
+git log --oneline
+
+Condense each commit to a single line. This is useful for getting a high-level overview of the project history.
+
+git log --stat
+
+Along with the ordinary git log information, include which files were altered and the relative number of lines that were 
+added or deleted from each of them.
+
+git log -p
+
+Display the patch representing each commit. This shows the full diff of each commit, which is the most detailed view you can 
+have of your project history.
+
+git log --author="<pattern>"
+
+Search for commits by a particular author. The <pattern> argument can be a plain string or a regular expression.
+
+git log --grep="<pattern>"
+
+Search for commits with a commit message that matches <pattern>, which can be a plain string or a regular expression.
+
+git log <since>..<until>
+
+Show only commits that occur between <since> and <until>. Both arguments can be either a commit ID, a branch name, HEAD, or any 
+other kind of revision reference.
+
+git log <file>
+
+Only display commits that include the specified file. This is an easy way to see the history of a particular file.
+
+git log --graph --decorate --oneline
+
+A few useful options to consider. The --graph flag that will draw a text based graph of the commits on the left hand side of 
+the commit messages. --decorate adds the names of branches or tags of the commits that are shown. --oneline shows the commit 
+information on a single line making it easier to browse through commits at-a-glance.
+
+=========
+Example
+=========
+The Usage section provides many examples of git log, but keep in mind that several options can be combined into a single command:
+
+git log --author="John Smith" -p hello.py
+
+This will display a full diff of all the changes John Smith has made to the file hello.py.
+
+The .. syntax is a very useful tool for comparing branches. The next example displays a brief overview of all the commits that 
+are in some-feature that are not in master.
+
+git log --oneline master..some-feature
+
+============
+Tagging
+===========
+Tagging is generally used to capture a point in history that is used for a marked version release (i.e. v1.0.1). A tag is like 
+a branch that doesn’t change. Unlike branches, tags, after being created, have no further history of commits. 
+
+=================
+Creating a tag
+===================
+
+To create a new tag execute the following command:
+
+git tag <tagname>
+
+Replace <tagname> with a semantic identifier to the state of the repo at the time the tag is being created. A common pattern 
+is to use version numbers like git tag v1.4. Git supports two different types of tags, annotated and lightweight tags. 
+The previous example created a lightweight tag. Lightweight tags and Annotated tags differ in the amount of accompanying meta 
+data they store. A best practice is to consider Annotated tags as public, and Lightweight tags as private. Annotated tags store 
+extra meta data such as: the tagger name, email, and date. This is important data for a public release. Lightweight tags are 
+essentially 'bookmarks' to a commit, they are just a name and a pointer to a commit, useful for creating quick links to relevant 
+commits.
+
+==============
+Annotated Tags
+==============
+Annotated tags are stored as full objects in the Git database. To reiterate, They store extra meta data such as: 
+the tagger name, email, and date. Similar to commits and commit messages Annotated tags have a tagging message. Additionally, 
+for security, annotated tags can be signed and verified with GNU Privacy Guard (GPG). Suggested best practices for git tagging 
+is to prefer annotated tags over lightweight so you can have all the associated meta-data.
+
+git tag -a v1.4
+
+Executing this command will create a new annotated tag identified with v1.4. The command will then open up the configured 
+default text editor to prompt for further meta data input.
+
+git tag -a v1.4 -m "my version 1.4"
+
+Executing this command is similar to the previous invocation, however, this version of the command is passed the -m option 
+and a message. This is a convenience method similar to git commit -m that will immediately create a new tag and forgo opening 
+the local text editor in favor of saving the message passed in with the -m option.
+
+================
+Lightweight Tags
+====================
+
+git tag v1.4-lw
+
+Executing this command creates a lightweight tag identified as v1.4-lw. Lightweight tags are created with the absence of 
+the -a, -s, or -m options. Lightweight tags create a new tag checksum and store it in the .git/ directory of the project's repo.
+
+==============
+Listing Tags
+==============
+
+To list stored tags in a repo execute the following:
+
+git tag
+
+This will output a list of tags:
+
+v0.10.0
+ v0.10.0-rc1
+ v0.11.0
+ v0.11.0-rc1
+ v0.11.1
+ v0.11.2
+ v0.12.0
+ v0.12.0-rc1
+ v0.12.1
+ v0.12.2
+ v0.13.0
+ v0.13.0-rc1
+ v0.13.0-rc2
+
+To refine the list of tags the -l option can be passed with a wild card expression:
+
+$ git tag -l *-rc*
+ v0.10.0-rc1
+ v0.11.0-rc1
+ v0.12.0-rc1
+ v0.13.0-rc1
+ v0.13.0-rc2
+ v0.14.0-rc1
+ v0.9.0-rc1
+ v15.0.0-rc.1
+ v15.0.0-rc.2
+ v15.4.0-rc.3
+
+This previous example uses the -l option and a wildcard expression of -rc which returns a list of all tags marked with 
+a -rc prefix, traditionally used to identify release candidates.
+
+==========================
+Tagging Old Commits
+=======================
+The previous tagging examples have demonstrated operations on implicit commits. By default, git tag will create a tag on 
+the commit that HEAD is referencing. Alternatively git tag can be passed as a ref to a specific commit. This will tag the 
+passed commit instead of defaulting to HEAD. To gather a list of older commits execute the git log command.
+
+$ git log --pretty=oneline
+ 15027957951b64cf874c3557a0f3547bd83b3ff6 Merge branch 'feature'
+ a6b4c97498bd301d84096da251c98a07c7723e65 add update method for thing
+ 0d52aaab4479697da7686c15f77a3d64d9165190 one more thing
+ 6d52a271eda8725415634dd79daabbc4d9b6008e Merge branch 'experiment'
+
+Executing git log will output a list of commits. In this example we will pick the top most commit Merge branch 'feature' for 
+the new tag. We will need to reference to the commit SHA hash to pass to Git:
+
+git tag -a v1.2 15027957951b64cf874c3557a0f3547bd83b3ff6
+
+Executing the above git tag invocation will create a new annotated commit identified as v1.2 for the commit we selected in the 
+previous git log example.
+
+=================================
+ReTagging/Replacing Old Tags
+=================================
+If you try to create a tag with the same identifier as an existing tag, Git will throw an error like:
+
+fatal: tag 'v0.4' already exists
+
+Additionally if you try to tag an older commit with an existing tag identifier Git will throw the same error.
+
+In the event that you must update an existing tag, the -f FORCE option must be used.
+
+git tag -a -f v1.4 15027957951b64cf874c3557a0f3547bd83b3ff6
+
+Executing the above command will map the 15027957951b64cf874c3557a0f3547bd83b3ff6 commit to the v1.4 tag identifier. 
+It will override any existing content for the v1.4 tag.
+
+============================
+Sharing: Pushing Tags to Remote
+==============================
+
+Sharing tags is similar to pushing branches. By default, git push will not push tags. Tags have to be explicitly passed to 
+git push.
+
+$ git push origin v1.4
+ Counting objects: 14, done.
+ Delta compression using up to 8 threads.
+ Compressing objects: 100% (12/12), done.
+ Writing objects: 100% (14/14), 2.05 KiB | 0 bytes/s, done.
+ Total 14 (delta 3), reused 0 (delta 0)
+ To git@bitbucket.com:atlasbro/gittagdocs.git
+ * [new tag] v1.4 -> v1.4
+
+To push multiple tags simultaneously pass the --tags option to git push command. When another user clones or pulls a repo 
+they will receive the new tags.
+
+===============================
+Checking Out Tags
+==========================
+You can view the state of a repo at a tag by using the git checkout command.
+
+git checkout v1.4
+
+The above command will checkout the v1.4 tag. This puts the repo in a detached HEAD state. This means any changes 
+made will not update the tag. They will create a new detached commit. This new detached commit will not be part of any branch 
+and will only be reachable directly by the commits SHA hash. Therefore it is a best practice to create a new branch anytime 
+you're making changes in a detached HEAD state.
+
+====================
+Deleting Tags
+===================
+Deleting tags is a straightforward operation. Passing the -d option and a tag identifier to git tag will delete the 
+identified tag.
+
+$ git tag
+ v1
+ v2
+ v3
+ $ git tag -d v1
+ $ git tag
+ v2
+ v3
+
+In this example git tag is executed to display a list of tags showing v1, v2, v3, Then git tag -d v1 is executed which 
+deletes the v1 tag.
+
+
+=========================
+Git Blame
+=========================
+The git blame command is a versatile troubleshooting utility that has extensive usage options. The high-level function of git 
+blame is the display of author metadata attached to specific committed lines in a file. This is used to examine specific points 
+of a file's history and get context as to who the last author was that modified the line. This is used to explore the history of 
+specific code and answer questions about what, how, and why the code was added to a repository.
+
+Git blame is often used with a GUI display. Online Git hosting sites like Bitbucket offer blame views which are UI wrappers 
+to git blame. These views are referenced in collaborative discussions around pull requests and commits. Additionally, most IDE's 
+that have Git integration also have dynamic blame views.
+
+git blame only operates on individual files. A file-path is required for any useful output. 
+
+===================
+Common Options
+====================
+
+git blame -L 1,5 README.md
+
+The -L option will restrict the output to the requested line range. Here we have restricted the output to lines 1 through 5.
+
+git blame -e README.md
+
+The -e option shows the authors email address instead of username.
+
+git blame -w README.md
+
+The -w option ignores whitespace changes. If a previous author has modified the spacing of a file by switching from tabs to spaces or adding new lines this, unfortunately, obscures the output of git blame by showing these changes.
+
+git blame -M README.md
+
+The -M option detects moved or copied lines within in the same file. This will report the original author of the lines instead of the last author that moved or copied the lines.
+
+git blame -C README.md
+
+The -C option detects lines that were moved or copied from other files. This will report the original author of the lines instead of the last author that moved or copied the lines.
+
+
+=================
+Git Blame vs Git Log
+=====================
+
+While git blame displays the last author that modified a line, often times you will want to know when a line was originally 
+added. This can be cumbersome to achieve using git blame. It requires a combination of the -w, -C, and -M options. 
+It can be far more convenient to use the git log command.
+
+To list all original commits in-which a specific code piece was added or modified execute git log with the -S option. 
+Append the -S option with the code you are looking for. Let's take one of the lines from the README output above to use as an 
+example. Let us take the text "CSS3D and WebGL renderers" from Line 12 of the README output.
+
+$ git log -S"CSS3D and WebGL renderers." --pretty=format:'%h %an %ad %s'
+ e339d3c85 Mario Schuettel Tue Oct 13 16:51:06 2015 +0200 reverted README.md to original content
+ 509c2cc35 Daniel Tue Sep 8 13:56:14 2015 +0200 Updated README
+ cb20237cc Mr.doob Mon Dec 31 00:22:36 2012 +0100 Removed DOMRenderer. Now with the CSS3DRenderer it has become irrelevant.
+
+This output shows us that content from the README was added or modified 3 times by 3 different authors. It was originally 
+added in commit cb20237cc by Mr.doob. In this example, git log has also been prepended with the --pretty-format option. 
+This option converts the default output format of git log into one that matches the format of git log. For more information 
+on usage and configuration options visit the git log page.
