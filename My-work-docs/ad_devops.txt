@@ -1,0 +1,510 @@
+/////////////////////////////////////////////////////////////////////////////////////
+************************************* Devops ****************************************
+/////////////////////////////////////////////////////////////////////////////////////
+
+-------------------------------------------------------------------------------------
+##################CentOS##########################
+-------------------------------------------------------------------------------------
+To check the repo
+
+Type the following command:
+# yum -v repolist
+# yum -v repolist | less
+# yum repolist
+
+To list only enabled repos, enter:
+# yum repolist enabled
+
+To list only disabled repos, enter:
+# yum repolist disabled
+
+To list all repos (default), enter:
+# yum repolist all
+
+To list available packages under a repo called ksplice-uptrack, enter:
+# yum --disablerepo="*" --enablerepo="ksplice-uptrack" list available
+Where,
+
+    --disablerepo="*" : Disables specific repositories by id or glob. In this example, disable all repos.
+    --enablerepo="ksplice-uptrack" : Enable specific repositories by id or glob. In this example, enable a repo called ksplice-uptrack
+	
+
+
+###############Docker#######################
+Installation on Ubuntu: https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-using-the-repository
+--------------------------------------------
+
+Installation on CentOS: https://docs.docker.com/install/linux/docker-ce/centos/#install-docker-ce
+-----------------------
+Install using the repository
+Before you install Docker CE for the first time on a new host machine, you need to set up the Docker repository. Afterward, you can install and update Docker from the repository.
+
+SET UP THE REPOSITORY
+Install required packages. yum-utils provides the yum-config-manager utility, and device-mapper-persistent-data and lvm2 are required by the devicemapper storage driver.
+
+$ sudo yum install -y yum-utils \
+  device-mapper-persistent-data \
+  lvm2
+Use the following command to set up the stable repository. You always need the stable repository, even if you want to install builds from the edge or test repositories as well.
+
+$ sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+Optional: Enable the edge and test repositories. These repositories are included in the docker.repo file above but are disabled by default. You can enable them alongside the stable repository.
+
+$ sudo yum-config-manager --enable docker-ce-edge
+$ sudo yum-config-manager --enable docker-ce-test
+You can disable the edge or test repository by running the yum-config-manager command with the --disable flag. To re-enable it, use the --enable flag. The following command disables the edge repository.
+
+$ sudo yum-config-manager --disable docker-ce-edge
+
+INSTALL DOCKER CE
+Install the latest version of Docker CE, or go to the next step to install a specific version:
+
+$ sudo yum install docker-ce
+If prompted to accept the GPG key, verify that the fingerprint matches 060A 61C5 1B55 8A7F 742B 77AA C52F EB6B 621E 9F35, and if so, accept it.
+
+[If you have multiple Docker repositories enabled, installing or updating without specifying a version in the yum install or yum update command always installs the highest possible version, which may not be appropriate for your stability needs.]
+
+Docker is installed but not started. The docker group is created, but no users are added to the group.
+
+To install a specific version of Docker CE, list the available versions in the repo, then select and install:
+
+a. List and sort the versions available in your repo. This example sorts results by version number, highest to lowest, and is truncated:
+
+$ yum list docker-ce --showduplicates | sort -r
+
+docker-ce.x86_64            18.03.0.ce-1.el7.centos             docker-ce-stable
+The list returned depends on which repositories are enabled, and is specific to your version of CentOS (indicated by the .el7 suffix in this example).
+
+b. Install a specific version by its fully qualified package name, which is the package name (docker-ce) plus the version string (2nd column) up to the first hyphen, separated by a hyphen (-), for example, docker-ce-18.03.0.ce.
+
+$ sudo yum install docker-ce-<VERSION STRING>
+Docker is installed but not started. The docker group is created, but no users are added to the group.
+
+Start Docker.
+
+$ sudo systemctl start docker
+Verify that docker is installed correctly by running the hello-world image.
+
+$ sudo docker run hello-world
+
+$ docker run --name web1 <docker_image> //This will have name as web1.
+$ docker start web1 // Restart web1.
+
+Install from a package
+If you cannot use Docker’s repository to install Docker, you can download the .rpm file for your release and install it manually. You need to download a new file each time you want to upgrade Docker.
+
+Go to https://download.docker.com/linux/centos/7/x86_64/stable/Packages/ and download the .rpm file for the Docker version you want to install.
+
+Note: To install an edge package, change the word stable in the above URL to edge. Learn about stable and edge channels.
+
+Install Docker CE, changing the path below to the path where you downloaded the Docker package.
+
+$ sudo yum install /path/to/package.rpm
+Docker is installed but not started. The docker group is created, but no users are added to the group.
+
+Start Docker.
+
+$ sudo systemctl start docker
+Verify that docker is installed correctly by running the hello-world image.
+
+$ sudo docker run hello-world
+This command downloads a test image and runs it in a container. When the container runs, it prints an informational message and exits.
+
+Commands
+---------
+docker ps
+docker ps -a
+docker images
+
+docker run hello-world
+docker pull hello-world
+docker run hello-world bash
+docker run -d hello-world
+docker run -it ubuntu bash     ------> to see the os --->        cat /etc/*release*
+docker attach hello-world
+docker stop hello-world
+
+
+docker rm hello-world
+docker rmi <image>
+
+docker run -p 8080:8080 -p 50000:50000 -u root  -v /home/myjen:/var/jenkins_home jenkins       ----> volume mapping
+
+docker inspect <docker id>
+
+docker build -t <my_image_tag_name> .   // To build the image.
+
+docker container logs
+docker container run
+docker container start
+docker container rm
+docker container kill
+
+docker login
+docker push accntID/image_name
+docker stop
+docker kill
+
+docker exec -it <image_name> bash
+
+docker commit <container_id> <new_image_name> // copy and create new image.
+
+docker export --output="myimage.tar" mycontainer // export the image.
+
+docker import path_to_tar // import the image.
+
+docker-compose build // build a yml file which consist of multiple images
+docker-compose up // execute or run yml file which consist of multiple images.
+
+docker swarn init --advertise-addr IP_of_host
+docker swarn join
+docker swarn join-token
+docker swarn leave
+  
+
+
+
+
+
+
+
+
+--------------------------------------------
+###############GIT COMMANDS#################
+--------------------------------------------
+Four stages--> untracked, tracked, commit, remote
+
+git config --global user.name <name>
+git config --global user.email <email>
+
+git clone <git_repository_url>       To clone or copy the repository.
+
+git remote -v                        To see the remote repositories.
+
+git remote add <origin_1> <new_git_repository_url>   To add new repository.
+
+git branch <branch_name>             To create a branch.
+git branch                           To see the branches.
+git branch -m <br_name> <br_new_name>    To rename the branch.
+git branch -d <br_name>              To delete the branch. It can't be deleted if there is merge request pending on master for that branch. Use -D flag, to delete forcefully.
+git branch -D <br_name>              To delete the branch forcefully.
+git push origin :<br_name>           To delete the branch from remote. OR delete a branch and push it to remote repo.
+git diff master <br_name>            To see the difference between branches.
+git branch -a                        To show all branches.
+git branch -r                        To show all remote branches.
+git checkout -b <br_name>            To create a branch and switch it to immediately.
+git ls-remote origin                 To list down all branches and tags from remote repository.
+git checkout <br_name>               To go the branch.
+git checkout master                  To go on master.
+git push origin <br_name>            To push changes on branch on remote.
+
+git tag <tag_name>                   To create tag; have to be on that particular change_id (we call it something, I am forgetting)
+git tag --list                       To show the tags.
+git show <tag_name>                  To show the details of tag.
+git tag <tag_name> -m "<message with the tag>" To create a tag with a description.
+git push origin <tag_name>           To push the tag on the remote repo.
+git tag -d <tag_name>				 To delete tag.
+git push origin :<tag_name>          To delete the tag on remote repo.
+
+git blame <file_name>                To see, who all have made changes in file.
+git log                              To see the logs.
+
+git add .                            To make files to be tracked.
+git add <file_name>                  To make file to be tracked.
+
+git commit -m "<commit_message>"     To commit to the local repository.
+
+//Stash always before commit.
+git stash <stash_name>
+git stash                            To create a stash. Now run git status, you won't see any changes.
+git stash list                       To list the stashes.
+git stash drop <stash_name or id>    To delete the stash.
+git stash pop                        To apply the latest stash.
+git stash apply <stash_name stash@{0}>         To apply stash.
+
+git clean -f                         To remove the untracked.
+
+
+
+
+############################################################################################################################
+******************************** Ansible on CentOS *******************************************************
+############################################################################################################################
+
+sudo yum update -y
+
+rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6.8.noarch.rpm
+OR
+sudo yum install epel-release
+
+yum isntall ansible
+OR
+sudo yum install ansible
+
+ansible --version
+
+ssh-keygen
+
+ssh-copy-id -i root@<IP of node machine>
+
+vi /etc/ansible/hosts
+OR
+sudo vi /etc/ansible/hosts
+[group_name]
+alias ansible_ssh_host=your_server_ip
+
+ansible -m ping <name of the group of server in hosts file above>
+
+vi <name of playbook>.yml
+
+ansible-playbook <name of playbook>.yml --syntax-check // will check syntax
+ansible-playbook <name of playbook>.yml --step //Step wise, it will ask to continue for each step.
+ansible-playbook -v <name of playbook>.yml --step // enable verbose, will log information
+ansible-playbook <name of playbook>.yml // will execute
+==================================================
+
+Through Inventory.txt
+
+cat > /etc/ansible/inventory.txt
+target1 ansible_host=<IP Address>
+target2 ansible_host=<IP Address>
+
+ansible target1 -m ping -i inventory.txt
+ansible target2 -m ping -i inventory.txt
+ansible all -m ping -i inventory.txt
+====================================================
+
+
+
+
+http://docs.ansible.com/
+
+https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-centos-7
+
+https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-ubuntu-14-04
+
+https://www.unixmen.com/setup-ansible-ubuntu-15-04/
+
+
+
+
+
+
+
+
+
+#########################################################################################################################
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ REPOSITORY on CentOS $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+#########################################################################################################################
+
+yum -y repolist | less
+
+Loading "fastestmirror" plugin
+Loading "langpacks" plugin
+Adding en_US.UTF-8 to language list
+Config time: 0.018
+Yum version: 3.4.3
+Loading mirror speeds from cached hostfile
+ * base: centos.excellmedia.net
+ * epel: del-mirrors.extreme-ix.org
+ * extras: centos.excellmedia.net
+ * updates: centos.excellmedia.net
+Setting up Package Sacks
+pkgsack time: 0.009
+Repo-id      : base/7/x86_64
+Repo-name    : CentOS-7 - Base
+Repo-revision: 1504648209
+Repo-updated : Tue Sep  5 17:51:13 2017
+Repo-pkgs    : 9,591
+Repo-size    : 7.6 G
+Repo-mirrors : http://mirrorlist.centos.org/?release=7&arch=x86_64&repo=os&infra=stock
+Repo-baseurl : http://centos.excellmedia.net/7.4.1708/os/x86_64/ (9 more)
+Repo-expire  : 21,600 second(s) (last: Wed May  2 03:11:56 2018)
+  Filter     : read-only:present
+Repo-filename: /etc/yum.repos.d/CentOS-Base.repo
+
+Repo-id      : epel/x86_64
+Repo-name    : Extra Packages for Enterprise Linux 7 - x86_64
+Repo-revision: 1525177806
+Repo-updated : Tue May  1 08:33:51 2018
+Repo-pkgs    : 12,512
+Repo-size    : 13 G
+Repo-metalink: https://mirrors.fedoraproject.org/metalink?repo=epel-7&arch=x86_64
+  Updated    : Tue May  1 08:33:51 2018
+Repo-baseurl : http://del-mirrors.extreme-ix.org/epel/7/x86_64/ (13 more)
+Repo-expire  : 21,600 second(s) (last: Wed May  2 03:58:34 2018)
+  Filter     : read-only:present
+Repo-filename: /etc/yum.repos.d/epel.repo
+
+Repo-id      : extras/7/x86_64
+Repo-name    : CentOS-7 - Extras
+Repo-revision: 1522750681
+Repo-updated : Tue Apr  3 06:24:10 2018
+Repo-pkgs    : 448
+Repo-size    : 933 M
+Repo-mirrors : http://mirrorlist.centos.org/?release=7&arch=x86_64&repo=extras&infra=stock
+Repo-baseurl : http://centos.excellmedia.net/7.4.1708/extras/x86_64/ (9 more)
+Repo-expire  : 21,600 second(s) (last: Wed May  2 03:11:57 2018)
+  Filter     : read-only:present
+Repo-filename: /etc/yum.repos.d/CentOS-Base.repo
+
+Repo-id      : updates/7/x86_64
+Repo-name    : CentOS-7 - Updates
+Repo-revision: 1523961256
+Repo-updated : Tue Apr 17 06:49:16 2018
+Repo-pkgs    : 2,416
+Repo-size    : 7.5 G
+Repo-mirrors : http://mirrorlist.centos.org/?release=7&arch=x86_64&repo=updates&infra=stock
+Repo-baseurl : http://centos.excellmedia.net/7.4.1708/updates/x86_64/ (9 more)
+Repo-expire  : 21,600 second(s) (last: Wed May  2 03:11:57 2018)
+  Filter     : read-only:present
+Repo-filename: /etc/yum.repos.d/CentOS-Base.repo
+
+repolist: 24,967
+------------------------------------------------------------
+------------------------------------------------------------
+https://www.tecmint.com/install-git-centos-fedora-redhat/
+https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-configuring_yum_and_yum_repositories
+https://www.tecmint.com/how-to-enable-epel-repository-for-rhel-centos-6-5/
+https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-a-centos-7-server
+https://www.e2enetworks.com/help/knowledge-base/how-to-install-node-js-and-npm-on-centos/  --- latest node v6.9.4 and npm v3.10.10
+
+How to Enable EPEL Repository for RHEL/CentOS 7.x/6.x/5.x
+What is EPEL
+
+EPEL (Extra Packages for Enterprise Linux) is open source and free community based repository project from Fedora team which provides 100% high quality add-on software packages for Linux distribution including RHEL (Red Hat Enterprise Linux), CentOS, and Scientific Linux. Epel project is not a part of RHEL/Cent OS but it is designed for major Linux distributions by providing lots of open source packages like networking, sys admin, programming, monitoring and so on. Most of the epel packages are maintained by Fedora repo.
+
+Why we use EPEL repository?
+
+    Provides lots of open source packages to install via Yum.
+    Epel repo is 100% open source and free to use.
+    It does not provide any core duplicate packages and no compatibility issues.
+    All epel packages are maintained by Fedora repo.
+
+How To Enable EPEL Repository in RHEL/CentOS 7/6/5?
+
+First, you need to download the file using Wget and then install it using RPM on your system to enable the EPEL repository. Use below links based on your Linux OS versions. (Make sure you must be root user).
+
+RHEL/CentOS 7 64 Bit
+---------------------
+## RHEL/CentOS 7 64-Bit ##
+# wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+# rpm -ivh epel-release-latest-7.noarch.rpm
+
+RHEL/CentOS 6 32-64 Bit
+------------------------
+## RHEL/CentOS 6 32-Bit ##
+# wget http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+# rpm -ivh epel-release-6-8.noarch.rpm
+## RHEL/CentOS 6 64-Bit ##
+# wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+# rpm -ivh epel-release-6-8.noarch.rpm
+
+How Do I Verify EPEL Repo?
+-----------------------------
+You need to run the following command to verify that the EPEL repository is enabled. Once you ran the command you will see epel repository.
+# yum repolist
+
+Sample Output
+--------------
+Loaded plugins: downloadonly, fastestmirror, priorities
+Loading mirror speeds from cached hostfile
+* base: centos.aol.in
+* epel: ftp.cuhk.edu.hk
+* extras: centos.aol.in
+* rpmforge: be.mirror.eurid.eu
+* updates: centos.aol.in
+Reducing CentOS-5 Testing to included packages only
+Finished
+1469 packages excluded due to repository priority protections
+repo id                           repo name                                                      status
+base                              CentOS-5 - Base                                               2,718+7
+epel Extra Packages for Enterprise Linux 5 - i386 4,320+1,408
+extras                            CentOS-5 - Extras                                              229+53
+rpmforge                          Red Hat Enterprise 5 - RPMforge.net - dag                      11,251
+repolist: 19,075
+
+How Do I Use EPEL Repo?
+-------------------------
+
+You need to use YUM command for searching and installing packages. For example we search for Zabbix package using epel repo, lets see it is available or not under epel.
+
+# yum --enablerepo=epel info zabbix
+
+Sample Output
+-------------
+Available Packages
+Name       : zabbix
+Arch       : i386
+Version    : 1.4.7
+Release    : 1.el5
+Size       : 1.7 M
+Repo : epel
+Summary    : Open-source monitoring solution for your IT infrastructure
+URL        : http://www.zabbix.com/
+License    : GPL
+Description: ZABBIX is software that monitors numerous parameters of a network.
+
+Let’s install Zabbix package using epel repo option –enablerepo=epel switch.
+
+# yum --enablerepo=epel install zabbix
+
+Note: The epel configuration file is located under /etc/yum.repos.d/epel.repo.
+
+This way you can install as many as high standard open source packages using EPEL repo.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+************************** Node JS on centOS *********************************************
+
+-----------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------
+
+
+How to install Node.js and NPM on CentOS
+Introduction
+
+Node.js is a JavaScript runtime built on Chrome’s V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient. Node.js’ package ecosystem, npm, is the largest ecosystem of open source libraries in the world. In this article we will explain the steps of installing node.js and npm in CentOS.
+Step 1: Add node.js yum repository
+
+First we need to add yum repository of node.js to our system which is sourced from nodejs’ official website. Run the following commands in succession to add the yum repository.
+
+# yum install -y gcc-c++ make
+# curl -sL https://rpm.nodesource.com/setup_6.x | sudo -E bash -
+
+Step 2: Install node.js and NPM
+
+Now it’s time to install the node.js package and NPM package. Run the following command to do so. This single command will install node.js, npm and also other dependent packages.
+
+# yum install nodejs
+
+Step 3: Verify versions
+
+Having installed the packages, you need to check their versions.
+
+For checking node.js version:
+
+# node -v 
+v6.9.4
+
+For checking npm version:
+
+# npm -v 
+3.10.10
+
+----------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+

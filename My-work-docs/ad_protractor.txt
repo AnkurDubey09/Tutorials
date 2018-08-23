@@ -1,0 +1,448 @@
+
+
+///// Before Launch /////
+beforeLaunch: function () {
+    require('ts-node').register({
+      project: 'specs/tsconfig.e2e.json'
+    });
+ },
+   
+  
+///// On Complete /////  
+onComplete:function () {
+    console.log("Sending Mail with reports for the test execution.");
+    var sys = require('util')
+    var exec = require('child_process').exec;
+    function puts(error, stdout, stderr) { sys.puts(stdout) }
+    exec("node mail.js", puts);
+ }
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+ 
+////////////////********** Sending Mail || mail.js ****************/////////////////
+ 
+ const nodemailer = require('nodemailer');
+
+// Generate test SMTP service account from ethereal.email
+// Only needed if you don't have a real mail account for testing
+nodemailer.createTestAccount((err, account) => {
+    // create reusable transporter object using the default SMTP transport
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.pb.com',
+        port: 25,
+        secure: false // true for 465, false for other ports  
+    });
+
+    // setup email data with unicode symbols
+    let mailOptions = {
+        from: 'ankur.dubey@pb.com', // sender address
+        to: 'ankur.dubey@pb.com', // list of receivers
+        subject: 'Hello ✔', // Subject line
+        text: 'Hello world?', // plain text body
+        html: '<b>Hello world?</b>', // html body
+        attachments: [
+            {
+                'filename': 'index.html',
+                'filePath': './node_modules/jasmine-allure-reporter/target/site/allure-maven-plugin/index.html',
+            }
+    
+        ]
+    };
+
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        console.log('Message sent: %s', info.messageId);
+        // Preview only available when sending through an Ethereal account
+        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+
+        // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+        // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+    });
+});
+
+-----------------------------------------------------------------
+
+On conf.js --> 
+
+onComplete:function () {
+    console.log("Sending Mail with reports for the test execution.");
+    var sys = require('util')
+    var exec = require('child_process').exec;
+    function puts(error, stdout, stderr) { sys.puts(stdout) }
+    exec("node mail.js", puts);
+ }
+ 
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+ 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////*********** Generating logs || logs.js ********************///////////////////////////////////
+https://www.npmjs.com/package/winston
+https://www.npmjs.com/package/logger-winston
+
+npm i logger-winston
+npm i winston
+
+var winston = require('winston');
+
+
+winston.remove(winston.transports.Console);
+winston.add(winston.transports.Console, { timestamp: true });
+winston.add(winston.transports.File, { filename: 'winston-basic.log' });
+module.exports = winston;
+
+
+
+---------------------------------------------------------------------------------------
+On spec -->
+
+var logger = require('../../log');
+logger.log('info', '<message>');
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+
+////////////////////////////////////////******** Different Reorts ***********//////////////////////////////////////////////////
+
+///// On Prepare : Allure Reporter /////  npm i jasmine-allure-reporter
+onPrepare() {
+    var AllureReporter = require('jasmine-allure-reporter');
+    jasmine.getEnv().addReporter(new AllureReporter({
+      allureReport: {
+        resultDir: 'allure-results'
+      }
+    }));
+
+    jasmine.getEnv().afterEach(function(done){
+      browser.takeScreenshot().then(function(png){
+        allure.createAttachment('Screenshot', function(){
+          return new Buffer(png, 'base64')
+        }, 'image/png')();
+        done();
+      })
+    })
+  },
+  
+  ---------------------------------
+  To generate html allure report -- >
+    1- A directory is create with name 'allure-results'.
+    2- copy/paste this directory under jasmine-allure-reporter in node_modules.
+    3- Go to command prompt on that location and run following mvn command:
+    	mvn site -Dallure.results_pattern=allure-results  //// mvn site is to generate documentation
+	4- Now go to under 'node_modules\jasmine-allure-reporter\target\site\allure-maven-plugin', and open the index.html.
+  ---------------------------------
+
+/////////////////// On Prepare : jasmine-spec-reporter, teamcity-reporter, Jasmine2HtmlReporter ////////////////////
+
+var Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
+const { SpecReporter } = require('jasmine-spec-reporter');
+
+onPrepare() {
+    browser.driver.manage().window().maximize();
+    // Add   teamcity reporter
+    var jasmineReporters = require('jasmine-reporters');
+    jasmine.getEnv().addReporter(new jasmineReporters.TeamCityReporter());
+
+    jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+    jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
+      savePath: './reports/'
+    }));
+  }
+}
+--------------------------------------
+jasmine custom reporter --> https://jasmine.github.io/2.5/custom_reporter.html
+https://www.npmjs.com/package/jasmine-custom-reporters
+
+To install use npm i jasmine-custom-reporters
+
+Jasmine custom reporters: jasmine-custom-reporters -> spec-console-reporter, spec-json-reporter, spec-XML-reporter
+
+var consoleReporter = require(`jasmine-custom-reporters/spec-console-reporter`);
+//jasmine.getEnv().clearReporters() # use this statement to clear default reporters 
+jasmine.getEnv().addReporter(consoleReporter); //  Add this statement to proctractor config file in onPrepare function
+
+var JSONReporter = require(`jasmine-custom-reporters/spec-json-reporter`);
+var jsonReporter = new JSONReporter('path-to-your-file.json');
+//jasmine.getEnv().clearReporters() // use this statement to clear default reporters
+jasmine.getEnv().addReporter(jsonReporter); // Add this statement to proctractor config file in onPrepare function
+
+var XMLReporter = require(`jasmine-custom-reporters/spec-XML-reporter`);
+var xmlReporter = new XMLReporter('path-to-your-file.xml');
+//jasmine.getEnv().clearReporters() // use this statement to clear default reporters
+jasmine.getEnv().addReporter(xmlReporter); // Add this statement to proctractor config file in onPrepare function
+
+----------------------------------------------------------------------
+
+var myReporter = {
+      jasmineStarted: function(suiteInfo) {
+       console.log('Running suite with ' + suiteInfo.totalSpecsDefined);
+      },
+      suiteStarted: function(result) {
+       console.log('Suite started: ' + result.description + ' whose full description is: ' + result.fullName);
+      },
+      specStarted: function(result) {
+       console.log('Spec started: ' + result.description + ' whose full description is: ' + result.fullName);
+      },
+      specDone: function(result) {
+       console.log('Spec: ' + result.description + ' was ' + result.status);
+       for(var i = 0; i < result.failedExpectations.length; i++) {
+        console.log('Failure: ' + result.failedExpectations[i].message);
+        console.log(result.failedExpectations[i].stack);
+       }
+       console.log(result.passedExpectations.length);
+      },
+      suiteDone: function(result) {
+        console.log('Suite: ' + result.description + ' was ' + result.status);
+        for(var i = 0; i < result.failedExpectations.length; i++) {
+         console.log('AfterAll ' + result.failedExpectations[i].message);
+         console.log(result.failedExpectations[i].stack);
+        }
+      },
+    
+      jasmineDone: function() {
+       console.log('Finished suite');
+      }
+    };
+  
+    jasmine.getEnv().addReporter(myReporter);
+	
+-----------------------------------------------------
+
+	var logger = require('./log');
+
+    var numberOfPassed = 0;
+    var numberOfFailed = 0;
+    var numberOfPending = 0;
+
+    var myReporter = {
+      jasmineStarted: function(suiteInfo) {
+       console.log('Running suite with ' + suiteInfo.totalSpecsDefined);
+       logger.log('info', 'Running suite with ' + suiteInfo.totalSpecsDefined);
+      },
+
+      suiteStarted: function(result) {
+       console.log('Suite started: ' + result.description);
+       logger.log('info', 'Suite started: ' + result.description);
+      },
+
+      specStarted: function(result) {
+       console.log('Spec started: ' + result.description);
+       logger.log('info', 'Spec started: ' + result.description);
+      },
+
+      specDone: function(result) {
+       console.log('Spec: -> ' + result.description + ' Status: -> ' + result.status);
+       logger.log('info', 'Spec: -> ' + result.description + ' Status: -> ' + result.status);
+       for(var i = 0; i < result.failedExpectations.length; i++) {
+        console.log('Failure: ' + result.failedExpectations[i].message);
+        logger.log('info', 'Failure: ' + result.failedExpectations[i].message);
+        console.log(result.failedExpectations[i].stack);
+        logger.log('info', result.failedExpectations[i].stack);
+       }
+       console.log('Passed expectations in --> '+result.description+' are:-> '+result.passedExpectations.length);
+       logger.log('info', 'Passed expectations in --> '+result.description+' are:-> '+result.passedExpectations.length);
+       if(result.status === 'passed'){
+         numberOfPassed++;
+       }else if(result.status === 'failed'){
+         numberOfFailed++;
+       }
+       else{
+         numberOfPending++;
+       }
+      },
+
+      suiteDone: function(result) {
+        console.log('Suite: -> ' + result.description + ' Status: -> ' + result.status);
+        logger.log('info', 'Suite: -> ' + result.description + ' Status: -> ' + result.status);
+        for(var i = 0; i < result.failedExpectations.length; i++) {
+         console.log('AfterAll ' + result.failedExpectations[i].message);
+         logger.log('info', 'AfterAll ' + result.failedExpectations[i].message);
+         console.log(result.failedExpectations[i].stack);
+         logger.log('info', result.failedExpectations[i].stack);
+        }//console.log('passed in suite: '+numberOfPassed+' failed: '+numberOfFailed+' pending '+numberOfPending);
+      },
+    
+      jasmineDone: function() {
+       console.log('Finished suite');
+       console.log('##### passed: '+numberOfPassed+'##### failed: '+numberOfFailed+'##### pending: '+numberOfPending);
+       logger.log('info','========================================================================');
+       logger.log('info','========================================================================');
+       logger.log('info','passed: '+numberOfPassed+' failed: '+numberOfFailed+' pending: '+numberOfPending);
+       logger.log('info','========================================================================');
+      }
+      
+    };
+  
+    jasmine.getEnv().addReporter(myReporter);	
+
+-------------------------------------------------------------------------------------------
+ProtractorJasmine2HTMLReporter:
+
+https://www.npmjs.com/package/protractor-jasmine2-html-reporter
+
+var Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
+
+jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
+      savePath: './reports/'
+}));
+
+-------------------------------------------------------------------------------------------
+
+TeamcityReporter:
+
+var jasmineReporters = require('jasmine-reporters');
+jasmine.getEnv().addReporter(new jasmineReporters.TeamCityReporter());
+
+-------------------------------------------------------------------------------------------
+
+SpecReporter:
+
+const { SpecReporter } = require('jasmine-spec-reporter');
+jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+	
+-------------------------------------------------------------------------------------------
+
+////////////////////////*************** Mobile capabilities ********************///////////////////////////
+
+capabilities: {
+    'browserName': 'chrome',
+    chromeOptions: {
+        // disable "chrome is being controlled by automated software"
+        'args': ['disable-infobars=true',
+        '--user-agent="Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/600.1.3 (KHTML, like Gecko) Version/8.0 Mobile/12A4345d Safari/600.1.4"'],
+        //this can be used to configure chrome to be used on specified device.
+            mobileEmulation: {
+            "device": 'Apple iPhone 6 Plus',
+            "deviceMetrics": {
+                "width": 414,
+                "height": 736,
+                "pixelRatio": 3.0
+            }
+        }
+        
+    }
+  }
+  
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+https://github.com/angular/protractor/blob/master/docs/browser-setup.md
+/////////////////////********** Multicapabilities *************////////////////////////
+// conf.js
+exports.config = {
+  framework: 'jasmine',
+  seleniumAddress: 'http://localhost:4444/wd/hub',
+  specs: ['spec.js'],
+  multiCapabilities: [{
+    browserName: 'firefox'
+  }, {
+    browserName: 'chrome'
+  }]
+}
+
+////////////////*********** Parallel execution ****************/////////////////////////
+
+specs: [
+    'node_modules/jasmine-expect/index.js',
+    './specs/**/annotation.e2e-spec.ts',
+    './specs/**/legend.e2e-spec.ts'
+  ],
+  capabilities: {
+    'browserName': 'chrome',
+    shardTestFiles: true, 
+    maxInstances: 2,
+    chromeOptions: {
+      // disable "chrome is being controlled by automated software"
+      'args': ['disable-infobars=true']
+    }
+  },
+  
+  onPrepare() {
+    require('ts-node').register({
+      project: 'specs/tsconfig.e2e.json'
+    });
+	},
+	
+//////////////********** Runtime command line parameters **************////////////////////
+protractor protractor.conf.js --specs route/to/my/specs.js
+
+/////////////********* Parameterization **********//////////////
+module.exports = {
+  params: {
+    login: {
+      email: 'default',
+      password: 'default'
+    }
+  },
+    //  * other config options *
+}
+
+describe('describe some test', function() {
+
+  it('describe some step', function() {
+    $('.email').sendKeys(browser.params.login.email);
+    $('.password').sendKeys(browser.params.login.password);
+  });
+});
+
+Now, instead of using hard coded values, Protractor will use what is provided in the config file unless the user changes those values via the command line when running the spec file. To do this, add these flags to your protractor call:
+
+protractor conf.js --parameters.login.email=example@gmail.com 
+--parameters.login.password=foobar
+
+https://www.npmjs.com/package/parallel-protractor
+https://developers.perfectomobile.com/display/PD/Protractor+Parallel+Execution
+
+/////////////////////////**************** Configuring Test Suites *****************//////////////////////////////
+
+
+It is possible to separate your tests into various test suites. In your config file, you could setup the suites option as shown below:
+
+exports.config = {
+  // The address of a running selenium server.
+  seleniumAddress: 'http://localhost:4444/wd/hub',
+
+  // Capabilities to be passed to the webdriver instance.
+  capabilities: {
+    'browserName': 'chrome'
+  },
+
+  // Spec patterns are relative to the location of the spec file. They may
+  // include glob patterns.
+  suites: {
+    homepage: 'tests/e2e/homepage/**/*Spec.js',
+    search: ['tests/e2e/contact_search/**/*Spec.js',
+      'tests/e2e/venue_search/**/*Spec.js']
+  },
+
+  // Options to be passed to Jasmine-node.
+  jasmineNodeOpts: {
+    showColors: true, // Use colors in the command line report.
+  }
+};
+From the command line, you can then easily switch between running one or the other suite of tests. This command will run only the homepage section of the tests:
+
+protractor protractor.conf.js --suite homepage
+Additionally, you can run specific suites of tests with the command:
+
+protractor protractor.conf.js --suite homepage,search
+	
+////////////////////******************************* Headless Chrome **********************************///////////////////////////////
+http://www.webdriverjs.com/execute-protractor-tests-on-headless-chrome-browser/
+
+capabilities: {
+        'directConnect': true,
+        'browserName': 'chrome',
+        chromeOptions: {
+            args: ["--headless", "--disable-gpu", "--window-size=800x600"]
+        }
+    },
+	
+//////////////*********** Mobile setup ****************////////////////
+https://www.protractortest.org/#/mobile-setup
+
+///////////**** Timeout ******///////////
+https://www.protractortest.org/#/timeouts
+
