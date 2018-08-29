@@ -1,0 +1,131 @@
+<!-- https://mvnrepository.com/artifact/org.uncommons/reportng -->
+<dependency>
+    <groupId>org.uncommons</groupId>
+    <artifactId>reportng</artifactId>
+    <version>1.1.4</version>
+    <scope>test</scope>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/com.google.inject/guice -->
+<dependency>
+    <groupId>com.google.inject</groupId>
+    <artifactId>guice</artifactId>
+    <version>4.2.0</version>
+</dependency>
+
+/////////////////////////////////////////////////////////////////////////////////
+
+///////// Scenario java file ///////////////
+
+package com.ad.testcases;
+
+import org.openqa.selenium.By;
+import org.testng.Assert;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+
+import com.ad.base.TestBase;
+import com.relevantcodes.extentreports.LogStatus;
+
+public class TestNgListenerExample extends TestBase {
+	
+	@Test
+	public void loginTest(){
+		System.setProperty("org.uncommons.reportng.escape-output","false");
+		
+		driver.findElement(By.id(OR.getProperty("username_input"))).sendKeys("admin");
+		
+		driver.findElement(By.id(OR.getProperty("userpwd_input"))).sendKeys("admin");
+		
+		driver.findElement(By.cssSelector("[class*="+OR.getProperty("submit_btn")+"]")).click();
+		
+		Reporter.log("Entered into admin console successfully.");
+		Reporter.log("<a href=\"C:\\logs\\error.png\"><img src=\"C:\\logs\\error.png\" height=200 width=200></img></a>");
+	}
+	
+	
+
+}
+
+///////////// In listener file ////////////
+
+package com.ad.listeners;
+
+import org.testng.ITestContext;
+import org.testng.ITestListener;
+import org.testng.ITestResult;
+import org.testng.Reporter;
+import com.ad.utilities.CaptureScreenShotUtil;
+
+import com.ad.base.TestBase;
+import com.relevantcodes.extentreports.LogStatus;
+
+/*
+ * 
+ 
+•	onStart is invoked first.
+•	onTestStart is called once for each test before it is invoked.
+•	onTestSuccess is invoked whenever a test passes. In our example, t1 always passes whereas, t4 passes three times.
+•	onTestFailure is called for t2 as t2 will always fail. It is also called for t4 as it fails twice out of five times that it is invoked.
+•	onTestSkipped is called once for t3 as it is bound to skip.
+•	onTestFailedButWithinSuccessPercentage is called once for t4, the first time it fails. It is not called again as it doesn’t match the requested successPercentage of 80
+•	Finally onFinish is called once when the tests are all run.
+
+ * 
+ * */
+
+public class TestListenerForExtentReport extends TestBase implements ITestListener {
+
+	@Override
+	public void onFinish(ITestContext context) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void onStart(ITestContext context) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void onTestFailedButWithinSuccessPercentage(ITestResult arg0) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void onTestFailure(ITestResult Result) {
+		// TODO Auto-generated method stub
+		System.setProperty("org.uncommons.reportng.escape-output","false");
+		String screenShotPath = CaptureScreenShotUtil.captureScreenShot();
+		Reporter.log("<a href="+screenShotPath+">Screenshot</a>");
+		
+	}
+
+	@Override
+	public void onTestSkipped(ITestResult Result) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onTestStart(ITestResult Result) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onTestSuccess(ITestResult Result) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}
+
+//////////////////////////////////////////////////////////////////////
+
+/////////// testng.xml ////////////
+
+<listeners>
+		<listener class-name="org.uncommons.reportng.HTMLReporter"/>
+		<listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
+</listeners>
+
