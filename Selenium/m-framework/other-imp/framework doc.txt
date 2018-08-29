@@ -1,0 +1,24 @@
+1- Download Eclipse( I am using Luna): Luna - http://download.eclipse.org/releases/luna
+2- Configure the testNG (Help->Install new software): TestNG Eclipse - http://beust.com/eclipse/
+3- Create a maven project.
+4- Create the directory structure:
+src/test/java:
+				- com.ad.base (TestBase or SoulClass of the framework)
+				- com.ad.listeners (All customized listeners)
+				- com.ad.testcases (All test scenarios)
+				- com.ad.utilities (ExcelReader, ExtentManager, LoggerUtil, BrowsreUtil, CaptureScreenshotUtil and other)
+				- com.ad.rough (for doing some random things)
+				- com.ad.pageobjects (Page Objects or locators of the application in respective folder/class files; if not OR.properties)
+				- com.ad.appactions (Inherits page object and write functions here)
+				
+src/test/resources:
+					- excel (xlsx file or other excel format files)
+					- executables (browsers exe and other)
+					- extentconfig (extent config xml)
+					- logs (log files are created here, this can also contains log-config-properties xml and properties)
+					- properties (you keep here config.properties, OR.properties)
+					- runner (testng.xml)
+					
+pom.xml
+
+
