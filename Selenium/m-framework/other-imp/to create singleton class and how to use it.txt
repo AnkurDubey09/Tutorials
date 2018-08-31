@@ -1,0 +1,153 @@
+1- Create a Driver class to use its instance as singleton class' object.
+
+ex:
+
+package com.ad.utilities;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+
+import config.Configurations;
+
+public class Driver {
+	
+	public static WebDriver driverInstance = null;
+	
+	public static void initializeDriver(){
+		
+		if(driverInstance == null){
+			
+			System.out.println("Initializing Driver");
+			
+			if(Configurations.Browser.browser.equals("chrome")){
+				
+				System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"\\src\\test\\resources\\executables\\chromedriver.exe");
+				driverInstance = new ChromeDriver();
+				
+			}else if(Configurations.Browser.browser.equals("firefox")){
+				
+				//System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"\\src\\test\\resources\\executables\\geckodriver.exe");
+				driverInstance = new FirefoxDriver();
+				
+			}else if(Configurations.Browser.browser.equals("ie")){
+				
+				System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"\\src\\test\\resources\\executables\\IEDriverServer.exe");
+				driverInstance = new InternetExplorerDriver();
+				
+			}
+			
+			driverInstance.manage().timeouts().implicitlyWait(Configurations.Timeout.implicitlyTimeout, TimeUnit.SECONDS);
+			driverInstance.manage().window().maximize();
+			
+		}
+		
+	}
+	
+	public static WebDriver getInstanceOfDriver(){
+		
+		return driverInstance;
+		
+	}
+	
+	public static void close(){
+		
+		System.out.println("Closing Browser");
+		driverInstance.close();
+		driverInstance = null;
+		
+	}
+	
+	public static void quit() {
+
+		System.out.println("Quiting Browser");
+		driverInstance.quit();
+		driverInstance = null;
+
+	}
+
+}
+
+
+Now use this class's methods in any of @BeforeSuite, @BeforeClass or @BeforeTest methods as follows:
+
+TestBase.java:
+
+package com.ad.base;
+
+import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
+
+import com.ad.utilities.Driver;
+import com.ad.utilities.ExtentManager;
+import com.ad.utilities.LoggerUtils;
+
+import config.Configurations;
+
+public class TestBase{
+	
+	public static WebDriver driver = null;
+	public static WebDriverWait wait=null;
+		
+	@BeforeSuite
+	public void setup(){
+		
+		Driver.initializeDriver();
+		
+		driver = Driver.driverInstance;
+		
+		driver.navigate().to(Configurations.Url.url);
+		
+		wait = new WebDriverWait(driver, Configurations.Timeout.explicitlyTimeout); 
+				
+	}
+	
+	@AfterSuite
+	public void cleanup(){
+		
+		
+		
+	}
+	
+	@BeforeTest
+	public void setupBeforeTest(){
+		
+		
+		
+	}
+	
+	@AfterTest
+	public void cleanupAfterTest(){
+		
+		
+		
+	}
+	
+	@BeforeClass
+	public void setupBeforeClass(){
+		
+		
+		
+	}
+	
+	@AfterClass
+	public void cleanupAfterClass(){
+		
+		
+		
+	}
+	
+}
+
+Now your testcase classes can extend this TestBase.java and can use the same driver instance.
+
