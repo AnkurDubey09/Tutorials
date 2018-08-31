@@ -1,0 +1,80 @@
+There might be different ways to configure the config file which contains properties being used in the application:
+
+1- Use config.properties file which can be loaded and then its properties can be accessed using getProperty() method.
+
+example:
+config.properties ->
+
+browser=chrome
+testurl=http://localhost:8020/adminconsole/analyst
+pageloadtimeout=10
+Timeout=20
+explicitlywaittime=10
+testdata=D:\\Personal\\Sel_Java_Framework\\SelHybridFramework\\src\\test\\resources\\excel\\testdata.xlsx
+sheetname=Sheet1
+colname=TestName
+status=Run
+
+Now load this file in your class ->
+
+public static Properties config = new Properties();
+public static FileInputStream fis;
+
+try {
+		fis = new FileInputStream(System.getProperty("user.dir")+"\\src\\test\\resources\\properties\\Config.properties");
+	} catch (FileNotFoundException e) {
+				
+				e.printStackTrace();
+	}
+			
+try {
+		config.load(fis);
+	} catch (IOException e) {
+				
+				e.printStackTrace();
+	}
+	
+Now access the properties using ->
+
+config.getProperty("status") // This will return the 'Run' as configured above.
+
+2- We can create a public class and inside it, further can create classes for the modules and then in respective classes
+we can keep the public static properties. Now we can import this parent class and can access the static variables as properties.
+
+Ex.
+
+package config;
+
+public class Configurations {
+	
+	public class Browser{
+		
+		public static final String browser = "chrome";
+		
+	}
+	
+	public class Url{
+		
+		public static final String url = "http://localhost:8020/adminconsole/analyst";
+		
+	}
+	
+	public class Timeout{
+		
+		public static final int pageLoadTimeout = 10;
+		
+		public static final int implicitlyTimeout = 20;
+		
+		public static final int explicitlyTimeout = 10;
+	}
+
+}
+
+Now, use them as ->
+
+Configurations.Browser.browser // will return 'chrome'.
+
+3- Can use xlsx files to keep the properties and their values and then can use them.
+
+
+
