@@ -1,0 +1,166 @@
+********* Grid-To run automation on multiple machines or nodes on different browsers *********
+1- Download Selenium standalone server from https://www.seleniumhq.org/download/
+2- Open command prompt and run following command to run the hub:
+java -jar D:\jars\selenium\selenium-server-standalone-3.14.0.jar -role hub
+3- Open the command prompt and run following command to run the node and registering it with hub:
+java -Dwebdriver.chrome.driver="D:\jars\latest\chromedriver.exe" -jar D:\jars\selenium\selenium-server-standalone-3.14.0.jar -role node -hub http://192.168.1.102:4444/grid/register/
+4- Open editor and do following as mentioned in below example:
+	- Define desired capabilities
+	- Chrome options defined
+	- Define nodeURL, this should consist of node hub's url
+	- Get instance of RemoteWebDriver containing nodeURL and capabilities objects
+
+
+Example:
+
+For chrome:
+
+package com.ad.rough;
+
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.Platform;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+
+public class TestProperties {
+	
+	public static WebDriver driver;
+
+	public static void main(String[] args) throws IOException{
+		
+		// 1. Define desired capabilities
+		
+		DesiredCapabilities caps = new DesiredCapabilities();
+		caps.setBrowserName("chrome");
+		caps.setPlatform(Platform.WINDOWS);
+		
+		// 2. Chrome options defined
+		ChromeOptions co= new ChromeOptions();
+		co.merge(caps);
+		
+		String nodeUrl = "http://192.168.1.102:4444/wd/hub";//This is url from hub console -  Clients should connect to http://192.168.1.102:4444/wd/hub
+        driver = new RemoteWebDriver(new URL(nodeUrl), co);
+        
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.get("http://www.google.com");
+        System.out.println("Title is ===> "+ driver.getTitle());
+        
+        driver.findElement(By.name("q")).sendKeys("selenium grid");
+        Actions action = new Actions(driver); 
+		action.sendKeys(Keys.ENTER).build().perform();
+        
+	}
+	
+	
+}
+
+For firefox (gecko driver):
+
+Run following command to run and register the node with hub:
+
+java -Dwebdriver.gecko.driver="D:\jars\latest\geckodriver.exe" -jar D:\jars\selenium\selenium-server-standalone-3.14.0.jar -role node -hub http://192.168.1.102:4444/grid/register/
+
+package com.ad.rough;
+
+
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.Platform;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+public class TestProperties {
+		
+	public static WebDriver driver;
+	
+	public static void main(String[] args) throws IOException{
+		
+		// 1. Define desired capabilities
+		DesiredCapabilities caps = new DesiredCapabilities();
+		caps.setBrowserName("firefox");
+		caps.setPlatform(Platform.WINDOWS);
+		
+		// 2. Chrome options defined
+		FirefoxOptions co= new FirefoxOptions();
+		co.merge(caps);
+	
+		String nodeUrl = "http://192.168.1.102:4444/wd/hub";
+        driver = new RemoteWebDriver(new URL(nodeUrl), co);
+        
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.get("http://www.google.com");
+        System.out.println("Title is ===> "+ driver.getTitle());
+        
+        driver.findElement(By.name("q")).sendKeys("selenium grid");
+        Actions action = new Actions(driver); action.sendKeys(Keys.ENTER).build().perform();
+        
+	}
+	
+	
+}
+
+For IE:
+Run following command to run and register the node with hub:
+java -Dwebdriver.ie.driver="D:\jars\latest\IEDriverServer.exe" -jar D:\jars\selenium\selenium-server-standalone-3.14.0.jar -role node -hub http://192.168.1.102:4444/grid/register/
+
+package com.ad.rough;
+
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.Platform;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.ie.InternetExplorerOptions;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+public class TestProperties {
+	
+	private static final Logger LOGGER = LogManager.getLogger(TestProperties.class.getName());
+
+	public static WebDriver driver;
+
+	public static void main(String[] args) throws IOException{
+		
+		// 1. Define desired capabilities
+		//System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"\\src\\test\\resources\\executables\\chromedriver.exe");
+		DesiredCapabilities caps = new DesiredCapabilities();
+		caps.setBrowserName("internet explorer");
+		caps.setPlatform(Platform.WINDOWS);
+		
+		// 2. Chrome options defined
+		InternetExplorerOptions co= new InternetExplorerOptions();
+		co.merge(caps);
+	
+		String nodeUrl = "http://192.168.1.102:4444/wd/hub";
+        driver = new RemoteWebDriver(new URL(nodeUrl), co);
+        
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.get("http://www.google.com");
+        System.out.println("Title is ===> "+ driver.getTitle());
+        
+        driver.findElement(By.name("q")).sendKeys("selenium grid");
+        Actions action = new Actions(driver); 
+        action.sendKeys(Keys.ENTER).build().perform();
+        
+	}
+
+}
+

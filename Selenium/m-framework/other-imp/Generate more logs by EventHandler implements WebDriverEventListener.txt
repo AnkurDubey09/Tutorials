@@ -1,0 +1,237 @@
+You must have always craved for more logs from the Webdriver so that you can debug your scripts or may be log more information about your tests. Here is your answer to it, EventFiringWebDriver and the WebDriverEventListner. EventFiringWebDriver is a class and is used to wrap your webdriver around to throw events and WebDriverEventListner is an interface which you have to implement to catch the webdriver events. Don’t worry if you didn’t understand what I just wrote, I will explain you in steps.
+First thing to understand is your EventFiringWebDriver class. This is a class that implements the WebDriver interface. What the hell does that mean? It means that you will get all your regular webdriver methods like
+– findElementById
+– findElementByTagName
+In addition to this you will have two methods
+– register(WebDriverEventListener eventListener)
+– unregister(WebDriverEventListener eventListener)
+Register method will let you register our implementation of WebDriverEventListner to listen to the WebDriver events and with unregister you will be able to detach.
+ 
+Step 1: Implement the Selenium WebDriver Event Listener Interface
+I have created a class called EventHandler and implemented WebDriverEventListner. Once you have implemented WebDriverEventListner you will have to implement the list of methods as shown below in the code.
+package test;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.events.WebDriverEventListener;
+
+public class EventHandler implements WebDriverEventListener{
+
+	public void afterChangeValueOf(WebElement arg0, WebDriver arg1) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void afterClickOn(WebElement arg0, WebDriver arg1) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void afterFindBy(By arg0, WebElement arg1, WebDriver arg2) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void afterNavigateBack(WebDriver arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void afterNavigateForward(WebDriver arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void afterNavigateTo(String arg0, WebDriver arg1) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void afterScript(String arg0, WebDriver arg1) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void beforeChangeValueOf(WebElement arg0, WebDriver arg1) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void beforeClickOn(WebElement arg0, WebDriver arg1) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void beforeFindBy(By arg0, WebElement arg1, WebDriver arg2) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void beforeNavigateBack(WebDriver arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void beforeNavigateForward(WebDriver arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void beforeNavigateTo(String arg0, WebDriver arg1) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void beforeScript(String arg0, WebDriver arg1) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void onException(Throwable arg0, WebDriver arg1) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
+Here every method corresponds to an event. For eg. the afterNavigateTo() method. This one is called every time the navigate to a page is completed.
+
+	public void afterNavigateTo(String arg0, WebDriver arg1) {
+		// TODO Auto-generated method stub
+	}
+
+All we have to do is put some code inside the method so that our code is executed every time the page navigates to some other page. Ideally you would be adding your logging statements here. I have implemented simple print statements as shown in the more meaningful implementation shown below
+package test;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.events.WebDriverEventListener;
+
+public class EventHandler implements WebDriverEventListener{
+
+	public void afterChangeValueOf(WebElement arg0, WebDriver arg1) {
+		// TODO Auto-generated method stub
+
+		System.out.println("inside method afterChangeValueOf on " + arg0.toString());
+	}
+
+	public void afterClickOn(WebElement arg0, WebDriver arg1) {
+		// TODO Auto-generated method stub
+		System.out.println("inside method afterClickOn on " + arg0.toString());
+	}
+
+	public void afterFindBy(By arg0, WebElement arg1, WebDriver arg2) {
+		// TODO Auto-generated method stub
+		System.out.println("Find happened on " + arg1.toString() 
+				+ " Using method " + arg0.toString());
+	}
+
+	public void afterNavigateBack(WebDriver arg0) {
+		// TODO Auto-generated method stub
+
+		System.out.println("Inside the after navigateback to " + arg0.getCurrentUrl());
+	}
+
+	public void afterNavigateForward(WebDriver arg0) {
+		// TODO Auto-generated method stub
+		System.out.println("Inside the afterNavigateForward to " + arg0.getCurrentUrl());
+	}
+
+	public void afterNavigateTo(String arg0, WebDriver arg1) {
+		// TODO Auto-generated method stub
+		System.out.println("Inside the afterNavigateTo to " + arg0);
+	}
+
+	public void afterScript(String arg0, WebDriver arg1) {
+		// TODO Auto-generated method stub
+		System.out.println("Inside the afterScript to, Script is " + arg0);
+	}
+
+	public void beforeChangeValueOf(WebElement arg0, WebDriver arg1) {
+		// TODO Auto-generated method stub
+
+		System.out.println("Inside the beforeChangeValueOf method");
+	}
+
+	public void beforeClickOn(WebElement arg0, WebDriver arg1) {
+		// TODO Auto-generated method stub
+		System.out.println("About to click on the " + arg0.toString());
+
+	}
+
+	public void beforeFindBy(By arg0, WebElement arg1, WebDriver arg2) {
+		// TODO Auto-generated method stub
+		System.out.println("Just before finding element " + arg1.toString());
+
+	}
+
+	public void beforeNavigateBack(WebDriver arg0) {
+		// TODO Auto-generated method stub
+		System.out.println("Just before beforeNavigateBack " + arg0.getCurrentUrl());
+
+	}
+
+	public void beforeNavigateForward(WebDriver arg0) {
+		// TODO Auto-generated method stub
+		System.out.println("Just before beforeNavigateForward " + arg0.getCurrentUrl());
+
+	}
+
+	public void beforeNavigateTo(String arg0, WebDriver arg1) {
+		// TODO Auto-generated method stub
+		System.out.println("Just before beforeNavigateTo " + arg0);
+	}
+
+	public void beforeScript(String arg0, WebDriver arg1) {
+		// TODO Auto-generated method stub
+		System.out.println("Just before beforeScript " + arg0);
+	}
+
+	public void onException(Throwable arg0, WebDriver arg1) {
+		// TODO Auto-generated method stub
+		System.out.println("Exception occured at " + arg0.getMessage());
+
+	}
+
+}
+Once you are done with your event handler its time to throw some events.
+ 
+Step 2: Create Event Throwing WebDriver
+1) Create a regular WebDriver.
+
+FirefoxDriver driver = new FirefoxDriver();
+
+2) Now create an EventThrowingWebDriver using our regular WebDriver created above.
+EventFiringWebDriver eventDriver = new EventFiringWebDriver(driver);
+3) Create an instance of your eventHandler class and register it for events using the register method of EventFiringWebDriver object created above. Here is the code
+EventHandler handler = new EventHandler();
+eventDriver.register(handler);
+
+Now do you regular stuff and you will see how all the events are captured and how the print statements that we have set print respective logs.
+Here is the test,  follow the steps and modify your logging or whatever you would like to do in the event calls.
+
+package test;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
+
+public class programMain {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+         FirefoxDriver driver = new FirefoxDriver();
+         EventFiringWebDriver eventDriver = new EventFiringWebDriver(driver);
+
+		EventHandler handler = new EventHandler();
+		eventDriver.register(handler);
+		eventDriver.get("http://toolsqa.wpengine.com/automation-practice-switch-windows/");
+		WebElement element = eventDriver.findElement(By.id("target"));
+		element.click();
+
+	}
+
+}
