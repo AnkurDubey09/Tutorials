@@ -1,0 +1,43 @@
+ITestContext:
+ITestContext is basically used to store and share data across the tests in selenium by using TestNG framework.
+Let us consider below scenario – 
+We have 10 test cases (@Test methods) to be executed to complete one end to end test case. Now in call 10 test cases (@Test methods) we are sharing some data like “Customer_id”, which should be unique and same in our end to end test case i.e. in our 10 @Test methods. During the execution of end to end test case, it should be same.
+To handle this scenario, we have two ways – 
+            1.      If all 10 @Test methods are in same class, then we can store “Customer_id”  in a class level variable (instance variable)  and share it. But it may require high maintenance.
+          
+            2.      Another way to handle this is, ITestContext
+Let us see How ITestContext works.
+In any @Test method, we can use “iTestContext” by passing it as a parameter to the method.  Syntax as below – 
+
+package iTestContextLearn;
+
+import org.testng.ITestContext;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+public class Test1 {
+
+ @BeforeTest
+ public void SetData(ITestContext context){
+ 
+  String Customer_id = "C11012034";
+  context.setAttribute("CustID", Customer_id);
+  System.out.println("Value is stored in ITestContext");
+  System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
+
+ }
+ @Test
+ public void Test1a(ITestContext context){
+  String Customer_id1 = (String) context.getAttribute("CustID");
+  System.out.println("In Test1, Value stored in context is: "+Customer_id1);
+  System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
+
+ }
+ @Test
+ public void Test2a(ITestContext context){
+  String Customer_id1 = (String) context.getAttribute("CustID");
+  System.out.println("In Test2, Value stored in context is: "+Customer_id1);
+  System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
+
+ }
+}
