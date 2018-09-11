@@ -1,0 +1,30 @@
+<suite name="TestSuite">
+  <parameter name="perfectoURL"  value="https://yourcloud.perfectomobile.com"/>
+  <parameter name="perfectoUserName"  value="username"/>
+  <parameter name="perfectoPassword"  value="password"/>
+  <parameter name="inputWorkbook"  value="test.xlsx"/>
+   
+  <test name="iPhone Tests">
+     <parameter name="deviceSheet"  value="iPhone"/>
+     <parameter name="devicesPerTest"  value="3"/>
+     <parameter name="testFailureRetries"  value="1"/>
+      <classes>
+        <class name="testing.Phone2TestNG" >
+            <methods>
+                ...
+				
+				
+				
+HashMap<String,String> parameters = new HashMap<String, String>(testContext.getCurrentXmlTest().getAllParameters());
+
+
+/// To run the specific xml file, run following command: 
+mvn test -DsuiteXmlFile=testng.xml
+mvn test -Dtest=TestNgListenerExample // execute an entire class.
+mvn test -Dtest=TestNgListenerExample#loginTest //execute a specific test from a class.
+
+/// You can set the testng on pom.xml for run time:
+
+<suiteXmlFiles>
+    <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
+</suiteXmlFiles> 
