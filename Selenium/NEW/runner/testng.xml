@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite" parallel="none">
+<listeners>
+	<listener class-name="org.uncommons.reportng.HTMLReporter" />
+	<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+	<listener class-name="com.ad.auto.sel.listeners.TestListenerForLogs" />
+	<listener class-name="com.ad.auto.sel.listeners.TestListenerForExtentReport" />
+</listeners>
+<parameter name="browser" value="Firefox"></parameter>
+  <test name="Test">
+  	<classes>
+  		<class name="com.ad.auto.sel.tests.ORExampleExpediaPageTest"></class>
+  	</classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->

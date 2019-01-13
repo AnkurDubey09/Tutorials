@@ -164,14 +164,5 @@ public class TestProperties {
 
 }
 
-/// To run the specific xml file, run following command: 
-mvn test -DsuiteXmlFile=testng.xml
-mvn test -Dtest=TestNgListenerExample // execute an entire class.
-mvn test -Dtest=TestNgListenerExample#loginTest //execute a specific test from a class.
 
-/// You can set the testng on pom.xml for run time:
-
-<suiteXmlFiles>
-    <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
-</suiteXmlFiles> 
 
