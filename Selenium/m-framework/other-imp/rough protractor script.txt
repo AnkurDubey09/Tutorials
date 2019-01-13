@@ -1,0 +1,51 @@
+describe('@Admin console to set the template with the table', ()=>{
+    let tData = require('../../data/template_data.json');
+
+    xit('::ROUGH::WORK::',()=>{
+
+        console.log('Template Names are :************');
+        for(var i=0; i<templateNames.length; i++){
+            console.log('>>>>>>>>>> ', templateNames[i]);
+        }
+
+    });
+
+    it('admin console - configuring template with the table(s).', ()=>{
+       
+        browser.driver.get('http://localhost:8020/adminconsole/analyst');
+
+        browser.ignoreSynchronization = true;
+        
+        element(by.css('[name="j_username"]')).sendKeys('admin');
+        element(by.css('[name="j_password"]')).sendKeys('admin');
+        element(by.css('[value="Submit"]')).click();
+        element(by.css('[id="mainTabContainer_tablist_mapconfigstab"]')).click();
+        element(by.css('[id="mapconfiginnertabs_tablist_templateMappingContainer"]')).click();
+        browser.driver.sleep(2000);
+
+        let ini = tData.automate == -1 ? 0 : tData.automate;
+        let len = (tData.automate == -1 ? tData.data_array.length : ini + 1);
+
+        for (let ind = ini; ind < len; ind++) {
+            let templateData = tData.data_array[ind];
+            let template_name = templateData.template_name.create_template;
+            let table_path = templateData.table.table_path;
+            element.all(by.css('[id="templateMappingContainer"]>div>div:nth-of-type(2) li>div:nth-of-type(1)')).each((elm, ind) => {
+                elm.getText().then((val) => {
+                    if (val === table_path) {console.log(' table_path ==> ', table_path, 'ind is ',ind, 'val ===> ',val);
+                        element(by.css('li:nth-of-type(' + (ind + 1) + ') select[id="mapInformationTemplates"]')).click().then(() => {
+                            element.all(by.css('li:nth-of-type(' + (ind + 1) + ') [id="mapInformationTemplates"] option')).each((elm, ind) => {
+                                elm.getText().then((val) => {
+                                    if (val === template_name) {
+                                        elm.click();
+                                    }
+                                });
+                            });
+                        });
+                    }
+                });
+            });
+        }
+        element(by.css('[id="mapconfigurationsave"]')).click();
+    });
+});
