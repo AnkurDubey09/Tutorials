@@ -1,0 +1,527 @@
+{
+	"info": {
+		"_postman_id": "39ca2fee-1915-4629-86f9-feb20d6b0ea2",
+		"name": "zomato-workflows",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "zomato-search-restaurant-cuisine-est-cat-rating-order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f5ae43a0-f0e9-4ed4-9601-68772cee9c5e",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"const response = pm.response.json();",
+							"",
+							"let user_ratings_obj = {",
+							"    \"aggregate_rating\": \"3.6\",",
+							"    \"rating_text\": \"Good\",",
+							"    \"rating_color\": \"9ACD32\",",
+							"    \"votes\": \"83\",",
+							"    \"has_fake_reviews\": 0",
+							"}",
+							"",
+							"let est_type_obj = {",
+							"    \"id\": \"5\",",
+							"    \"name\": \"Lounge\"",
+							"}",
+							"",
+							"let location_obj = {",
+							"    \"address\": \"Infront of bank of India, City Center, Gwalior\",",
+							"    \"locality\": \"City Center\",",
+							"    \"city\": \"Gwalior\",",
+							"    \"city_id\": 11337,",
+							"    \"latitude\": \"26.2078455766\",",
+							"    \"longitude\": \"78.1916499138\",",
+							"    \"zipcode\": \"\",",
+							"    \"country_id\": 1,",
+							"    \"locality_verbose\": \"City Center, Gwalior\"",
+							"}",
+							"",
+							"pm.test(\"Body have following properties\", function () {",
+							"    pm.expect(response).to.have.property(\"results_found\");",
+							"    pm.expect(response).to.have.property(\"results_start\");",
+							"    pm.expect(response).to.have.property(\"results_shown\");",
+							"    pm.expect(response).to.have.property(\"restaurants\");",
+							"    pm.expect(response.restaurants[0]).to.have.property(\"restaurant\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"R\");",
+							"    pm.expect(response.restaurants[0].restaurant.R).to.have.property(\"res_id\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"apikey\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"name\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"id\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"url\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"location\");",
+							"    pm.expect(response.restaurants[0].restaurant.location).to.have.property(\"address\");",
+							"    pm.expect(response.restaurants[0].restaurant.location).to.have.property(\"locality\");",
+							"    pm.expect(response.restaurants[0].restaurant.location).to.have.property(\"city\");",
+							"    pm.expect(response.restaurants[0].restaurant.location).to.have.property(\"city_id\");",
+							"    pm.expect(response.restaurants[0].restaurant.location).to.have.property(\"latitude\");",
+							"    pm.expect(response.restaurants[0].restaurant.location).to.have.property(\"longitude\");",
+							"    pm.expect(response.restaurants[0].restaurant.location).to.have.property(\"zipcode\");",
+							"    pm.expect(response.restaurants[0].restaurant.location).to.have.property(\"country_id\");",
+							"    pm.expect(response.restaurants[0].restaurant.location).to.have.property(\"locality_verbose\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"switch_to_order_menu\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"cuisines\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"average_cost_for_two\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"price_range\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"currency\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"offers\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"opentable_support\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"is_zomato_book_res\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"mezzo_provider\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"is_book_form_web_view\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"book_form_web_view_url\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"book_again_url\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"thumb\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"user_rating\");",
+							"    pm.expect(response.restaurants[0].restaurant.user_rating).to.have.property(\"aggregate_rating\");",
+							"    pm.expect(response.restaurants[0].restaurant.user_rating).to.have.property(\"rating_text\");",
+							"    pm.expect(response.restaurants[0].restaurant.user_rating).to.have.property(\"rating_color\");",
+							"    pm.expect(response.restaurants[0].restaurant.user_rating).to.have.property(\"votes\");",
+							"    //pm.expect(response).to.have.property(\"custom_rating_text\");",
+							"    //pm.expect(response).to.have.property(\"custom_rating_text_background\");",
+							"    //pm.expect(response).to.have.property(\"rating_tool_tip\");",
+							"    pm.expect(response.restaurants[0].restaurant.user_rating).to.have.property(\"has_fake_reviews\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"photos_url\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"menu_url\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"mezzo_provider\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"featured_image\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"has_online_delivery\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"is_delivering_now\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"has_fake_reviews\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"include_bogo_offers\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"deeplink\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"order_url\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"order_deeplink\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"is_table_reservation_supported\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"has_table_booking\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"events_url\");",
+							"    pm.expect(response.restaurants[0].restaurant).to.have.property(\"establishment_types\");",
+							"    pm.expect(response.restaurants[0].restaurant.establishment_types).to.have.property(\"establishment_type\");",
+							"    pm.expect(response.restaurants[0].restaurant.establishment_types.establishment_type).to.have.property(\"id\");",
+							"    pm.expect(response.restaurants[0].restaurant.establishment_types.establishment_type).to.have.property(\"name\");",
+							"});",
+							"",
+							"pm.test(\"Body should include following values as object\", function () {",
+							"    pm.expect(response.restaurants[0].restaurant.user_rating).to.include(user_ratings_obj);",
+							"    pm.expect(response.restaurants[0].restaurant.establishment_types.establishment_type).to.include(est_type_obj);",
+							"    pm.expect(response.restaurants[0].restaurant.location).to.include(location_obj);",
+							"});",
+							"",
+							"pm.test(\"Body should include following values for the properties\", function () {",
+							"    pm.expect(response.restaurants[0].restaurant.name).to.eql(\"The Frappe House\");",
+							"    pm.expect(response.restaurants[0].restaurant.id).to.eql(\"18739146\");",
+							"    pm.expect(response.restaurants[0].restaurant.currency).to.eql(\"Rs.\");",
+							"    pm.expect(response.restaurants[0].restaurant.has_online_delivery).to.eql(1);",
+							"    pm.expect(response.restaurants[0].restaurant.is_delivering_now).to.eql(1);",
+							"});",
+							"",
+							"pm.test(\"Data types of properties should be\", function(){",
+							"    //pm.expect(response.restaurants).to.be.array;",
+							"    pm.expect(response.results_found).to.be.a('number');",
+							"    pm.expect(response.restaurants).to.be.a('array');",
+							"    pm.expect(response.restaurants[0].restaurant.include_bogo_offers).to.be.a('boolean');",
+							"    pm.expect(response.restaurants[0].restaurant.photos_url).to.be.a('string');",
+							"    pm.expect(response.restaurants[0].restaurant.user_rating).to.be.a('object');",
+							"    pm.expect(response.restaurants[0].restaurant.offers).to.be.a('array');",
+							"});",
+							"",
+							"/*",
+							"pm.environment.unset(\"ent_id\");",
+							"pm.environment.unset(\"ent_type\");",
+							"pm.environment.unset(\"est_type\");",
+							"pm.environment.unset(\"cat\");",
+							"pm.environment.unset(\"sort\");",
+							"pm.environment.unset(\"order\");",
+							"pm.environment.unset(\"cusine1\");",
+							"pm.environment.unset(\"cusine1\");",
+							"pm.environment.unset(\"cusine1\");*/",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ceaaa5a8-f1e0-401b-a695-7f51d82aba66",
+						"exec": [
+							"pm.environment.set(\"ent_id\", 11337);",
+							"pm.environment.set(\"ent_type\", \"city\");",
+							"pm.environment.set(\"est_type\", 5);",
+							"pm.environment.set(\"cat\", 10);",
+							"pm.environment.set(\"sort\", \"rating\");",
+							"pm.environment.set(\"order\", \"desc\");",
+							"pm.environment.set(\"cusine1\", 2);",
+							"pm.environment.set(\"cusine1\", 30);",
+							"pm.environment.set(\"cusine1\", 40);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "user-key",
+						"value": "{{api-key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://developers.zomato.com/api/v2.1/search?entity_id={{ent_id}}&entity_type={{ent_type}}&cuisines={{cusine1}}&establishment_type={{est_type}}&category={{cat}}&sort={{sort}}&order={{order}}",
+					"protocol": "https",
+					"host": [
+						"developers",
+						"zomato",
+						"com"
+					],
+					"path": [
+						"api",
+						"v2.1",
+						"search"
+					],
+					"query": [
+						{
+							"key": "entity_id",
+							"value": "{{ent_id}}"
+						},
+						{
+							"key": "entity_type",
+							"value": "{{ent_type}}"
+						},
+						{
+							"key": "cuisines",
+							"value": "{{cusine1}}"
+						},
+						{
+							"key": "establishment_type",
+							"value": "{{est_type}}"
+						},
+						{
+							"key": "category",
+							"value": "{{cat}}"
+						},
+						{
+							"key": "sort",
+							"value": "{{sort}}"
+						},
+						{
+							"key": "order",
+							"value": "{{order}}"
+						}
+					]
+				},
+				"description": "https://developers.zomato.com/api/v2.1/search?entity_id=11337&entity_type=city&cuisines=2%2C30%2C40&establishment_type=5&category=10&sort=rating&order=desc"
+			},
+			"response": []
+		},
+		{
+			"name": "verify for invalid api key",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f5ae43a0-f0e9-4ed4-9601-68772cee9c5e",
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"Forbidden\");",
+							"});",
+							"",
+							"const response = pm.response.json();",
+							"",
+							"pm.test(\"Should show message as Invalid API Key\", function(){",
+							"    pm.expect(response.message).to.equal(\"Invalid API Key\");",
+							"});",
+							"",
+							"pm.environment.unset(\"ent_id\");",
+							"pm.environment.unset(\"ent_type\");",
+							"pm.environment.unset(\"est_type\");",
+							"pm.environment.unset(\"cat\");",
+							"pm.environment.unset(\"sort\");",
+							"pm.environment.unset(\"order\");",
+							"pm.environment.unset(\"cusine1\");",
+							"pm.environment.unset(\"cusine1\");",
+							"pm.environment.unset(\"cusine1\");",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ceaaa5a8-f1e0-401b-a695-7f51d82aba66",
+						"exec": [
+							"pm.environment.set(\"ent_id\", 11337);",
+							"pm.environment.set(\"ent_type\", \"city\");",
+							"pm.environment.set(\"est_type\", 5);",
+							"pm.environment.set(\"cat\", 10);",
+							"pm.environment.set(\"sort\", \"rating\");",
+							"pm.environment.set(\"order\", \"desc\");",
+							"pm.environment.set(\"cusine1\", 2);",
+							"pm.environment.set(\"cusine1\", 30);",
+							"pm.environment.set(\"cusine1\", 40);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "user-key",
+						"value": "invalid_api_key",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://developers.zomato.com/api/v2.1/search?entity_id={{ent_id}}&entity_type={{ent_type}}&cuisines={{cusine1}},{{cusine2}}.{{cusine3}}&establishment_type={{est_type}}&category={{cat}}&sort={{sort}}&order={{order}}",
+					"protocol": "https",
+					"host": [
+						"developers",
+						"zomato",
+						"com"
+					],
+					"path": [
+						"api",
+						"v2.1",
+						"search"
+					],
+					"query": [
+						{
+							"key": "entity_id",
+							"value": "{{ent_id}}"
+						},
+						{
+							"key": "entity_type",
+							"value": "{{ent_type}}"
+						},
+						{
+							"key": "cuisines",
+							"value": "{{cusine1}},{{cusine2}}.{{cusine3}}"
+						},
+						{
+							"key": "establishment_type",
+							"value": "{{est_type}}"
+						},
+						{
+							"key": "category",
+							"value": "{{cat}}"
+						},
+						{
+							"key": "sort",
+							"value": "{{sort}}"
+						},
+						{
+							"key": "order",
+							"value": "{{order}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "zomato-review",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "be4ca610-12a2-4863-8ff0-da78983b3102",
+						"exec": [
+							"pm.environment.set(\"res_id\",18739146);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "266a1e16-8e86-40f6-9b03-0ac66613ce8c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"const response = pm.response.json();",
+							"",
+							"",
+							"",
+							"pm.test(\"Body have following properties\", function () {",
+							"    pm.expect(response).to.have.property(\"reviews_count\");",
+							"    pm.expect(response).to.have.property(\"reviews_start\");",
+							"    pm.expect(response).to.have.property(\"reviews_shown\");",
+							"    pm.expect(response).to.have.property(\"user_reviews\");",
+							"    pm.expect(response.user_reviews[0]).to.have.property(\"review\");",
+							"    pm.expect(response.user_reviews[0].review).to.have.property(\"rating\");",
+							"    pm.expect(response.user_reviews[0].review).to.have.property(\"review_text\");",
+							"    pm.expect(response.user_reviews[0].review).to.have.property(\"id\");",
+							"    pm.expect(response.user_reviews[0].review).to.have.property(\"rating_color\");",
+							"    pm.expect(response.user_reviews[0].review).to.have.property(\"review_time_friendly\");",
+							"    pm.expect(response.user_reviews[0].review).to.have.property(\"rating_text\");",
+							"    pm.expect(response.user_reviews[0].review).to.have.property(\"timestamp\");",
+							"    pm.expect(response.user_reviews[0].review).to.have.property(\"timestamp\");",
+							"    pm.expect(response.user_reviews[0].review).to.have.property(\"review_time_friendly\");",
+							"    pm.expect(response.user_reviews[0].review).to.have.property(\"likes\");",
+							"    pm.expect(response.user_reviews[0].review).to.have.property(\"user\");",
+							"    pm.expect(response.user_reviews[0].review.user).to.have.property(\"name\");",
+							"    pm.expect(response.user_reviews[0].review.user).to.have.property(\"foodie_level\");",
+							"    pm.expect(response.user_reviews[0].review.user).to.have.property(\"foodie_level_num\");",
+							"    pm.expect(response.user_reviews[0].review.user).to.have.property(\"foodie_color\");",
+							"    pm.expect(response.user_reviews[0].review.user).to.have.property(\"profile_url\");",
+							"    pm.expect(response.user_reviews[0].review.user).to.have.property(\"profile_image\");",
+							"    pm.expect(response.user_reviews[0].review.user).to.have.property(\"profile_deeplink\");",
+							"    pm.expect(response.user_reviews[0].review).to.have.property(\"comments_count\");",
+							"    ",
+							"});",
+							"",
+							"pm.test(\"Data types of properties should be\", function(){",
+							"    //pm.expect(response.restaurants).to.be.array;",
+							"    pm.expect(response.reviews_count).to.be.a('number');",
+							"    pm.expect(response.user_reviews[0].review.rating).to.be.a('number');",
+							"    pm.expect(response.user_reviews).to.be.a('array');",
+							"    pm.expect(response.user_reviews[0].review.review_text).to.be.a('string');",
+							"    pm.expect(response.user_reviews[0].review).to.be.a('object');",
+							"    pm.expect(response.user_reviews[0].review.user).to.be.a('object');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "user-key",
+						"value": "{{api-key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://developers.zomato.com/api/v2.1/reviews?res_id={{res_id}}",
+					"protocol": "https",
+					"host": [
+						"developers",
+						"zomato",
+						"com"
+					],
+					"path": [
+						"api",
+						"v2.1",
+						"reviews"
+					],
+					"query": [
+						{
+							"key": "res_id",
+							"value": "{{res_id}}"
+						}
+					]
+				},
+				"description": "https://developers.zomato.com/api/v2.1/reviews?res_id=18739146"
+			},
+			"response": []
+		},
+		{
+			"name": "zomato-review for invalid res_id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "be4ca610-12a2-4863-8ff0-da78983b3102",
+						"exec": [
+							"pm.environment.set(\"res_id\",18739146);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "266a1e16-8e86-40f6-9b03-0ac66613ce8c",
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {",
+							"    pm.response.to.have.status(500);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "user-key",
+						"type": "text",
+						"value": "{{api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://developers.zomato.com/api/v2.1/reviews?res_id=invalid_res_id",
+					"protocol": "https",
+					"host": [
+						"developers",
+						"zomato",
+						"com"
+					],
+					"path": [
+						"api",
+						"v2.1",
+						"reviews"
+					],
+					"query": [
+						{
+							"key": "res_id",
+							"value": "invalid_res_id"
+						}
+					]
+				},
+				"description": "https://developers.zomato.com/api/v2.1/reviews?res_id=18739146"
+			},
+			"response": []
+		}
+	]
+}

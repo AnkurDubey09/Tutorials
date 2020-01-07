@@ -1,0 +1,10 @@
+curl -X GET --header "Accept: application/json" --header "user-key: 7551e1b7aac1cb39267c91a92184885f" "https://developers.zomato.com/api/v2.1/reviews?res_id=19039800"
+
+
+curl -X GET --header "Accept: application/json" --header "user-key: 7551e1b7aac1cb39267c91a92184885f" "https://developers.zomato.com/api/v2.1/search"
+
+
+curl -X GET --header "Accept: application/json" --header "user-key: 7551e1b7aac1cb39267c91a92184885f" "https://developers.zomato.com/api/v2.1/categories"
+
+
+curl -X GET --header "Accept: application/json" --header "user-key: 7551e1b7aac1cb39267c91a92184885f" "https://developers.zomato.com/api/v2.1/restaurant?res_id=19039800"

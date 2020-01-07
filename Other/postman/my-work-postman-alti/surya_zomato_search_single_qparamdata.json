@@ -1,0 +1,147 @@
+[
+	{
+		"qparam_name":"entity_id",
+		"qparam_value":11337,
+		"expected_param_name":"restaurants-restaurant-location-city",
+		"expected_value":"Raebareli",
+		"op_name": "nn"
+	},
+	{
+		"qparam_name":"entity_type",
+		"qparam_value":"city",
+		"expected_param_name":"restaurants-resultsFound",
+		"expected_value":1418920,
+		"op_name": "gt"
+	}
+	,
+	{
+		"qparam_name":"entity_type",
+		"qparam_value":"subzone",
+		"expected_param_name":"restaurants-resultsFound",
+		"expected_value":1418920,
+		"op_name": "gt"
+	}
+	,
+	{
+		"qparam_name":"entity_type",
+		"qparam_value":"zone",
+		"expected_param_name":"restaurants-resultsFound",
+		"expected_value":1418920,
+		"op_name": "gt"
+	}
+	,
+	{
+		"qparam_name":"entity_type",
+		"qparam_value":"landmark",
+		"expected_param_name":"restaurants-resultsFound",
+		"expected_value":1418920,
+		"op_name": "gt"
+	}
+	,
+	{
+		"qparam_name":"entity_type",
+		"qparam_value":"metro",
+		"expected_param_name":"restaurants-resultsFound",
+		"expected_value":1418920,
+		"op_name": "gt"
+	}
+	,
+	{
+		"qparam_name":"entity_type",
+		"qparam_value":"group",
+		"expected_param_name":"restaurants-resultsFound",
+		"expected_value":1418920,
+		"op_name": "gt"
+	},
+	{
+		"qparam_name":"start",
+		"qparam_value":10,
+		"expected_param_name":"restaurants-resultsStart",
+		"expected_value":10,
+		"op_name": "eql"
+	},
+	{
+		"qparam_name":"count",
+		"qparam_value":15,
+		"expected_param_name":"restaurants-resultsShown",
+		"expected_value":15,
+		"op_name": "eql"
+	},
+	{
+		"qparam_name":"lat",
+		"qparam_value":18.6528438157,
+		"expected_param_name":"restaurants-restaurant-location-city",
+		"expected_value":"Raebareli",
+		"op_name": "nn"
+	},
+	{
+		"qparam_name":"lon",
+		"qparam_value":73.7328519300,
+		"expected_param_name":"restaurants-restaurant-location-city",
+		"expected_value":"Raebareli",
+		"op_name": "nn"
+	},
+	{
+		"qparam_name":"cuisines",
+		"qparam_value":100,
+		"expected_param_name":"restaurants-restaurant-cuisines",
+		"expected_value":"Desserts",
+		"op_name": "inc"
+	},
+	{
+		"qparam_name":"establishment_type",
+		"qparam_value":8,
+		"expected_param_name":"restaurants-restaurant-establishmentTypes-establishmentType-name",
+		"expected_value":"Club",
+		"op_name": "inc"
+	},
+	{
+		"qparam_name":"collection_id",
+		"qparam_value":536,
+		"expected_param_name":"restaurants-restaurant-location-address",
+		"expected_value": "Pune-Mumbai Expressway, Ravet, Pune",
+		"op_name": "eql"
+	},
+	{
+		"qparam_name":"category",
+		"qparam_value":6,
+		"expected_param_name":"restaurants-restaurant-name",
+		"expected_value":"Hayyatt Cafe and Restaurant",
+		"op_name": "nn"
+	},
+	{
+		"qparam_name":"sort",
+		"qparam_value":"cost",
+		"expected_param_name":"restaurants-restaurant-name",
+		"expected_value":"Tea and Niceties",
+		"op_name": "nn"
+	},
+	{
+		"qparam_name":"sort",
+		"qparam_value":"rating",
+		"expected_param_name":"restaurants-restaurant-name",
+		"expected_value":"The Grand Thakar",
+		"op_name": "eql"
+	},
+	{
+		"qparam_name":"sort",
+		"qparam_value":"real_distance",
+		"expected_param_name":"NA",
+		"expected_value":500,
+		"op_name": ""
+	},
+	{
+		"qparam_name":"order",
+		"qparam_value":"asc",
+		"expected_param_name":"NA",
+		"expected_value":"",
+		"op_name": ""
+	},
+	{
+		"qparam_name":"order",
+		"qparam_value":"desc",
+		"expected_param_name":"NA",
+		"expected_value":"",
+		"op_name": ""
+	}
+]

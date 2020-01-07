@@ -1,0 +1,68 @@
+[
+	{
+		"qparams_name":"res_id start",
+		"qparams_value":"18739146 10",
+		"expected_params_name":"all_properties",
+		"expected_values":"NA"
+	},
+	{
+		"qparams_name":"res_id start",
+		"qparams_value":"18739146 10",
+		"expected_params_name":"all_datatypes",
+		"expected_values":"NA"
+	},
+	{
+		"qparams_name":"res_id start count",
+		"qparams_value":"18739146 10 5",
+		"expected_params_name":"reviews_count reviews_start reviews_shown",
+		"expected_values":"22 10 5"
+	},
+	{
+		"qparams_name":"res_id start",
+		"qparams_value":"18739146 10",
+		"expected_params_name":"reviews_count reviews_start",
+		"expected_values":"22 10"
+	},
+	{
+		"qparams_name":"res_id count",
+		"qparams_value":"18739146 5",
+		"expected_params_name":"reviews_count reviews_shown",
+		"expected_values":"22 5"
+	},
+	{
+		"qparams_name":"start count",
+		"qparams_value":"10 5",
+		"expected_params_name":"reviews_start reviews_shown",
+		"expected_values":"NA 5"
+	},
+	{
+		"qparams_name":"res_id",
+		"qparams_value":"18739146",
+		"expected_params_name":"reviews_count",
+		"expected_values":"22"
+	},
+	{
+		"qparams_name":"start",
+		"qparams_value":"5",
+		"expected_params_name":"",
+		"expected_values":""
+	},
+	{
+		"qparams_name":"count",
+		"qparams_value":"5",
+		"expected_params_name":"",
+		"expected_values":""
+	},
+	{
+		"qparams_name":"res_id count",
+		"qparams_value":" 5",
+		"expected_params_name":"reviews_count reviews_shown",
+		"expected_values":"NA 5"
+	},
+	{
+		"qparams_name":"res_id start",
+		"qparams_value":"invalid_res_id 5",
+		"expected_params_name":"reviews_start reviews_shown",
+		"expected_values":500
+	}
+]

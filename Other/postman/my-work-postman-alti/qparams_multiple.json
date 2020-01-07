@@ -1,0 +1,98 @@
+[
+	{
+		"qparams_name":"collection_id",
+		"qparams_value":"120",
+		"expected_params_name":"results_found",
+		"expected_values":"74"
+	},
+	{
+		"qparams_name":"start",
+		"qparams_value":"15",
+		"expected_params_name":"results_start",
+		"expected_values":"15"
+	},
+	{
+		"qparams_name":"count",
+		"qparams_value":"15",
+		"expected_params_name":"results_shown",
+		"expected_values":"15"
+	},
+	{
+		"qparams_name":"entity_id cuisines entity_type start count",
+		"qparams_value":"11337 100 city 10 15",
+		"expected_params_name":"NA cuisines NA start count",
+		"expected_values":"NA Desserts NA 10 15"
+	},
+	{
+		"qparams_name":"entity_id cuisines entity_type",
+		"qparams_value":"11337 100 city",
+		"expected_params_name":"NA cuisines NA",
+		"expected_values":"NA Desserts NA"
+	},
+	{
+		"qparams_name":"entity_type start count",
+		"qparams_value":"11337 10 15",
+		"expected_params_name":"NA start count",
+		"expected_values":"NA 10 15"
+	},
+	{
+		"qparams_name":"entity_id cuisines entity_type start",
+		"qparams_value":"11337 100 city 10",
+		"expected_params_name":"NA cuisines NA start",
+		"expected_values":"NA Desserts NA 10"
+	},
+	{
+		"qparams_name":"entity_id establishment_type",
+		"qparams_value":"11337 8",
+		"expected_params_name":"NA est_name",
+		"expected_values":"1415364 Club"
+	},
+	{
+		"qparams_name":"lat lon",
+		"qparams_value":"18.6528438157 73.7328519300",
+		"expected_params_name":"results_found name",
+		"expected_values":"12503 BeHive"
+	},
+	{
+		"qparams_name":"lat lon radius",
+		"qparams_value":"18.6528438157 73.7328519300 10",
+		"expected_params_name":"NA",
+		"expected_values":"NA"
+	},
+	{
+		"qparams_name":"entity_id entity_type cuisines collection_id",
+		"qparams_value":"11337 city 100 1",
+		"expected_params_name":"results_found url",
+		"expected_values":"22 https://www.zomato.com/gwalior/punjabi-chicken-mangu-chicken-shinde-ki-chhawani?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1"
+	},
+	{
+		"qparams_name":"collection_id cuisines",
+		"qparams_value":"120 100",
+		"expected_params_name":"results_found",
+		"expected_values":"1"
+	},
+	{
+		"qparams_name":"entity_id entity_type cuisines collection_id",
+		"qparams_value":"11337 city 100 120",
+		"expected_params_name":"results_found, results_start, results_shown",
+		"expected_values":"0 0 0"
+	},
+	{
+		"qparams_name":"entity_id entity_type cuisines establishment_type sort order",
+		"qparams_value":"11337 city 100 1 rating desc",
+		"expected_params_name":"results_found latitude longitude",
+		"expected_values":"4 26.2095571674 78.1664344668"
+	},
+	{
+		"qparams_name":"entity_id entity_type cuisines establishment_type sort order",
+		"qparams_value":"11337 city 100 1 rating asc",
+		"expected_params_name":"results_found latitude longitude",
+		"expected_values":"4 26.2151740000 78.1708370000"
+	},
+	{
+		"qparams_name":"entity_id entity_type cuisines establishment_type sort order",
+		"qparams_value":"11337 city 100 1 real_distance asc",
+		"expected_params_name":"results_found",
+		"expected_values":500
+	}
+]

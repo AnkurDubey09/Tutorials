@@ -1,0 +1,118 @@
+{
+    "reviews_count": 10,
+    "reviews_start": 0,
+    "reviews_shown": 5,
+    "user_reviews": [
+        {
+            "review": {
+                "rating": 1,
+                "review_text": "I had ordered Paneer Bhujiya and Paneer tikka masala it was Full of oil,red chilli and zero percent of taste. All in vain. Please do not rep...",
+                "id": 42739768,
+                "rating_color": "CB202D",
+                "review_time_friendly": "14 hours ago",
+                "rating_text": "Avoid!",
+                "timestamp": 1556219959,
+                "likes": 0,
+                "user": {
+                    "name": "Sumit Chauhan",
+                    "foodie_level": "Foodie",
+                    "foodie_level_num": 2,
+                    "foodie_color": "ffd35d",
+                    "profile_url": "https://www.zomato.com/users/sumit-chauhan-88779442?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1",
+                    "profile_image": "https://b.zmtcdn.com/data/user_profile_pictures/b49/3889ecd9650bc457a92138ccb2e47b49.jpg?fit=around%7C100%3A100&crop=100%3A100%3B%2A%2C%2A",
+                    "profile_deeplink": "zomato://u/88779442"
+                },
+                "comments_count": 0
+            }
+        },
+        {
+            "review": {
+                "rating": 1,
+                "review_text": "Very poor packing .. they don't know how to do packing and deliver the food in a good condition to the customer ... I had a very bad experie...",
+                "id": 42721885,
+                "rating_color": "CB202D",
+                "review_time_friendly": "yesterday",
+                "rating_text": "Avoid!",
+                "timestamp": 1556124399,
+                "likes": 0,
+                "user": {
+                    "name": "Saumya Agrawal",
+                    "foodie_level": "Foodie",
+                    "foodie_level_num": 2,
+                    "foodie_color": "ffd35d",
+                    "profile_url": "https://www.zomato.com/users/saumya-agrawal-38662961?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1",
+                    "profile_image": "https://b.zmtcdn.com/images/user_avatars/cupcake.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A",
+                    "profile_deeplink": "zomato://u/38662961"
+                },
+                "comments_count": 0
+            }
+        },
+        {
+            "review": {
+                "rating": 5,
+                "review_text": "Very hard working zomato team i congrats to team Same taste and zomato was nice delivery welcome zomato in Farrukhabad i m happy for this se...",
+                "id": 42720790,
+                "rating_color": "305D02",
+                "review_time_friendly": "yesterday",
+                "rating_text": "Insane!",
+                "timestamp": 1556121060,
+                "likes": 0,
+                "user": {
+                    "name": "Ashu Pal",
+                    "foodie_level": "Foodie",
+                    "foodie_level_num": 2,
+                    "foodie_color": "ffd35d",
+                    "profile_url": "https://www.zomato.com/users/ashu-pal-106375831?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1",
+                    "profile_image": "https://b.zmtcdn.com/images/user_avatars/wine_2x.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A",
+                    "profile_deeplink": "zomato://u/106375831"
+                },
+                "comments_count": 0
+            }
+        },
+        {
+            "review": {
+                "rating": 4,
+                "review_text": "Nice food and best tariff rate you had provided me. I feel very happy from your service which provided by you within due duration and delive...",
+                "id": 42638525,
+                "rating_color": "5BA829",
+                "review_time_friendly": "7 days ago",
+                "rating_text": "Great!",
+                "timestamp": 1555687377,
+                "likes": 1,
+                "user": {
+                    "name": "Rahul Dixit",
+                    "foodie_level": "Foodie",
+                    "foodie_level_num": 2,
+                    "foodie_color": "ffd35d",
+                    "profile_url": "https://www.zomato.com/users/rahul-dixit-107200623?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1",
+                    "profile_image": "https://b.zmtcdn.com/data/user_profile_pictures/390/45515348e979fd6c2e34cd3c2edde390.jpg?fit=around%7C100%3A100&crop=100%3A100%3B%2A%2C%2A",
+                    "profile_deeplink": "zomato://u/107200623"
+                },
+                "comments_count": 0
+            }
+        },
+        {
+            "review": {
+                "rating": 4,
+                "review_text": "Be careful with your phone number to make a statement and time for your body and the connection with your phone and then the is my best hind...",
+                "id": 42604442,
+                "rating_color": "5BA829",
+                "review_time_friendly": "9 days ago",
+                "rating_text": "Great!",
+                "timestamp": 1555500282,
+                "likes": 1,
+                "user": {
+                    "name": "Krishu Yadav",
+                    "foodie_level": "Foodie",
+                    "foodie_level_num": 3,
+                    "foodie_color": "ffd35d",
+                    "profile_url": "https://www.zomato.com/users/krishu-yadav-106662946?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1",
+                    "profile_image": "https://b.zmtcdn.com/data/user_profile_pictures/cdd/02b99a3f98be3258d887a83061ee7cdd.jpg?fit=around%7C100%3A100&crop=100%3A100%3B%2A%2C%2A",
+                    "profile_deeplink": "zomato://u/106662946"
+                },
+                "comments_count": 0
+            }
+        }
+    ],
+    "Respond to reviews via Zomato Dashboard": "https://www.zomato.com/business/claim?ref=rpg&resid=19039800#claim"
+}

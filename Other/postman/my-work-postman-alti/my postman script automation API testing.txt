@@ -1,0 +1,907 @@
+postmangetallcollections:
+https://api.getpostman.com/collections?apikey=535880f5957640c7a62770b88c948f68
+
+{
+    "collections": [
+        {
+            "id": "11c0ff65-2719-46b1-8f15-6a4a4997a150",
+            "name": "rough",
+            "owner": "7292032",
+            "uid": "7292032-11c0ff65-2719-46b1-8f15-6a4a4997a150"
+        },
+        {
+            "id": "39ca2fee-1915-4629-86f9-feb20d6b0ea2",
+            "name": "zomato-workflows",
+            "owner": "7292032",
+            "uid": "7292032-39ca2fee-1915-4629-86f9-feb20d6b0ea2"
+        },
+        {
+            "id": "3b13abf4-3555-4562-98a5-b680330e4225",
+            "name": "zomatobin",
+            "owner": "7292032",
+            "uid": "7292032-3b13abf4-3555-4562-98a5-b680330e4225"
+        },
+        {
+            "id": "60e92dff-453a-4bd7-afd6-1925c6b72339",
+            "name": "zomato-qparams",
+            "owner": "7292032",
+            "uid": "7292032-60e92dff-453a-4bd7-afd6-1925c6b72339"
+        },
+        {
+            "id": "7d644400-c152-4f4f-8902-b5e3f8fa13ea",
+            "name": "surya-collection",
+            "owner": "7292032",
+            "uid": "7292032-7d644400-c152-4f4f-8902-b5e3f8fa13ea"
+        },
+        {
+            "id": "8ac2e74c-07e9-44a9-9428-745c16aca9cf",
+            "name": "zomato-review-collection",
+            "owner": "7292032",
+            "uid": "7292032-8ac2e74c-07e9-44a9-9428-745c16aca9cf"
+        },
+        {
+            "id": "a09e9acb-e6a7-4d46-8d24-6f73cde40b53",
+            "name": "Surya zomato review multiple qparam",
+            "owner": "7292032",
+            "uid": "7292032-a09e9acb-e6a7-4d46-8d24-6f73cde40b53"
+        },
+        {
+            "id": "adc5fa40-b945-41d3-ae66-1ccf2a980706",
+            "name": "httpbin",
+            "owner": "7292032",
+            "uid": "7292032-adc5fa40-b945-41d3-ae66-1ccf2a980706"
+        },
+        {
+            "id": "c36fb94c-fa3e-4e68-9897-530950db3355",
+            "name": "zomato-multiple-qparams",
+            "owner": "7292032",
+            "uid": "7292032-c36fb94c-fa3e-4e68-9897-530950db3355"
+        },
+        {
+            "id": "dae8600c-7c9a-467d-9afd-a4dbd7b1386a",
+            "name": "Surya zomato search multiple qparam",
+            "owner": "7292032",
+            "uid": "7292032-dae8600c-7c9a-467d-9afd-a4dbd7b1386a"
+        },
+        {
+            "id": "fc5c6f02-994b-4620-b2aa-2aa5585454de",
+            "name": "Surya zomato search single qparam",
+            "owner": "7292032",
+            "uid": "7292032-fc5c6f02-994b-4620-b2aa-2aa5585454de"
+        }
+    ]
+}
+
+
+##############################################################################################################################################
+
+Surya-zomato-search-multiple-qparams:
+GET--> https://{{surya-env-1}}/search{{qparams}}
+
+Header:--> 
+user-key - 7551e1b7aac1cb39267c91a92184885f
+Co-Relation-Id - 123e4567-e89b-12d3-a456-426655440000
+
+Pre-request steps:-->
+setTimeout(()=>{}, 10000);
+
+let qparam_str = "";
+let qparams_name_array = pm.iterationData.get("qparams_name").split(" ");
+let qparams_value_array = pm.iterationData.get("qparams_value").split(" ");
+
+for(var i=0; i<qparams_name_array.length; i++){
+    if(i === 0){
+        qparam_str += "?"+qparams_name_array[i]+"="+qparams_value_array[i];
+    }else{
+       qparam_str += "&"+qparams_name_array[i]+"="+qparams_value_array[i];
+    }
+}
+
+pm.environment.set("qparams", qparam_str);
+
+Tests:-->
+
+let response;
+let expected_params_array;
+let expected_values_array;
+
+if(pm.iterationData.get("expected_values") === 500){
+    pm.test("Status code is 200", function () {
+        pm.response.to.have.status(500);
+    });
+    expected_params_array = [];
+    expected_values_array = [];
+}else{
+    response = pm.response.json();
+    pm.test("Status code is 200", function () {
+        pm.response.to.have.status(200);
+    });
+
+    pm.test("Content-Type is present", function () {
+        pm.response.to.have.header("Content-Type");
+    });
+    
+    expected_params_array = pm.iterationData.get("expected_params_name").split(" ");
+    expected_values_array = pm.iterationData.get("expected_values").split(" ");
+}
+
+postman.setNextRequest("https://{{surya-env-1}}/search{{qparams}}");
+
+/*let expected_params_array = pm.iterationData.get("expected_params_name").split(" ");
+let expected_values_array = pm.iterationData.get("expected_values").split(" ");*/
+//console.log(expected_params_array);
+//console.log(expected_values_array);
+
+for(var i=0; i<expected_params_array.length; i++){
+    if(expected_params_array[i] === "NA"){
+        continue;
+    }else{
+        pm.test("verifications..."+expected_params_array[i],()=>{
+          switch(expected_params_array[i]){
+            case "resultsFound":{
+                pm.expect(response.results_found).to.equal(parseInt(expected_values_array[i]));
+                break;
+            }
+            case "resultsStart":{
+                pm.expect(response.results_start).to.equal(parseInt(expected_values_array[i]));
+                break;
+            }
+            case "resultsShown":{
+                pm.expect(response.results_shown).to.equal(parseInt(expected_values_array[i]));
+                break;
+            }
+            case "cuisines":{
+                pm.expect(response.restaurants[0].restaurant.cuisines).to.contains(expected_values_array[i]);
+                break;
+            }
+            case "estName":{
+                pm.expect(response.restaurants[0].restaurant.establishment_types.establishment_type.name).to.equal(expected_values_array[i]);
+                break;
+            }
+            case "url":{
+                pm.expect(response.restaurants[0].restaurant.url).to.equal(expected_values_array[i]);
+                break;
+            }
+            case "latitude":{
+                pm.expect(response.restaurants[0].restaurant.location.latitude).to.equal(expected_values_array[i]);
+                break;
+            }
+            case "longitude":{
+                pm.expect(response.restaurants[0].restaurant.location.longitude).to.equal(expected_values_array[i]);
+                break;
+            }
+            }
+        });
+    }
+}
+
+##############################################################################################################################################
+
+Surya-zomato-search-single-qparam:
+GET--> http://{{surya-env-1}}/search?{{qparam_name}}={{qparam_value}}
+
+Header:-->
+user-key - 7551e1b7aac1cb39267c91a92184885f
+Co-Relation-Id - 123e4567-e89b-12d3-a456-426655440000
+
+Pre-request steps:-->
+let value = pm.iterationData.get("expected_value");
+let param = pm.iterationData.get("expected_param_name");
+
+pm.globals.set("value", value);
+pm.globals.set("param", param);
+
+Tests:-->
+let response;
+let operation;
+
+if(pm.iterationData.get("expected_value") === 500){
+    pm.test("Status code is 500", function () {
+        pm.response.to.have.status(500);
+    });
+}else{
+    response = pm.response.json();
+    operation = pm.iterationData.get("op_name");
+    pm.test("Status code is 200", function () {
+        pm.response.to.have.status(200);
+    });
+
+    pm.test("Content-Type is present", function () {
+        pm.response.to.have.header("Content-Type");
+    });
+}
+//const response = pm.response.json();
+
+if(pm.iterationData.get("expected_param_name") !== "NA"){
+    var param_array = pm.iterationData.get("expected_param_name").split("-");
+    //console.log(param_array);
+    if(param_array.length<3){
+        switch(operation){
+            case 'eql':{
+                pm.test("Verify - "+param_array[1], function () {
+                    pm.expect(response[param_array[1]]).to.eql(pm.iterationData.get("expected_value"));
+                });break;
+            }
+            case 'gt':{
+                pm.test("Verify - "+param_array[1], function () {
+                    pm.expect(response[param_array[1]]).to.be.gt(pm.iterationData.get("expected_value"));
+                });break;
+            }
+            case 'inc':{
+                pm.test("Verify - "+operation+" - "+param_array[1], function () {
+                    pm.expect(response[param_array[1]]).to.include(pm.iterationData.get("expected_value"));
+                });break;
+            }
+            case 'nn':{
+                pm.test("Verify - "+operation+" - "+param_array[1], function () {
+                    pm.expect(response[param_array[1]]).to.not.equal("");
+                });break;
+            }
+        }
+    }else{
+        var mini_resp = response["restaurants"][0][param_array[1]];
+        //console.log(mini_resp);
+        for(var i=0; i<param_array.length; i++){
+            if(i > 1){
+                mini_resp = mini_resp[param_array[i]];
+                //console.log("response is --> ",mini_resp);
+            }  
+        }
+        switch(operation){
+            case 'eql':{
+                pm.test("Verify - "+mini_resp, function () {
+                    pm.expect(mini_resp).to.eql(pm.iterationData.get("expected_value"));
+                });break;
+            }
+            case 'gt':{
+                pm.test("Verify - "+mini_resp, function () {
+                    pm.expect(mini_resp).to.be.gt(pm.iterationData.get("expected_value"));
+                });break;
+            }
+            case 'inc':{
+                pm.test("Verify - "+mini_resp, function () {
+                    pm.expect(mini_resp).to.include(pm.iterationData.get("expected_value"));
+                });break;
+            }
+            case 'nn':{
+                pm.test("Verify - "+operation+" - "+param_array[1], function () {
+                    pm.expect(response[param_array[1]]).to.not.equal("");
+                });break;
+            }
+        }
+    }
+}
+
+postman.setNextRequest("http://{{surya-env-1}}/search?{{qparam_name}}={{qparam_value}}");
+
+##############################################################################################################################################
+
+Surya-collection:
+
+surya-zomato-search-manual:
+GET-->http://{{surya-env-1}}/search
+
+Pre-request steps:-->
+pm.variables.set("rid", 18741217);
+
+surya-zomato-review-manual:
+http://{{surya-env-1}}/reviews?res_id={{res_id}}
+
+Pre-request steps:-->
+pm.variables.set("res_id",18893355);
+
+###############################################################################################################################################
+###############################################################################################################################################
+
+Zomato-search-single-qparams:
+GET--> https://{{zomato_dev}}/api/{{api_version}}/search?{{qparam_name}}={{qparam_value}}
+
+Header-->
+user-key - 7551e1b7aac1cb39267c91a92184885f
+
+Pre-request Script:-->
+let value = pm.iterationData.get("expected_value");
+let param = pm.iterationData.get("expected_param_name");
+
+pm.globals.set("value", value);
+pm.globals.set("param", param);
+
+Tests:-->
+let response;
+
+if(pm.iterationData.get("expected_value") === 500){
+    pm.test("Status code is 500", function () {
+        pm.response.to.have.status(500);
+    });
+}else{
+    response = pm.response.json();
+    pm.test("Status code is 200", function () {
+        pm.response.to.have.status(200);
+    });
+
+    pm.test("Content-Type is present", function () {
+        pm.response.to.have.header("Content-Type");
+    });
+}
+
+
+//const response = pm.response.json();
+
+if(pm.iterationData.get("expected_param_name") !== "NA"){
+    var param_array = pm.iterationData.get("expected_param_name").split("-");
+    //console.log(param_array);
+    if(param_array.length<3){
+        pm.test("Verify - "+param_array[1], function () {
+            pm.expect(response[param_array[1]]).to.eql(pm.iterationData.get("expected_value"));
+        });
+    }else{
+        var mini_resp = response["restaurants"][0][param_array[1]];
+        //console.log(mini_resp);
+        for(var i=0; i<param_array.length; i++){
+            if(i > 1){
+                mini_resp = mini_resp[param_array[i]];
+                //console.log("response is --> ",mini_resp);
+            }  
+        }
+        pm.test("Verify - "+mini_resp, function () {
+            pm.expect(mini_resp).to.eql(pm.iterationData.get("expected_value"));
+        });
+    }
+}
+
+postman.setNextRequest("https://developers.zomato.com/api/v2.1/search?{{qparam_name}}={{qparam_value}}");
+
+################################################################################################################################################
+
+Zomato-search-single-qparams:
+GET--> https://developers.zomato.com/api/v2.1/search{{qparams}}
+
+Header-->
+user-key - 7551e1b7aac1cb39267c91a92184885f
+
+Pre-request Script:-->
+let qparam_str = "";
+let qparams_name_array = pm.iterationData.get("qparams_name").split(" ");
+let qparams_value_array = pm.iterationData.get("qparams_value").split(" ");
+
+for(var i=0; i<qparams_name_array.length; i++){
+    if(i === 0){
+        qparam_str += "?"+qparams_name_array[i]+"="+qparams_value_array[i];
+    }else{
+       qparam_str += "&"+qparams_name_array[i]+"="+qparams_value_array[i];
+    }
+}
+
+pm.environment.set("qparams", qparam_str);
+
+
+Tests:-->
+let response;
+let expected_params_array;
+let expected_values_array;
+
+if(pm.iterationData.get("expected_values") === 500){
+    pm.test("Status code is 200", function () {
+        pm.response.to.have.status(500);
+    });
+    expected_params_array = [];
+    expected_values_array = [];
+}else{
+    response = pm.response.json();
+    pm.test("Status code is 200", function () {
+        pm.response.to.have.status(200);
+    });
+
+    pm.test("Content-Type is present", function () {
+        pm.response.to.have.header("Content-Type");
+    });
+    
+    expected_params_array = pm.iterationData.get("expected_params_name").split(" ");
+    expected_values_array = pm.iterationData.get("expected_values").split(" ");
+}
+
+postman.setNextRequest("https://developers.zomato.com/api/v2.1/search{{qparams}}");
+
+/*let expected_params_array = pm.iterationData.get("expected_params_name").split(" ");
+let expected_values_array = pm.iterationData.get("expected_values").split(" ");*/
+//console.log(expected_params_array);
+//console.log(expected_values_array);
+
+for(var i=0; i<expected_params_array.length; i++){
+    if(expected_params_array[i] === "NA"){
+        continue;
+    }else{
+        pm.test("verifications..."+expected_params_array[i],()=>{
+          switch(expected_params_array[i]){
+            case "results_found":{
+                pm.expect(response.results_found).to.equal(parseInt(expected_values_array[i]));
+                break;
+            }
+            case "results_start":{
+                pm.expect(response.results_start).to.equal(parseInt(expected_values_array[i]));
+                break;
+            }
+            case "results_shown":{
+                pm.expect(response.results_shown).to.equal(parseInt(expected_values_array[i]));
+                break;
+            }
+            case "cuisines":{
+                pm.expect(response.restaurants[0].restaurant.cuisines).to.contains(expected_values_array[i]);
+                break;
+            }
+            case "est_name":{
+                pm.expect(response.restaurants[0].restaurant.establishment_types.establishment_type.name).to.equal(expected_values_array[i]);
+                break;
+            }
+            case "url":{
+                pm.expect(response.restaurants[0].restaurant.url).to.equal(expected_values_array[i]);
+                break;
+            }
+            case "latitude":{
+                pm.expect(response.restaurants[0].restaurant.location.latitude).to.equal(expected_values_array[i]);
+                break;
+            }
+            case "longitude":{
+                pm.expect(response.restaurants[0].restaurant.location.longitude).to.equal(expected_values_array[i]);
+                break;
+            }
+            }
+        });
+    }
+}
+
+###############################################################################################################################################
+
+Zomato-workflows:
+https://developers.zomato.com/api/v2.1/search?entity_id={{ent_id}}&entity_type={{ent_type}}&cuisines={{cusine1}}&establishment_type={{est_type}}&category={{cat}}&sort={{sort}}&order={{order}}
+zomato-search:
+Pre-request Script:-->
+pm.environment.set("ent_id", 11337);
+pm.environment.set("ent_type", "city");
+pm.environment.set("est_type", 1);
+pm.environment.set("cat", 10);
+pm.environment.set("sort", "rating");
+pm.environment.set("order", "asc");
+pm.environment.set("cusine1", 100);
+
+Tests:
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+pm.test("Content-Type is present", function () {
+    pm.response.to.have.header("Content-Type");
+});
+
+const response = pm.response.json();
+
+let user_ratings_obj = {
+    "aggregate_rating": "3.2",
+    "rating_text": "Average",
+    "rating_color": "CDD614",
+    "votes": "7" //,    "has_fake_reviews": 0
+}
+
+let est_type_obj = {
+    "id": "1",
+    "name": "Café"
+}
+
+let location_obj = {
+    "address": "Shop 1, Plot 22, Near GDA Office, Phool Bagh Road, Ravi Nagar, Lashkar, Gwalior",
+    "locality": "Lashkar",
+    "city": "Gwalior",
+    "city_id": 11337,
+    "latitude": "26.2151740000",
+    "longitude": "78.1708370000",
+    "zipcode": "",
+    "country_id": 1,
+    "locality_verbose": "Lashkar, Gwalior"
+}
+
+pm.test("Body have following properties", function () {
+    pm.expect(response).to.have.property("results_found");
+    pm.expect(response).to.have.property("results_start");
+    pm.expect(response).to.have.property("results_shown");
+    pm.expect(response).to.have.property("restaurants");
+    pm.expect(response.restaurants[0]).to.have.property("restaurant");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("R");
+    pm.expect(response.restaurants[0].restaurant.R).to.have.property("res_id");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("apikey");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("name");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("id");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("url");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("location");
+    pm.expect(response.restaurants[0].restaurant.location).to.have.property("address");
+    pm.expect(response.restaurants[0].restaurant.location).to.have.property("locality");
+    pm.expect(response.restaurants[0].restaurant.location).to.have.property("city");
+    pm.expect(response.restaurants[0].restaurant.location).to.have.property("city_id");
+    pm.expect(response.restaurants[0].restaurant.location).to.have.property("latitude");
+    pm.expect(response.restaurants[0].restaurant.location).to.have.property("longitude");
+    pm.expect(response.restaurants[0].restaurant.location).to.have.property("zipcode");
+    pm.expect(response.restaurants[0].restaurant.location).to.have.property("country_id");
+    pm.expect(response.restaurants[0].restaurant.location).to.have.property("locality_verbose");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("switch_to_order_menu");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("cuisines");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("average_cost_for_two");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("price_range");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("currency");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("offers");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("opentable_support");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("is_zomato_book_res");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("mezzo_provider");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("is_book_form_web_view");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("book_form_web_view_url");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("book_again_url");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("thumb");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("user_rating");
+    pm.expect(response.restaurants[0].restaurant.user_rating).to.have.property("aggregate_rating");
+    pm.expect(response.restaurants[0].restaurant.user_rating).to.have.property("rating_text");
+    pm.expect(response.restaurants[0].restaurant.user_rating).to.have.property("rating_color");
+    pm.expect(response.restaurants[0].restaurant.user_rating).to.have.property("votes");
+    //pm.expect(response).to.have.property("custom_rating_text");
+    //pm.expect(response).to.have.property("custom_rating_text_background");
+    //pm.expect(response).to.have.property("rating_tool_tip");
+   // pm.expect(response.restaurants[0].restaurant.user_rating).to.have.property("has_fake_reviews");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("photos_url");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("menu_url");
+   // pm.expect(response.restaurants[0].restaurant).to.have.property("mezzo_provider");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("featured_image");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("has_online_delivery");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("is_delivering_now");
+   // pm.expect(response.restaurants[0].restaurant).to.have.property("has_fake_reviews");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("include_bogo_offers");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("deeplink");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("order_url");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("order_deeplink");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("is_table_reservation_supported");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("has_table_booking");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("events_url");
+    pm.expect(response.restaurants[0].restaurant).to.have.property("establishment_types");
+    pm.expect(response.restaurants[0].restaurant.establishment_types).to.have.property("establishment_type");
+    pm.expect(response.restaurants[0].restaurant.establishment_types.establishment_type).to.have.property("id");
+    pm.expect(response.restaurants[0].restaurant.establishment_types.establishment_type).to.have.property("name");
+});
+
+pm.test("Body should include following values as object", function () {
+    pm.expect(response.restaurants[0].restaurant.user_rating).to.include(user_ratings_obj);
+    pm.expect(response.restaurants[0].restaurant.establishment_types.establishment_type).to.include(est_type_obj);
+    pm.expect(response.restaurants[0].restaurant.location).to.include(location_obj);
+});
+
+pm.test("Body should include following values for the properties", function () {
+    pm.expect(response.restaurants[0].restaurant.name).to.eql("Cafe Coffee Day");
+    pm.expect(response.restaurants[0].restaurant.id).to.eql("18893355");
+    pm.expect(response.restaurants[0].restaurant.url).to.eql("https://www.zomato.com/gwalior/cafe-coffee-day-1-lashkar?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1");
+    pm.expect(response.restaurants[0].restaurant.switch_to_order_menu).to.eql(0);
+    pm.expect(response.restaurants[0].restaurant.cuisines).to.eql("Cafe, Desserts, Beverages, Sandwich");
+    pm.expect(response.restaurants[0].restaurant.average_cost_for_two).to.eql(650);
+    pm.expect(response.restaurants[0].restaurant.price_range).to.eql(2);
+    pm.expect(response.restaurants[0].restaurant.currency).to.eql("Rs.");
+    pm.expect(response.restaurants[0].restaurant.opentable_support).to.eql(0);
+    pm.expect(response.restaurants[0].restaurant.is_zomato_book_res).to.eql(0);
+    pm.expect(response.restaurants[0].restaurant.mezzo_provider).to.eql("OTHER");
+    pm.expect(response.restaurants[0].restaurant.is_book_form_web_view).to.eql(0);
+    pm.expect(response.restaurants[0].restaurant.book_form_web_view_url).to.eql("");
+    pm.expect(response.restaurants[0].restaurant.book_again_url).to.eql("");
+    pm.expect(response.restaurants[0].restaurant.thumb).to.eql("https://b.zmtcdn.com/data/pictures/chains/9/18737969/938108b9416d00148e9d8f84bd704171.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A");
+    pm.expect(response.restaurants[0].restaurant.photos_url).to.eql("https://www.zomato.com/gwalior/cafe-coffee-day-1-lashkar/photos?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1#tabtop");
+    pm.expect(response.restaurants[0].restaurant.menu_url).to.eql("https://www.zomato.com/gwalior/cafe-coffee-day-1-lashkar/menu?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1&openSwipeBox=menu&showMinimal=1#tabtop");
+    pm.expect(response.restaurants[0].restaurant.featured_image).to.eql("https://b.zmtcdn.com/data/pictures/chains/9/18737969/938108b9416d00148e9d8f84bd704171.jpg");
+    
+    pm.expect(response.restaurants[0].restaurant.include_bogo_offers).to.eql(true);
+    pm.expect(response.restaurants[0].restaurant.deeplink).to.eql("zomato://restaurant/18893355");
+    pm.expect(response.restaurants[0].restaurant.order_url).to.eql("https://www.zomato.com/gwalior/cafe-coffee-day-1-lashkar/order?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1");
+    pm.expect(response.restaurants[0].restaurant.order_deeplink).to.eql("");
+    
+    pm.expect(response.restaurants[0].restaurant.is_table_reservation_supported).to.eql(0);
+    pm.expect(response.restaurants[0].restaurant.has_table_booking).to.eql(0);
+    pm.expect(response.restaurants[0].restaurant.events_url).to.eql("https://www.zomato.com/gwalior/cafe-coffee-day-1-lashkar/events#tabtop?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1");
+    
+    pm.expect(response.restaurants[0].restaurant.has_online_delivery).to.eql(1);
+    pm.expect(response.restaurants[0].restaurant.is_delivering_now).to.eql(1);
+});
+
+pm.test("Data types of properties should be", function(){
+    //pm.expect(response.restaurants).to.be.array;
+    pm.expect(response.results_found).to.be.a('number');
+    pm.expect(response.restaurants).to.be.a('array');
+    pm.expect(response.restaurants[0].restaurant.include_bogo_offers).to.be.a('boolean');
+    pm.expect(response.restaurants[0].restaurant.photos_url).to.be.a('string');
+    pm.expect(response.restaurants[0].restaurant.user_rating).to.be.a('object');
+    pm.expect(response.restaurants[0].restaurant.offers).to.be.a('array');
+});
+
+/*
+pm.environment.unset("ent_id");
+pm.environment.unset("ent_type");
+pm.environment.unset("est_type");
+pm.environment.unset("cat");
+pm.environment.unset("sort");
+pm.environment.unset("order");
+pm.environment.unset("cusine1");
+pm.environment.unset("cusine1");
+pm.environment.unset("cusine1");*/
+
+--------------------------------------------------------------------------
+
+zomato-search-for-zomato-events:
+https://developers.zomato.com/api/v2.1/search?collection_id={{collection_id}}
+Pre-request Script-->
+pm.variables.set("collection_id", 120);
+
+Tests-->
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+pm.test("Content-Type is present", function () {
+    pm.response.to.have.header("Content-Type");
+});
+
+const response = pm.response.json();
+
+let zomato_events_obj = {
+              "event_id": 342194,
+              "friendly_start_date": "24 April",
+              "friendly_end_date": "15 May",
+              "friendly_timing_str": "Wednesday, 24th April - Wednesday, 15th May",
+              "start_date": "2019-04-24",
+              "end_date": "2019-05-15",
+              "end_time": "23:00:00",
+              "start_time": "19:30:00",
+              "is_active": 1,
+              "date_added": "2019-04-23 15:37:10",
+              "is_valid": 1,
+              "share_url": "http://www.zoma.to/r/0",
+              "show_share_url": 0,
+              "title": "Incredible Deals",
+              "description": "Incredible Summer Deals at Bay15.\r\nDon't miss it! Show these promo on your phone to the staff upon arrival to avail these deals.",
+              "display_time": "07:30 pm - 11:00 pm",
+              "display_date": "24 April - 15 May",
+              "is_end_time_set": 1,
+              "disclaimer": "Restaurants are solely responsible for the service; availability and quality of the events including all or any cancellations/ modifications/ complaints.",
+              "event_category": 0,
+              "event_category_name": "",
+              "book_link": ""
+              
+            
+    }
+    
+let zomato_events_photo_obj = {
+                    "url": "https://b.zmtcdn.com/data/zomato_events/photos/a66/a81d9e6cbd796e85ca7f7bd0a0be4a66_1556014049.jpg",
+                    "thumb_url": "https://b.zmtcdn.com/data/zomato_events/photos/a66/a81d9e6cbd796e85ca7f7bd0a0be4a66_1556014049.jpg?fit=around%7C100%3A100&crop=100%3A100%3B%2A%2C%2A",
+                    "order": 0,
+                    "md5sum": "a81d9e6cbd796e85ca7f7bd0a0be4a66",
+                    "id": 461607,
+                    "photo_id": 461607,
+                    "uuid": 1556014043487592,
+                    "type": "NORMAL"
+    }
+    
+let zomato_events_share_data_obj = {
+                "should_show": 0
+    }
+
+pm.test("Body have following zomato search events' properties", function () {
+    pm.expect(response.restaurants[0].restaurant).to.have.property("zomato_events");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0]).to.have.property("event");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("event_id");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("friendly_start_date");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("friendly_end_date");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("friendly_timing_str");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("start_date");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("end_date");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("end_time");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("start_time");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("is_active");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("date_added");
+    //pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("photos");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event.photos[0]).to.have.property("photo");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event.photos[0].photo).to.have.property("url");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event.photos[0].photo).to.have.property("thumb_url");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event.photos[0].photo).to.have.property("order");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event.photos[0].photo).to.have.property("md5sum");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event.photos[0].photo).to.have.property("id");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event.photos[0].photo).to.have.property("photo_id");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event.photos[0].photo).to.have.property("uuid");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event.photos[0].photo).to.have.property("type");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("restaurants");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("is_valid");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("share_url");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("show_share_url");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("title");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("description");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("display_time");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("display_date");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("is_end_time_set");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("disclaimer");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("event_category");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("event_category_name");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("book_link");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("types");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.have.property("share_data");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event.share_data).to.have.property("should_show");
+});
+
+pm.test("Body should include following zomato events' values as object", function () {
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.include(zomato_events_obj);
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event.photos[0].photo).to.include(zomato_events_photo_obj);
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event.share_data).to.include(zomato_events_share_data_obj);
+});
+
+pm.test("Body should include following values for the zomato events' properties", function () {
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event.event_id).to.eql(342194);
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event.friendly_start_date).to.eql("24 April");
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event.friendly_end_date).to.eql("15 May");
+});
+
+pm.test("Data types of zomato events' properties should be", function(){
+    pm.expect(response.restaurants[0].restaurant.zomato_events).to.be.a('array');
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event.restaurants).to.be.a('array');
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event.photos).to.be.a('array');
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event.types).to.be.a('array');
+    
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event).to.be.a('object');
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event.photos[0].photo).to.be.a('object');
+    pm.expect(response.restaurants[0].restaurant.zomato_events[0].event.share_data).to.be.a('object');
+});
+
+---------------------------------------------------------------------------------------------------------
+
+
+zomato-search-with-no-value-to-qparam:
+https://developers.zomato.com/api/v2.1/search?entity_id=&entity_type=&cuisines=&establishment_type=&category=&sort=&order=&q=&start=&count=&lat=&lon=&radius=
+Pre-request Script-->
+Tests-->
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+pm.test("Content-Type is present", function () {
+    pm.response.to.have.header("Content-Type");
+});
+
+const response = pm.response.json();
+
+pm.test("Data types of properties should be", function(){
+    //pm.expect(response.restaurants).to.be.array;
+    pm.expect(response.results_found).to.be.a('number');
+    pm.expect(response.restaurants).to.be.a('array');
+    pm.expect(response.restaurants[0].restaurant.include_bogo_offers).to.be.a('boolean');
+    pm.expect(response.restaurants[0].restaurant.photos_url).to.be.a('string');
+    pm.expect(response.restaurants[0].restaurant.user_rating).to.be.a('object');
+    pm.expect(response.restaurants[0].restaurant.offers).to.be.a('array');
+});
+
+
+pm.test("Default values for the properties", function () {
+    pm.expect(response.results_shown).to.equal(20);
+    pm.expect(response.results_start).to.equal(0);
+    pm.expect(response.results_found).not.to.equal(0);
+    pm.expect(response.restaurants[0].restaurant.apikey).to.equal(pm.environment.get("api-key"));
+});
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+zomato-search-verify for invalid api key:
+
+Tests-->
+pm.test("Status code is 403", function () {
+    pm.response.to.have.status(403);
+});
+
+
+pm.test("Status code name has string", function () {
+    pm.response.to.have.status("Forbidden");
+});
+
+const response = pm.response.json();
+
+pm.test("Should show message as Invalid API Key", function(){
+    pm.expect(response.message).to.equal("Invalid API Key");
+});
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+zomato-review:
+https://developers.zomato.com/api/v2.1/reviews?res_id={{res_id}}
+
+Pre-request Script-->
+pm.environment.set("res_id",18893355);//18739146
+
+Tests-->
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+pm.test("Content-Type is present", function () {
+    pm.response.to.have.header("Content-Type");
+});
+
+const response = pm.response.json();
+
+
+
+pm.test("Body have following properties", function () {
+    pm.expect(response).to.have.property("reviews_count");
+    pm.expect(response).to.have.property("reviews_start");
+    pm.expect(response).to.have.property("reviews_shown");
+    pm.expect(response).to.have.property("user_reviews");
+    pm.expect(response.user_reviews[0]).to.have.property("review");
+    pm.expect(response.user_reviews[0].review).to.have.property("rating");
+    pm.expect(response.user_reviews[0].review).to.have.property("review_text");
+    pm.expect(response.user_reviews[0].review).to.have.property("id");
+    pm.expect(response.user_reviews[0].review).to.have.property("rating_color");
+    pm.expect(response.user_reviews[0].review).to.have.property("review_time_friendly");
+    pm.expect(response.user_reviews[0].review).to.have.property("rating_text");
+    pm.expect(response.user_reviews[0].review).to.have.property("timestamp");
+    pm.expect(response.user_reviews[0].review).to.have.property("timestamp");
+    pm.expect(response.user_reviews[0].review).to.have.property("review_time_friendly");
+    pm.expect(response.user_reviews[0].review).to.have.property("likes");
+    pm.expect(response.user_reviews[0].review).to.have.property("user");
+    pm.expect(response.user_reviews[0].review.user).to.have.property("name");
+    pm.expect(response.user_reviews[0].review.user).to.have.property("foodie_level");
+    pm.expect(response.user_reviews[0].review.user).to.have.property("foodie_level_num");
+    pm.expect(response.user_reviews[0].review.user).to.have.property("foodie_color");
+    pm.expect(response.user_reviews[0].review.user).to.have.property("profile_url");
+    pm.expect(response.user_reviews[0].review.user).to.have.property("profile_image");
+    pm.expect(response.user_reviews[0].review.user).to.have.property("profile_deeplink");
+    pm.expect(response.user_reviews[0].review).to.have.property("comments_count");
+    
+});
+
+pm.test("Data types of properties should be", function(){
+    //pm.expect(response.restaurants).to.be.array;
+    pm.expect(response.reviews_count).to.be.a('number');
+    pm.expect(response.user_reviews[0].review.rating).to.be.a('number');
+    pm.expect(response.user_reviews).to.be.a('array');
+    pm.expect(response.user_reviews[0].review.review_text).to.be.a('string');
+    pm.expect(response.user_reviews[0].review).to.be.a('object');
+    pm.expect(response.user_reviews[0].review.user).to.be.a('object');
+});
+
+pm.test("Verify values for properties", function () {
+    pm.expect(response.reviews_count).to.eql(1);
+    pm.expect(response.reviews_start).to.eql(0);
+    pm.expect(response.reviews_shown).to.eql(1);
+    pm.expect(response.user_reviews).to.be.an('array').that.is.not.empty;
+    pm.expect(response.user_reviews[0].review.rating).to.eql(4);
+    pm.expect(response.user_reviews[0].review.review_text).to.include("Calm environment ");
+    pm.expect(response.user_reviews[0].review.rating_text).to.eql("Great!");
+    pm.expect(response.user_reviews[0].review.user).to.be.an('object').that.is.not.empty;
+    pm.expect(response.user_reviews[0].review.user.name).to.not.eql("null");
+    pm.expect(response.user_reviews[0].review.user.name).to.not.eql("null");
+    pm.expect(response.user_reviews[0].review.timestamp).to.not.eql("null");
+    pm.expect(response.user_reviews[0].review.id).to.not.eql("null");
+    pm.expect(response.user_reviews[0].review.rating_color).to.not.eql("null");
+});
+
+pm.environment.unset("res_id");
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+zomato-review for invalid res_id
+https://{{zomato_dev}}/api/{{api_version}}/reviews?res_id=invalid_res_id
+
+Tests-->
+pm.test("Status code is 500", function () {
+    pm.response.to.have.status(500);
+});
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
